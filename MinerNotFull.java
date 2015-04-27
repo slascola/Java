@@ -1,12 +1,11 @@
 
-public class MinerNotFull
+public class MinerNotFull extends Miner
 {
-   extends Miner
-{
+
 	private double current_img;
-	   private double resource_count;
+	private double resource_count;
 	   public MinerNotFull(Entity name, Dudes resource_limit, Entity position, 
-	      Dudes rate, Entity imgs, Miner animation_rate, double current_img, double resource_count)
+	      Dudes rate, Entity imgs, Miner animation_rate)
 	   {
 		  super(name, resource_limit, position, rate, imgs, animation_rate);
 	      this.current_img = 0;
