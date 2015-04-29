@@ -1,13 +1,13 @@
-//is name from Entity or Point like in Entity.java
+
 public class MinerFull extends Miner
 {
 
    private int current_img;
    private int resource_count;
-   public MinerFull(Entity name, Dudes resource_limit, Entity position, 
-		      Dudes rate, Entity imgs, Miner animation_rate)
+   public MinerFull(String name, int resource_limit, Point position, 
+		      int rate, String imgs, int animation_rate)
    {
-	   super(name, resource_limit, position, rate, imgs, animation_rate);
+	   super(name, position, rate, resource_limit, animation_rate);
 	   this.current_img = 0;
 	   this.resource_count = resource_limit;
    }
