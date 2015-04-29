@@ -9,13 +9,6 @@ public class Point
       this.x = x;
 	  this.y = y;
    }
-   public double xCoordinate()
-   {
-	   return this.x;
-   }
-   public double yCoordinate()
-   {
-	   return this.y;
-   }
+   
 }
 
