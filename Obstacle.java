@@ -1,7 +1,7 @@
 
 public class Obstacle extends Entity
 {
-   public Obstacle(Entity name, Entity position)
+   public Obstacle(String name, Point position)
    {
 	   super(name, position);
    }
