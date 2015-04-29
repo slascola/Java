@@ -1,7 +1,7 @@
 
 public class OreBlob extends Rate
 {
-   public OreBlob(Entity name, Entity position, Rate rate)
+   public OreBlob(String name, Point position, int rate)
    {
 	   super(name, position, rate);
    }
