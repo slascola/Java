@@ -1,11 +1,11 @@
 
 public class Ore extends Rate
 {
-   private double rate;
-   public Ore(Entity name, Enitity position, Rate rate)
+   private int rate;
+   public Ore(String name, Point position, int rate)
    {
 	   super(name, position, rate); //redefining rate?
-	   this.rate = 5000.0;
+	   this.rate = 5000;
    }
    protected String entity_string()
    {
