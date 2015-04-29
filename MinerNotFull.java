@@ -2,8 +2,8 @@
 public class MinerNotFull extends Miner
 {
 
-	private double current_img;
-	private double resource_count;
+	private int current_img;
+	private int resource_count;
 	   public MinerNotFull(Entity name, Dudes resource_limit, Entity position, 
 	      Dudes rate, Entity imgs, Miner animation_rate)
 	   {
@@ -19,7 +19,7 @@ public class MinerNotFull extends Miner
 		   toString(this.rate) + toString(this.animation_rate);
 		   return miner_string;
 	   }
-	   public MinerNotFull try_transform_miner_not_full(WorldModel world)
+	   protected MinerNotFull try_transform_miner_not_full(WorldModel world)
 	   {
 	      if (this.resource_count < this.resource_limit)
 		  {
@@ -35,7 +35,12 @@ public class MinerNotFull extends Miner
 		  }
 	         
 	   }
-	   //ASK HOW TO ADD MINER_TO_ORE WITH RETURNING OBJECT AND BOOLEAN
+	   
+	   protected boolean miner_to_ore(WorldModel world, Ore ore)
+	   {
+		   Point entity_pt = 
+		   
+	   }
 }
 
 
