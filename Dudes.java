@@ -1,15 +1,17 @@
 
 public class Dudes extends Entity
 {
-   private double rate;
-   private double resource_limit;
-   public Dudes(Entity name, Entity position, double rate, double resource_limit)
+   private int rate;
+   private int resource_limit;
+   private int resource_count;
+   public Dudes(String name, Point position, int rate, int resource_limit, int resource_count)
    {
 	   super(name, position);
 	   this.rate = rate;
 	   this.resource_limit = resource_limit;
+	   this.resource_count = 0;
    }
-   protected void set_resource_count(double n)
+   protected void set_resource_count(int n)
    {
 	   this.resource_count = n;
    }
