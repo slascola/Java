@@ -5,9 +5,9 @@ public class MinerNotFull extends Miner
 	private int current_img;
 	private int resource_count;
 	   public MinerNotFull(String name, int resource_limit, Point position, 
-	      int rate, String imgs, int animation_rate)
+	      int rate, String imgs, int animation_rate, int resource_count)
 	   {
-		  super(name, position, rate, resource_limit, animation_rate);
+		  super(name, position, rate, resource_limit, resource_count, animation_rate);
 	      this.current_img = 0;
 		  this.resource_count = 0;
 	   }
@@ -21,7 +21,7 @@ public class MinerNotFull extends Miner
 	   }
 	   protected MinerNotFull try_transform_miner_not_full(WorldModel world)
 	   {
-	      if (this.resource_count < this.resource_limit)
+	      if (this.resource_count < this.get_resource_limit())
 		  {
 			  return this;
 		  }
@@ -39,7 +39,22 @@ public class MinerNotFull extends Miner
 	   protected boolean miner_to_ore(WorldModel world, Ore ore)
 	   {
 		   Point entity_pt = this.get_position();
-		   
+		   if(ore!)//how to change ?
+		   {
+			   return false;
+		   }
+		   Point ore_pt = ore.get_position();
+		   if (actions.adjacent(entity_pt, ore_pt))
+		   {
+			   this.set_resource_count(1 + this.get_resource_count());
+			   actions.remove_entity(ore, world);
+			   return true;
+		   }
+		   else
+		   {
+			   Point new_pt = actions.next_position(world, entity_pt, ore_pt);
+			   return false;
+		   }
 	   }
 }
 
