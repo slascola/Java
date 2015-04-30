@@ -5,11 +5,26 @@ public class MinerFull extends Miner
    private int current_img;
    private int resource_count;
    public MinerFull(String name, int resource_limit, Point position, 
-		      int rate, String imgs, int animation_rate)
+		      int rate, String imgs, int animation_rate, int resource_count)
    {
-	   super(name, position, rate, resource_limit, animation_rate);
+	   super(name, position, rate, resource_limit, resource_count, animation_rate);
 	   this.current_img = 0;
 	   this.resource_count = resource_limit;
+   }
+   protected boolean miner_to_smith(WorldModel world, Blacksmith smith)
+   {
+	   Point entity_pt = this.get_position();
+	   if(!smith)
+	   {
+		   return false;
+	   }
+	   Point smith_pt = smith.get_position();
+	   if (actions.adjacent(entity_pt, smith_pt))
+	   {
+		   smith.set_resource_count(smith.get_resource_count() + this.get_resource_count());
+		   this.set_resource_count(0);
+		   return true;
+	   }
    }
    protected MinerNotFull try_transform_miner_full(WorldModel world)
    {
