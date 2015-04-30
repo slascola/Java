@@ -7,6 +7,8 @@ public class Obstacle extends Entity
    }
    protected String entity_string()
    {
-	   //help
+	   String obstacle_entity;
+	   obstacle_entity = "obstacle" + this.get_name() + toString(this.get_position());
+	   return obstacle_entity;
    }
 }
