@@ -13,9 +13,9 @@ public class Blacksmith extends Dudes
    protected String entity_string()
    {
 	   String blacksmithString;
-	   blacksmithString = "blacksmith" + this.get_name() + String.valueOf(this.get_position()) 
-			   + Integer.toString(this.get_resource_limit()) +
-			   Integer.toString(this.get_rate()) + Integer.toString(this.resource_distance);
+	   blacksmithString = "blacksmith" + " " + this.get_name() + " " + (this.get_position().x) + " "
+			   + this.get_position().y + " " + (this.get_resource_limit()) + " " +
+			   (this.get_rate()) + " " + (this.resource_distance);
 	   return blacksmithString;
    }
 }
