@@ -15,8 +15,8 @@ public class Vein extends Rate
    protected String entity_string()
    {
 	   String vein_string;
-	   vein_string = "vein" + this.get_name() + String.valueOf(this.get_position()) + 
-			   Integer.toString(this.get_rate()) + Integer.toString(this.get_resource_distance());
+	   vein_string = "vein" + " " + this.get_name() + " " + this.get_position().x + " "+ 
+	           this.get_position().y + " " + this.get_rate() + " "+ this.get_resource_distance();
 	   return vein_string;
    }
 }
