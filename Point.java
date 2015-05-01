@@ -2,9 +2,9 @@
 public class Point 
 
 {
-   private double x;
-   private double y;
-   public Point(double x, double y)
+   public final int x;
+   public final int y;
+   public Point(int x, int y)
    {
       this.x = x;
 	  this.y = y;
