@@ -14,9 +14,9 @@ public class MinerNotFull extends Miner
 	   public String entity_string()
 	   {
 		   String miner_string;
-		   miner_string = "miner" + this.name + toString(this.position.x) +
-		   toString(this.position.y) + toString(this.resource_limit) + 
-		   toString(this.rate) + toString(this.animation_rate);
+		   miner_string = "miner" + this.get_name() + String.valueOf(this.get_position().x) +
+		   String.valueOf(this.get_position().y) + Integer.toString(this.get_resource_limit()) + 
+		   Integer.toString(this.get_rate()) + Integer.toString(this.get_animation_rate());
 		   return miner_string;
 	   }
 	   protected MinerNotFull try_transform_miner_not_full(WorldModel world)
