@@ -14,7 +14,7 @@ public class OreBlob extends Rate
    protected boolean blob_to_vein(WorldModel world, Vein vein)
    {
 	   Point entity_pt = this.get_position();
-	   if(! vein)
+	   if(vein != null)
 	   {
 		   return false;
 	   }
@@ -28,7 +28,7 @@ public class OreBlob extends Rate
 	   {
 		   Point new_pt = actions.blob_next_position(world, entity_pt, vein_pt);
 		   Entity old_entity = world.get_title_occupant(new_pt);
-		   if (old_entity instanceOf(Ore)
+		   if (old_entity instanceof Ore)
            {
 			 actions.remove_entity(old_entity, world);
 		   }
