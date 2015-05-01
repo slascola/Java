@@ -14,12 +14,12 @@ public class MinerNotFull extends Miner
 	   public String entity_string()
 	   {
 		   String miner_string;
-		   miner_string = "miner" + this.get_name() + String.valueOf(this.get_position().x) +
-		   String.valueOf(this.get_position().y) + Integer.toString(this.get_resource_limit()) + 
-		   Integer.toString(this.get_rate()) + Integer.toString(this.get_animation_rate());
+		   miner_string = "miner" + " " + this.get_name() + " " + (this.get_position().x) + " " +
+		   (this.get_position().y) + " " + (this.get_resource_limit()) + " " +
+		   (this.get_rate()) + " " + (this.get_animation_rate());
 		   return miner_string;
 	   }
-	   protected MinerNotFull try_transform_miner_not_full(WorldModel world)
+	   protected Miner try_transform_miner_not_full(WorldModel world)
 	   {
 	      if (this.resource_count < this.get_resource_limit())
 		  {
@@ -39,7 +39,7 @@ public class MinerNotFull extends Miner
 	   protected boolean miner_to_ore(WorldModel world, Ore ore)
 	   {
 		   Point entity_pt = this.get_position();
-		   if(ore!)//how to change ?
+		   if(ore != null)
 		   {
 			   return false;
 		   }
