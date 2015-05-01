@@ -10,7 +10,8 @@ public class Ore extends Rate
    protected String entity_string()
    {
 	   String ore_string;
-	   ore_string = "ore" + this.get_name() + this.get_position() + this.get_rate();
+	   ore_string = "ore" + this.get_name() + String.valueOf(this.get_position()) + 
+			   Integer.toString(this.get_rate());
 	   return ore_string;
    }
 }
