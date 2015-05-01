@@ -20,11 +20,11 @@ public class Dudes extends Entity
 	   return this.resource_count;
 	   
    }
-   protected double get_resource_limit()
+   protected int get_resource_limit()
    {
 	   return this.resource_limit;
    }
-   protected double get_rate()
+   protected int get_rate()
    {
 	   return this.rate;
    }
