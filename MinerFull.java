@@ -14,7 +14,7 @@ public class MinerFull extends Miner
    protected boolean miner_to_smith(WorldModel world, Blacksmith smith)
    {
 	   Point entity_pt = this.get_position();
-	   if(!smith)
+	   if(smith != null)
 	   {
 		   return false;
 	   }
