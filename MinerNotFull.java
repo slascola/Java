@@ -27,7 +27,7 @@ public class MinerNotFull extends Miner
 		  }
 	      else
 		  {
-			 MinerFull new_entity =  new MinerFull(
+			 Miner new_entity =  new MinerFull(
 	            this.get_name(), this.get_resource_limit(),
 	            this.get_position(), this.get_rate(),
 	            this.get_images(), this.get_animation_rate());
@@ -52,7 +52,8 @@ public class MinerNotFull extends Miner
 		   }
 		   else
 		   {
-			   Point new_pt = actions.next_position(world, entity_pt, ore_pt);
+			   Point new_pt = actions.next_position(world, entity_pt, ore_pt); 
+			   world.move_entity(this, new_pt);
 			   return false;
 		   }
 	   }
