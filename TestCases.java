@@ -78,5 +78,12 @@ public class TestCases {
 		String m_string = "miner Charlie 2 6 10 14 10";
 		assertEquals(m_string, mnf.entity_string());
 	}
+	@Test
+	public void testTryTransformMNF1()
+	{
+		Point pos = new Point(4, 5);
+		MinerNotFull mnf = new MinerNotFull("Jody", 2, pos, 7, null, 5, 1);
+		assertEquals(mnf, mnf.try_transform_miner_not_full());
+	}
 
 }
