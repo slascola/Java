@@ -19,11 +19,17 @@ public class MinerFull extends Miner
 		   return false;
 	   }
 	   Point smith_pt = smith.get_position();
-	   if (actions.adjacent(entity_pt, smith_pt))
+	   if (Actions.adjacent(entity_pt, smith_pt))
 	   {
 		   smith.set_resource_count(smith.get_resource_count() + this.get_resource_count());
 		   this.set_resource_count(0);
 		   return true;
+	   }
+	   else
+	   {
+		   Point new_pt = Actions.next_position(world, entity_pt, smith_pt);
+		   world.move_entity(this, new_pt);
+		   return false;
 	   }
    }
    protected MinerNotFull try_transform_miner_full(WorldModel world)
