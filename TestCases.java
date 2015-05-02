@@ -43,7 +43,7 @@ public class TestCases {
 	public void testDudesGetResourceLimit()
 	{
 		Point pos = new Point(5, 8);
-		Dudes d = new Dudes("Sammy", pos, 5, 12, 0);
+		Dudes d = new Dudes("Garth", pos, 5, 12, 0);
 		assertEquals(12, d.get_resource_limit(), DELTA);
 	}
 	
@@ -69,6 +69,14 @@ public class TestCases {
 		Point pos = new Point(85, 67);
 		Rate r = new Rate("Dat Rate", pos, 9);
 		assertEquals(9, r.get_rate(), DELTA);
+	}
+	@Test
+	public void testMNFString()
+	{
+		Point pos = new Point(2, 6);
+		MinerNotFull mnf = new MinerNotFull("Charlie", 10, pos, 14, null, 10, 0);
+		String m_string = "miner Charlie 2 6 10 14 10";
+		assertEquals(m_string, mnf.entity_string());
 	}
 
 }
