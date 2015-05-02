@@ -62,5 +62,13 @@ public class TestCases {
 		Miner m = new Miner("Crowley", pos, 8, 15, 0, 6);
 		assertEquals(6, m.get_animation_rate(), DELTA);
 	}
+	
+	@Test
+	public void testRateGetRate()
+	{
+		Point pos = new Point(85, 67);
+		Rate r = new Rate("Dat Rate", pos, 9);
+		assertEquals(9, r.get_rate(), DELTA);
+	}
 
 }
