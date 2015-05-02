@@ -19,7 +19,8 @@ public class MinerNotFull extends Miner
 		   (this.get_rate()) + " " + (this.get_animation_rate());
 		   return miner_string;
 	   }
-	   protected Miner try_transform_miner_not_full(WorldModel world)
+	   
+	   protected Miner try_transform_miner_not_full()
 	   {
 	      if (this.resource_count < this.get_resource_limit())
 		  {
@@ -27,14 +28,15 @@ public class MinerNotFull extends Miner
 		  }
 	      else
 		  {
-			 Miner new_entity =  new MinerFull(
+			 MinerFull new_entity =  new MinerFull(
 	            this.get_name(), this.get_resource_limit(),
 	            this.get_position(), this.get_rate(),
 	            this.get_images(), this.get_animation_rate());
 	         return new_entity; 
 		  }
-	         
 	   }
+	   
+	         
 	   
 	   protected boolean miner_to_ore(WorldModel world, Ore ore)
 	   {

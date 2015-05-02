@@ -16,4 +16,6 @@ public class Miner extends Dudes
    {
 	  return this.animation_rate;
    }
+   
+   
 }
