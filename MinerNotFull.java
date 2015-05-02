@@ -44,15 +44,15 @@ public class MinerNotFull extends Miner
 			   return false;
 		   }
 		   Point ore_pt = ore.get_position();
-		   if (actions.adjacent(entity_pt, ore_pt))
+		   if (Actions.adjacent(entity_pt, ore_pt))
 		   {
 			   this.set_resource_count(1 + this.get_resource_count());
-			   actions.remove_entity(ore, world);
+			   Actions.remove_entity(ore, world);
 			   return true;
 		   }
 		   else
 		   {
-			   Point new_pt = actions.next_position(world, entity_pt, ore_pt); 
+			   Point new_pt = Actions.next_position(world, entity_pt, ore_pt); 
 			   world.move_entity(this, new_pt);
 			   return false;
 		   }
