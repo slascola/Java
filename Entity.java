@@ -20,4 +20,8 @@ public class Entity
    {
 	   return this.name;
    }
+   protected String get_images()
+   {
+	   return null;  
+   }
 }

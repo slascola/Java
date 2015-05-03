@@ -7,7 +7,7 @@ public class MinerNotFull extends Miner
 	   public MinerNotFull(String name, int resource_limit, Point position, 
 	      int rate, String imgs, int animation_rate, int resource_count)
 	   {
-		  super(name, position, rate, resource_limit, resource_count, animation_rate);
+		  super(name, position, rate, resource_limit, resource_count, animation_rate, imgs);
 	      this.current_img = 0;
 		  this.resource_count = 0;
 	   }
@@ -24,14 +24,18 @@ public class MinerNotFull extends Miner
 	   {
 	      if (this.resource_count < this.get_resource_limit())
 		  {
-			  return this;
+	    	  MinerNotFull samemnf = new MinerNotFull(this.get_name(),
+                      this.get_resource_limit(), this.get_position(), this.get_rate(),
+                      this.get_images(), this.get_animation_rate(), this.get_resource_count());
+                      return samemnf;
+
 		  }
 	      else
 		  {
 			 MinerFull new_entity =  new MinerFull(
 	            this.get_name(), this.get_resource_limit(),
 	            this.get_position(), this.get_rate(),
-	            this.get_images(), this.get_animation_rate());
+	            this.get_images(), this.get_animation_rate(), this.get_resource_count());
 	         return new_entity; 
 		  }
 	   }

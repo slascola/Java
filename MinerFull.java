@@ -7,7 +7,7 @@ public class MinerFull extends Miner
    public MinerFull(String name, int resource_limit, Point position, 
 		      int rate, String imgs, int animation_rate, int resource_count)
    {
-	   super(name, position, rate, resource_limit, resource_count, animation_rate);
+	   super(name, position, rate, resource_limit, resource_count, animation_rate, imgs);
 	   this.current_img = 0;
 	   this.resource_count = resource_limit;
    }

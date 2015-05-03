@@ -4,7 +4,8 @@ public class Miner extends Dudes
    private int resource_count;
    private int resource_limit;
    private int animation_rate;
-   public Miner(String name, Point position, int rate, int resource_limit, int resource_count, int animation_rate)
+   public Miner(String name, Point position, int rate, int resource_limit, int resource_count, 
+		   int animation_rate, String imgs)
    {
 	   super(name, position, rate, resource_limit, resource_count);
 	   this.resource_count = 0;
