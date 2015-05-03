@@ -93,6 +93,123 @@ public class TestCases {
 		MinerFull mf = new MinerFull("Gabriel", 10, pos, 8, null, 1, 5);
 		assertEquals(mf, mnf.try_transform_miner_not_full());
 	}
+	@Test
+	public void testsetPosition()
+	{
+		Point pos = new Point(1, 2);
+		Entity e = new Entity("MinerNotFull", pos);
+		Point newPos = new Point(2, 3);
+		assertEquals(newPos ,e.set_position(pos));
+	}
+	
+	@Test 
+	public void getPosition()
+	{
+		Point pos = new Point(3,4);
+		Entity e = new Entity("Ore", pos);
+		assertEquals(pos, e.get_position());
+		
+	}
+	
+	@Test
+	public void testGetName1()
+	{
+		Point pos = new Point(1, 2);
+		Entity e = new Entity("Ore", pos);
+		assertEquals("Ore", e.get_name());
+		
+	}
+	
+	@Test 
+	public void testAdjacentFirstTrue()
+	{
+		Point p1 = new Point(1, 4);
+		Point p2 = new Point(1, 3);
+		assertTrue(Actions.adjacent(p1, p2));
+		
+	}
+	
+	@Test
+	public void testAdjacentBothFalse()
+	{
+		Point p1 = new Point(6, 3);
+		Point p2 = new Point(2, 7);
+		assertFalse(Actions.adjacent(p1, p2));
+	}
+	
+	@Test 
+	public void testAdjacentSecondTrue()
+	{
+		Point p1 = new Point(5, 3);
+		Point p2 = new Point(4, 3);
+		assertTrue(Actions.adjacent(p1, p2));
+	}
+	
+	@Test
+	public void testBlacksmithString()
+	{
+		Point pos = new Point(1, 2);
+		Blacksmith b = new Blacksmith("Blacksmith", pos, 1, 5000, 3, 2); 
+		String str = new String("blacksmith Blacksmith 1 2 1 5000 1");
+		assertEquals(str, b.entity_string());
+		
+		
+	}
+	
+	@Test
+	public void testObstacleString()
+	{
+	Point pos = new Point(2, 3);
+	Obstacle o = new Obstacle("Obstacle", pos);
+	String o_str = new String("obstacle Obstacle 2 3");
+	assertEquals(o_str, o.entity_string());
+	}
+	
+	
+	@Test
+	public void testOreString()
+	{
+		Point pos = new Point(3, 7);
+		Ore ore = new Ore("Ore", pos, 5000);
+		String ore_str = new String("ore Ore 3 7 5000");
+		assertEquals(ore_str, ore.entity_string());
+	}
+	
+	@Test
+	public void testOreBlobGetAnimation()
+	{
+	
+		Point pos = new Point(1, 2);
+		OreBlob ob = new OreBlob("OreBlob", pos, 500, 20);
+		assertEquals(20, ob.get_animation_rate());
+	}
+	
+	@Test
+	public void testQuake()
+	{
+		Point pos = new Point(1, 2);
+		Quake q = new Quake("Quake", pos, 500);
+		assertEquals(500, q.get_animation_rate());
+
+		
+	}
+	
+	@Test
+	public void testVeinString()
+	{
+		Point pos = new Point(8, 5);
+		Vein v = new Vein("Vein", 5, pos, 1);
+		String v_str = new String("vein Vein 8 5 5 1");
+		assertEquals(v_str, v.entity_string());
+	}
+	
+	@Test
+	public void testVeinGetResourceDist()
+	{
+		Point pos = new Point(4, 17);
+		Vein v = new Vein("Vein", 5, pos, 1);
+		assertEquals(1, v.get_resource_distance());
+	}
 	
 
 }
