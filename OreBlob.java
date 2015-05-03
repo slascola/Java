@@ -11,6 +11,7 @@ public class OreBlob extends Rate
    {
 	   return this.animation_rate;
    }
+   /*
    protected boolean blob_to_vein(WorldModel world, Vein vein)
    {
 	   Point entity_pt = this.get_position();
@@ -36,4 +37,5 @@ public class OreBlob extends Rate
 		   return false; 
 	   }
    }
+   */
 }
