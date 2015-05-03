@@ -59,7 +59,7 @@ public class TestCases {
 	public void testMinerGetAnimationRate()
 	{
 		Point pos = new Point(6, 8);
-		Miner m = new Miner("Crowley", pos, 8, 15, 0, 6);
+		Miner m = new Miner("Crowley", pos, 8, 15, 0, 6, null);
 		assertEquals(6, m.get_animation_rate(), DELTA);
 	}
 	
@@ -85,5 +85,14 @@ public class TestCases {
 		MinerNotFull mnf = new MinerNotFull("Jody", 2, pos, 7, null, 5, 1);
 		assertEquals(mnf, mnf.try_transform_miner_not_full());
 	}
+	@Test
+	public void testTryTransformMNF2()
+	{
+		Point pos = new Point(8,7);
+		MinerNotFull mnf = new MinerNotFull("Gabriel", 10, pos, 8, null, 1, 5);
+		MinerFull mf = new MinerFull("Gabriel", 10, pos, 8, null, 1, 5);
+		assertEquals(mf, mnf.try_transform_miner_not_full());
+	}
+	
 
 }
