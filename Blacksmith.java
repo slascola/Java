@@ -3,7 +3,8 @@ public class Blacksmith extends Dudes
 {
    private int resource_count;
    private int resource_distance;
-   public Blacksmith(String name, Point position, int resource_limit, int rate, int resource_distance, int resource_count)
+   public Blacksmith(String name, Point position, int resource_limit, int rate, int resource_distance, 
+		   int resource_count)
    {
 	   super(name, position, rate, resource_limit, resource_count);
 	   this.resource_count = 0;
