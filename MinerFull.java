@@ -11,6 +11,7 @@ public class MinerFull extends Miner
 	   this.current_img = 0;
 	   this.resource_count = resource_limit;
    }
+   /*
    protected boolean miner_to_smith(WorldModel world, Blacksmith smith)
    {
 	   Point entity_pt = this.get_position();
@@ -32,11 +33,12 @@ public class MinerFull extends Miner
 		   return false;
 	   }
    }
-   protected MinerNotFull try_transform_miner_full(WorldModel world)
+   */
+   protected MinerNotFull try_transform_miner_full()
    {
 	   MinerNotFull new_entity = new MinerNotFull(this.get_name(), 
 			   this.get_resource_limit(), this.get_position(),
-			   this.get_rate(), this.get_images(), this.get_animation_rate());
+			   this.get_rate(), this.get_images(), this.get_animation_rate(), this.get_resource_count());
 	   return new_entity;
    }
 }

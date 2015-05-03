@@ -24,10 +24,7 @@ public class MinerNotFull extends Miner
 	   {
 	      if (this.resource_count < this.get_resource_limit())
 		  {
-	    	  MinerNotFull samemnf = new MinerNotFull(this.get_name(),
-                      this.get_resource_limit(), this.get_position(), this.get_rate(),
-                      this.get_images(), this.get_animation_rate(), this.get_resource_count());
-                      return samemnf;
+	    	  return this;
 
 		  }
 	      else
@@ -41,7 +38,7 @@ public class MinerNotFull extends Miner
 	   }
 	   
 	         
-	   
+	   /*
 	   protected boolean miner_to_ore(WorldModel world, Ore ore)
 	   {
 		   Point entity_pt = this.get_position();
@@ -63,6 +60,7 @@ public class MinerNotFull extends Miner
 			   return false;
 		   }
 	   }
+	   */
 }
 
 
