@@ -10,13 +10,13 @@ public class WorldModel {
 	private int[][] occupancy;
 	private OrderedList action_queue; 
 	
-	public WorldModel(int num_rows, int num_cols, Grid background)
+	public WorldModel(int num_rows, int num_cols, Entity background)
 	{
-		this.background = Grid(num_cols, num_rows, background);
+		this.background = new Grid(num_cols, num_rows, background);
 		this.num_rows = num_rows;
 		this.num_cols = num_cols;
 		this.occupancy = occupancy;
-		this.entities = //array list?
+		this.entities = entities;
 	    this.action_queue = OrderedList();
 		
 	}
@@ -30,7 +30,7 @@ public class WorldModel {
 	}
 	protected Entity find_nearest(Point point, Class type)
 	{
-		List<Entity> oftype = new ArrayList();
+		List<Entity> oftype = new ArrayList<Entity>();
 		for (Entity e : this.entities)
 		{
 			if (type.isInstance(e))
@@ -88,7 +88,7 @@ public class WorldModel {
 	{
 		if (this.within_bounds(pt))
 		{
-			this.background.set_sell(pt, bgnd);
+			this.background.set_cell(pt, bgnd);
 		}
 	}
 	protected int[][] get_title_occupant(Point pt)
