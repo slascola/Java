@@ -21,6 +21,15 @@ public class Grid {
 			}
 		}
 	}
+	protected void set_cell(Point point, int value)
+	{
+		this.cells[point.y][point.x] = value;
+	}
+	protected int get_cell(Point point)
+	{
+		return this.cells[point.y][point.x];
+	}
+	
 	
 
 }
