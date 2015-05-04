@@ -37,5 +37,5 @@ public class OreBlob extends Rate
 		   return false; 
 	   }
    }
-   */
+  */ 
 }
