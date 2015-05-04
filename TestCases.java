@@ -89,9 +89,17 @@ public class TestCases {
 	public void testTryTransformMNF2()
 	{
 		Point pos = new Point(8,7);
-		MinerNotFull mnf = new MinerNotFull("Gabriel", 10, pos, 8, null, 1, 5);
-		MinerFull mf = new MinerFull("Gabriel", 10, pos, 8, null, 1, 5);
-		assertEquals(mf, mnf.try_transform_miner_not_full());
+		MinerNotFull mnf = new MinerNotFull("Gabriel", 5, pos, 8, null, 1, 10);
+		MinerFull mf = new MinerFull("Gabriel", 5, pos, 8, null, 1, 10);
+		Miner haha = mnf.try_transform_miner_not_full();
+		assertEquals("Gabriel", haha.get_name());
+		assertEquals(5, haha.get_resource_limit(), DELTA);
+		assertEquals(pos, haha.get_position());
+		assertEquals(8, haha.get_rate(), DELTA);
+		assertEquals(null, haha.get_images());
+		assertEquals(1, haha.get_animation_rate(), DELTA);
+		assertEquals(0, haha.get_resource_count(), DELTA);
+		
 	}
 	@Test
 	public void testsetPosition()
@@ -210,6 +218,44 @@ public class TestCases {
 		Vein v = new Vein("Vein", 5, pos, 1);
 		assertEquals(1, v.get_resource_distance());
 	}
+	@Test
+	public void testRemoveEntity()
+	{
+		Point pos = new Point(6, 8);
+		Entity e = new Entity("Kayla", pos);
+		
+	}
+	@Test
+	public boolean testWithinBoundsAllTrue()
+	{
+		Grid background = new Grid(4, 4, int[]);
+		int[][] occupancy; //need defining
+		WorldModel world = new WorldModel(background, 4, 5, );
+		Point point = new Point(1, 2);
+		int x = 0;
+		int y = 2;
+		assertTrue(point);
+	}
+	
+	@Test
+	public boolean testWithinBoundsFalse()
+	{
+		Grid background = new Grid(6, 6, int[]);
+		int[][] occupancy;//need defining
+		WorldModel world = new WorldModel(7, 7, background);
+		Point point = new Point(-1, -5);
+		assertFalse(world.within_bounds(point));
+	}
+	
+	@Test
+	public int testDistanceSq()
+	{
+		Point p1 = new Point(1, 3);
+		Point p2 = new Point(2, 1);
+		assertEquals(5, WorldModel.distance_sq(p1, p2));
+	}
+
+
 	
 
 }
