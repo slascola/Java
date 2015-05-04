@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.Before;
@@ -218,6 +219,7 @@ public class TestCases {
 		Vein v = new Vein("Vein", 5, pos, 1);
 		assertEquals(1, v.get_resource_distance());
 	}
+	/*
 	@Test
 	public void testRemoveEntity()
 	{
@@ -226,11 +228,11 @@ public class TestCases {
 		
 	}
 	@Test
-	public boolean testWithinBoundsAllTrue()
+	public void testWithinBoundsAllTrue()
 	{
 		Grid background = new Grid(4, 4, int[]);
 		int[][] occupancy; //need defining
-		WorldModel world = new WorldModel(background, 4, 5, );
+		WorldModel world = new WorldModel(4, 5, background);
 		Point point = new Point(1, 2);
 		int x = 0;
 		int y = 2;
@@ -238,7 +240,7 @@ public class TestCases {
 	}
 	
 	@Test
-	public boolean testWithinBoundsFalse()
+	public void testWithinBoundsFalse()
 	{
 		Grid background = new Grid(6, 6, int[]);
 		int[][] occupancy;//need defining
@@ -246,16 +248,88 @@ public class TestCases {
 		Point point = new Point(-1, -5);
 		assertFalse(world.within_bounds(point));
 	}
-	
+	*/
 	@Test
-	public int testDistanceSq()
+	public void testDistanceSq()
 	{
 		Point p1 = new Point(1, 3);
 		Point p2 = new Point(2, 1);
 		assertEquals(5, WorldModel.distance_sq(p1, p2));
 	}
-
-
+	
+	@Test
+	public void testMinertoSmith1()
+	{
+		Point pos1 = new Point(1,2);
+		Entity e = new Entity("Nicole", pos1);
+		WorldModel world = new WorldModel(4,5, e);
+		Point pos = new Point(4,9);
+		MinerFull m = new MinerFull("Jo", 8, pos, 4, null, 7, 10);
+		Blacksmith b = null;
+		assertFalse(m.miner_to_smith(world, b));
+	}
+    @Test
+    public void testMinertoSmith2()
+    {
+    	Point pos = new Point(1, 4);
+    	MinerFull m = new MinerFull("Donna", 4, pos, 9, null, 1, 7);
+    	Point pos1 = new Point(1,7);
+    	Entity e = new Entity("Dean", pos1);
+    	WorldModel world = new WorldModel( 8, 7, e);
+    	Point bs = new Point(1, 3);
+    	Blacksmith b = new Blacksmith("Daniel", bs, 7, 1, 1, 0);
+    	assertTrue(m.miner_to_smith(world, b));
+    	
+    }
+    @Test
+    public void testMinertoSmith3()
+    {
+    	Point pos = new Point(6,3);
+    	MinerFull m = new MinerFull("Cain", 8, pos, 6, null, 4, 8);
+    	Point pos1 = new Point(5,7);
+    	Entity e = new Entity("Sarah", pos1);
+    	WorldModel world = new WorldModel(8, 4, e);
+    	Point bs = new Point(2,7);
+    	Blacksmith b = new Blacksmith("Adam", bs, 6, 1, 1, 0);
+    	assertFalse(m.miner_to_smith(world, b));
+    }
+    @Test
+    public void testMinertoOre1()
+    {
+    	Point pos = new Point(9,1);
+    	MinerNotFull m = new MinerNotFull("Rowena", 1, pos, 9, null, 3, 7);
+    	Point pos1 = new Point(5, 8);
+    	Entity e = new Entity("D.Roman", pos1);
+    	WorldModel world = new WorldModel(1, 2, e);
+    	Ore ore = null;
+    	assertFalse(m.miner_to_ore(world, ore));
+    }
+    @Test
+    public void testMinertoOre2()
+    {
+    	Point pos = new Point(2, 5);
+    	MinerNotFull m = new MinerNotFull("Cap", 2, pos, 4, null, 9, 1);
+    	Point pos1 = new Point(1, 4);
+    	Entity e = new Entity("MYBFF", pos1);
+    	WorldModel world = new WorldModel(2, 5, e);
+    	Point os = new Point(2, 4);
+    	Ore ore = new Ore("Samandriel", os, 4);
+    	assertTrue(m.miner_to_ore(world, ore));
+    	
+    }
+    @Test
+    public void testMinertoOre3()
+    {
+    	Point pos = new Point(5, 8);
+    	MinerNotFull m = new MinerNotFull("Blackwidow", 6, pos, 8, null, 1, 0);
+    	Point pos1 = new Point(2, 0);
+    	Entity e = new Entity("THOR", pos1);
+    	WorldModel world = new WorldModel(1, 5, e);
+    	Point os = new Point(100, 50);
+    	Ore ore = new Ore("Tony Stark", os, 1);
+    	assertFalse(m.miner_to_ore(world, ore));
+    	
+    }
 	
 
 }
