@@ -11,7 +11,7 @@ public class MinerFull extends Miner
 	   this.current_img = 0;
 	   this.resource_count = resource_limit;
    }
-   /*
+   
    protected boolean miner_to_smith(WorldModel world, Blacksmith smith)
    {
 	   Point entity_pt = this.get_position();
@@ -33,7 +33,7 @@ public class MinerFull extends Miner
 		   return false;
 	   }
    }
-   */
+   
    protected MinerNotFull try_transform_miner_full()
    {
 	   MinerNotFull new_entity = new MinerNotFull(this.get_name(), 
