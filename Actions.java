@@ -17,13 +17,13 @@ import java.lang.Math;
 	   return ((x1 == x2 && Math.abs(y1 - y2) == 1) ||
 			   (y1 == y2 && Math.abs(x1 - x2) == 1));
       }
-     public static void next_position(WorldModel world, Point entity_pt, Point dest_pt)
+     public static Point next_position(WorldModel world, Point entity_pt, Point dest_pt)
      {
-    	 
+    	 return null;
      }
-     public static void blob_next_position(WorldModel world, Point entity_pt, Point dest_pt)
+     public static Point blob_next_position(WorldModel world, Point entity_pt, Point dest_pt)
      {
-    	 
+    	return null; 
      }
      public static void remove_entity(Entity entity, WorldModel world)
      {
