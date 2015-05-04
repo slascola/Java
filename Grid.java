@@ -6,7 +6,7 @@ public class Grid {
 	private List cells;
 	private int occupancy_value;
 
-	public Grid(int width, int height, int occupancy_value)
+	public Grid(int width, int height, Entity occupancy_value)
 	{
 		this.width = width;
 		this.height = height;
