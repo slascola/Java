@@ -38,7 +38,7 @@ public class MinerNotFull extends Miner
 	   }
 	   
 	         
-	   /*
+	   
 	   protected boolean miner_to_ore(WorldModel world, Ore ore)
 	   {
 		   Point entity_pt = this.get_position();
@@ -60,7 +60,7 @@ public class MinerNotFull extends Miner
 			   return false;
 		   }
 	   }
-	   */
+	   
 }
 
 
