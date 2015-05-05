@@ -365,8 +365,9 @@ public class TestCases {
     	WorldModel world = new WorldModel(4, 4);
 		world.add_entity(e);
 		world.set_occupancy(pos, e);
-		//List<Entity> entitylist = world.get_entities();
-		//entitylist.add(e);
+		List<Entity> entitylist = new ArrayList<Entity>();
+		entitylist.add(e);
+		assertEquals(e, entitylist.get(0));
 		assertEquals(e, world.get_occupancy(pos));
 		
 		
