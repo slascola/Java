@@ -94,7 +94,7 @@ public class WorldModel {
 	{
 		if(this.within_bounds(pt))
 		{
-			return this.background[pt.y][pt.y];
+			return this.background[pt.y][pt.x];
 		}
 		return null;
 	}
