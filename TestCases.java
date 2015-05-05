@@ -535,7 +535,59 @@ public class TestCases {
 		assertEquals(1, Actions.blob_next_position(world, pt, dest).y);
 		
 	}
-
+	@Test
+	public void testBlobtoVein()
+	{
+		WorldModel world = new WorldModel(4, 4);
+		Point v = new Point(1, 3);
+		Vein vein = new Vein("Castiel", 500, v, 1);
+		Point o = new Point(1, 4);
+		OreBlob oreb = new OreBlob("Deano", o, 500, 1000);
+		assertFalse(oreb.blob_to_vein(world, null));
+		
+		
+	}
+	@Test
+	public void testBlobtoVein2()
+	{
+		WorldModel world = new WorldModel(5, 5);
+        Point v = new Point(1, 3);
+        Vein vein = new Vein("Squirrel", 100, v, 1);
+        Point o = new Point(1, 4);
+        OreBlob oreb = new OreBlob("Moose", o, 100, 90);
+        assertTrue(oreb.blob_to_vein(world, vein));
+        world.remove_entity(vein);
+    	assertNull(world.get_occupancy(v));
+	}
+	@Test
+	public void testBlobtoVein3()
+	{
+		WorldModel world = new WorldModel(1, 1);
+		Point v = new Point(5, 5);
+		Vein vein = new Vein("Wings", 500, v, 1);
+		Point o = new Point(10, 4);
+		OreBlob oreb = new OreBlob("Wings2", o, 120, 80);
+		assertFalse(oreb.blob_to_vein(world, vein));
+		Point new_pt = new Point(9, 4);
+		Entity e = new Ore("Giraffe", new_pt, 500);
+		world.remove_entity(e);
+		assertNull(world.get_occupancy(new_pt));
+		
+	}
+	@Test
+	public void testBlobtoVein4()
+	{
+		WorldModel world = new WorldModel(1, 1);
+		Point v = new Point(5, 5);
+		Vein vein = new Vein("Wings", 500, v, 1);
+		Point o = new Point(10, 4);
+		OreBlob oreb = new OreBlob("Wings2", o, 120, 80);
+		assertFalse(oreb.blob_to_vein(world, vein));
+		Point new_pt = new Point(8, 7);
+		Entity e = new Quake("Impala", new_pt, 500);
+		e.set_position(o);
+		assertEquals(o, e.get_position());
+	}
     
     
     
