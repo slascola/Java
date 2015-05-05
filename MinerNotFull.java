@@ -42,7 +42,7 @@ public class MinerNotFull extends Miner
 	   protected boolean miner_to_ore(WorldModel world, Ore ore)
 	   {
 		   Point entity_pt = this.get_position();
-		   if(ore != null)
+		   if(ore == null)
 		   {
 			   return false;
 		   }
