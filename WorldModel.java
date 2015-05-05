@@ -6,27 +6,24 @@ public class WorldModel {
 	private int num_rows;
 	private int num_cols;
 	private List<Entity> entities;
-	private Grid background;
-	private int[][] occupancy;
-	private OrderedList action_queue; 
+	private Background[][] background;
+	private Entity[][] occupancy;
 	
-	public WorldModel(int num_rows, int num_cols, Entity background)
+	
+	public WorldModel(int num_rows, int num_cols)
 	{
-		this.background = new Grid(num_cols, num_rows, background);
+		this.background = new Background[num_rows][num_cols];
 		this.num_rows = num_rows;
 		this.num_cols = num_cols;
-		this.occupancy = occupancy;
-		this.entities = entities;
-	    this.action_queue = OrderedList();
+		this.occupancy = new Entity[num_rows][num_cols];
+		this.entities = new ArrayList<Entity>();
 		
 	}
 	protected boolean within_bounds(Point point)
 	{
-		int x;
-		int y;
-		Point pt = new Point(x, y);
-		return pt.x >= 0 && pt.x < this.num_cols && 
-				pt.y >= 0 && pt.y < this.num_rows;
+		
+		return point.x >= 0 && point.x < this.num_cols && 
+				point.y >= 0 && point.y < this.num_rows;
 	}
 	protected Entity find_nearest(Point point, Class type)
 	{
@@ -37,30 +34,46 @@ public class WorldModel {
 			{
 				oftype.add(e);
 			}
-			int dist = distance_sq(point, e.get_position());
-			oftype.add(dist);//e outside for loop?
-		}
-		return nearest_entity(oftype);
 			
+		}
+		return nearest_entity(oftype, point);
+			
+	}
+	protected Entity get_occupancy(Point pt)
+	{
+		if(this.within_bounds(pt))
+		{
+			return this.occupancy[pt.y][pt.x];
+		}
+		return null;
+	}
+	protected void set_occupancy(Point pt, Entity entity)
+	{
+		if (this.within_bounds(pt))
+		{
+			this.occupancy[pt.y][pt.x] = entity;
+		}
 	}
 	protected void add_entity(Entity entity)
 	{
+		Point pt = entity.get_position();
+		if (this.within_bounds(pt))
+		{
+			this.occupancy[pt.y][pt.x] = entity;
+			this.entities.add(entity);
+		}
 		
 	}
-	protected Point[] move_entity(Entity entity, Point pt)
+	protected void move_entity(Entity entity, Point pt)
 	{
-		Point tiles[] = new Point[0];//making new array
 		if (this.within_bounds(pt))
 		{
 			Point old_pt = entity.get_position();
-			this.occupancy[old_pt.y][old_pt.x] = null;//sets grid position to none
-			tiles.add(old_pt);
+			this.occupancy[old_pt.y][old_pt.x] = null;
 			this.occupancy[pt.y][pt.x] = entity;
-			tiles.add(pt);
 			entity.set_position(pt);
 			
-		}
-		return tiles; 
+		} 
 	}
 	protected void remove_entity(Entity entity)
 	{
@@ -77,26 +90,28 @@ public class WorldModel {
 		   this.occupancy[pt.y][pt.x] = null;
 	   }
 	}
-	protected int[][] get_background(Point pt)//returning grid?
+	protected Background get_background(Point pt)
 	{
 		if(this.within_bounds(pt))
 		{
-			return this.get_cell(pt);
+			return this.background[pt.y][pt.y];
 		}
+		return null;
 	}
-	protected void set_background(Point pt, Grid bgnd)
+	protected void set_background(Point pt, Background bgnd)
 	{
 		if (this.within_bounds(pt))
 		{
-			this.background.set_cell(pt, bgnd);
+			this.background[pt.y][pt.x] = bgnd;
 		}
 	}
-	protected int[][] get_title_occupant(Point pt)
+	protected Entity get_tile_occupant(Point pt)
 	{
 		if (this.within_bounds(pt))
 		{
 			return this.occupancy[pt.y][pt.x];
 		}
+		return null;
 	}
 	protected List<Entity> get_entities()
 	{
@@ -107,21 +122,23 @@ public class WorldModel {
 	{
 		return (world.within_bounds(pt) && world.occupancy[pt.y][pt.x] != null);
 	}
-	public static Entity nearest_entity(int[] entity_dists)
+	public static Entity nearest_entity(List<Entity> l1, Point point)
 	{
-		if (entity_dists.length > 0)
+		Entity nearest = null;
+		if (l1.size() > 0)
 		{
-			int[] pair = entity_dists[0];
-			for (other : entity_dists)
+			nearest = l1.get(0);
+			
+			for (Entity other : l1)
 			{
-				if(other[1] < pair[1])
+				int dist = distance_sq(point, nearest.get_position());
+				int otherdist = distance_sq(point, other.get_position());
+				if(otherdist < dist)
 				{
-					pair = other;
+					nearest = other;
+					
 				}
-				else
-				{
-					Entity nearest = null;
-				}
+				
 			}
 			
 		}
