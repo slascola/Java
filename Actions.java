@@ -1,13 +1,42 @@
 
-//adjacent and remove entity for sure
-//maybe next position and blob next position
+
 import java.lang.Math;
  public class Actions extends Point
 {
    public Actions(int x, int y)
    {
 	   super(x, y);
+	   final int BLOB_RATE_SCALE = 4;
+	   final int BLOB_ANIMATION_RATE_SCALE = 50;
+	   final int BLOB_ANIMATION_MIN = 1;
+	   final int BLOB_ANIMATION_MAX = 3;
+
+	   final int ORE_CORRUPT_MIN = 20000;
+	   final int ORE_CORRUPT_MAX = 30000;
+
+	   final int QUAKE_STEPS = 10;
+	   final int QUAKE_DURATION = 1100;
+	   final int QUAKE_ANIMATION_RATE = 100;
+
+	   final int VEIN_SPAWN_DELAY = 500;
+	   final int VEIN_RATE_MIN = 8000;
+	   final int VEIN_RATE_MAX = 17000;
    }
+     public static int sign(int x)
+     {
+    	 if (x < 0)
+    	 {
+    		 return -1;
+    	 }
+    	 else if(x > 0)
+    	 {
+    		 return 1;
+    	 }
+    	 else
+    	 {
+    		 return 0;
+    	 }
+     }
      public static boolean adjacent(Point pt1, Point pt2)
      {
 	   int x1 = pt1.x;
@@ -75,6 +104,22 @@ import java.lang.Math;
      public static void remove_entity(Entity entity, WorldModel world)
      {
     	 
+     }
+     public static Point find_open_around(WorldModel world, Point pt, int distance)
+     {
+    	 for(int dy = -distance; dy < distance +1; dy++)
+    	 {
+    		 for(int dx = -distance; dx < distance +1; dx++)
+    		 {
+    			 Point new_pt = new Point(pt.x + dx, pt.y + dy);
+    			 if(world.within_bounds(new_pt) &&
+    					 !(WorldModel.is_occupied(world, new_pt)))
+    			 {
+    				 return new_pt;
+    			 }
+    		 }
+    	 }
+    	 return null;
      }
   
 }
