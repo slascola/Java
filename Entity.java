@@ -3,10 +3,14 @@ public class Entity
 {
    private String name;
    private Point position;
-   public Entity(String name, Point position)
+   private int[] imgs;
+   private int current_img;
+   public Entity(String name, Point position, int[] imgs)
    {
 	   this.name = name;
 	   this.position = position;
+	   this.imgs = imgs;
+	   this.current_img = 0;
    }
    protected void set_position(Point point)
    {
@@ -20,8 +24,17 @@ public class Entity
    {
 	   return this.name;
    }
-   protected String get_images()
+   
+   protected int[] get_images()
    {
-	   return null;  
+	   return this.imgs;
+   }
+   protected int get_image()
+   {
+	   return this.imgs[this.current_img];
+   }
+   protected void next_image()
+   {
+	   this.current_img = (this.current_img + 1) % this.imgs.length; 
    }
 }
