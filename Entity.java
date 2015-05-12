@@ -1,11 +1,12 @@
-
+import java.util.List;
+import processing.core.*;
 public class Entity 
 {
    private String name;
    private Point position;
-   private int[] imgs;
+   private List<PImage> imgs;
    private int current_img;
-   public Entity(String name, Point position, int[] imgs)
+   public Entity(String name, Point position, List<PImage> imgs)
    {
 	   this.name = name;
 	   this.position = position;
@@ -25,16 +26,16 @@ public class Entity
 	   return this.name;
    }
    
-   protected int[] get_images()
+   protected List<PImage> get_images()
    {
 	   return this.imgs;
    }
-   protected int get_image()
+   protected PImage get_image()
    {
-	   return this.imgs[this.current_img];
+	   return this.imgs.get(this.current_img);
    }
    protected void next_image()
    {
-	   this.current_img = (this.current_img + 1) % this.imgs.length; 
+	   this.current_img = (this.current_img + 1) % this.imgs.size(); 
    }
 }

@@ -1,10 +1,11 @@
-
+import processing.core.*;
+import java.util.List;
 public class Background 
 {
    private String name;
-   private int[] imgs;
+   private List<PImage> imgs;
    private int current_img;
-   public Background(String name, int []imgs)
+   public Background(String name,  List<PImage>imgs)
    {
 	   this.name = name;
 	   this.imgs = imgs;
@@ -16,16 +17,16 @@ public class Background
    {
 	   return this.name;
    }
-   protected int[] get_images()
+   protected List<PImage> get_images()
    {
 	   return this.imgs;
    }
-   protected int get_image()
+   protected PImage get_image()
    {
-	   return this.imgs[this.current_img];
+	   return this.imgs.get(this.current_img);
    }
    protected void next_image()
    {
-	   this.current_img = (this.current_img + 1) % this.imgs.length; 
+	   this.current_img = (this.current_img + 1) % this.imgs.size(); 
    }
 }

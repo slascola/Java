@@ -1,11 +1,12 @@
-
+import java.util.List;
+import processing.core.*;
 public class MinerNotFull extends Miner
 {
 
 	private int current_img;
 	private int resource_count;
 	   public MinerNotFull(String name, int resource_limit, Point position, 
-	      int rate, String imgs, int animation_rate, int resource_count)
+	      int rate, List<PImage> imgs, int animation_rate, int resource_count)
 	   {
 		  super(name, position, rate, resource_limit, resource_count, animation_rate, imgs);
 	      this.current_img = 0;

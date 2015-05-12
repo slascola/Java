@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
-
+import processing.core.*;
 public class WorldModel {
 
 	private int num_rows;
@@ -26,6 +26,10 @@ public class WorldModel {
 	public int getNumCols()
 	{
 		return this.num_cols;
+	}
+	public List<Entity> getEntities()
+	{
+		return this.entities;
 	}
 	protected boolean within_bounds(Point point)
 	{
@@ -98,6 +102,15 @@ public class WorldModel {
 		   this.entities.remove(entity);
 		   this.occupancy[pt.y][pt.x] = null;
 	   }
+	}
+	protected PImage get_background_image(Point pt)
+	{
+		if(this.within_bounds(pt))
+		{
+			Background cell = this.background[pt.y][pt.x];
+			return cell.get_image();
+		}
+		return 0;
 	}
 	
 	protected Background get_background(Point pt)

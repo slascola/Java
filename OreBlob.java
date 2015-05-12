@@ -1,10 +1,11 @@
-
+import java.util.List;
+import processing.core.*;
 public class OreBlob extends Rate
 {
 	private int animation_rate;
-   public OreBlob(String name, Point position, int rate, int animation_rate)
+   public OreBlob(String name, Point position, int rate, int animation_rate, List<PImage> imgs)
    {
-	   super(name, position, rate);
+	   super(name, position, imgs, rate);
 	   this.animation_rate = animation_rate;
    }
    protected int get_animation_rate()

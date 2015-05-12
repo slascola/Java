@@ -1,10 +1,11 @@
-
+import java.util.List;
+import processing.core.*;
 public class Ore extends Rate
 {
    private int rate;
-   public Ore(String name, Point position, int rate)
+   public Ore(String name, Point position, int rate, List<PImage> imgs)
    {
-	   super(name, position, rate); 
+	   super(name, position, imgs, rate); 
 	   this.rate = 5000;
    }
    protected String entity_string()

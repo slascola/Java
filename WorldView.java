@@ -49,7 +49,7 @@ public class WorldView extends PApplet {
 	}
 	public void draw_entities()
 	{
-		for(Entity entity : this.world.entities)//make getter
+		for(Entity entity : this.world.getEntities())
 		{
 			if(this.viewport.collidepoint(entity.get_position().x, entity.get_position().y))
 			{
@@ -63,11 +63,12 @@ public class WorldView extends PApplet {
 		this.draw_background();
 		this.draw_entities();
 	}
-	public void update_view(Point view_delta, PImage mouse_img)
+	public void update_view(int view_delta, int view_delta2, PImage mouse_img)
 	{
-		view_delta = new Point(0,0);//fix
+		view_delta = 0;
+		view_delta2 = 0;
 		mouse_img = null;
-		this.viewport = create_shifted_viewport(this.viewport, view_delta, this.getNumRows(), this.getNumCols());
+		this.viewport = create_shifted_viewport(this.viewport, view_delta, view_delta2, this.getNumRows(), this.getNumCols());
 		this.mouse_img = mouse_img;
 		this.draw_viewport();
 		//pygame.display.update()
