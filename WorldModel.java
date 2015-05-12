@@ -19,6 +19,14 @@ public class WorldModel {
 		this.entities = new ArrayList<Entity>();
 		
 	}
+	public int getNumRows()
+	{
+		return this.num_rows;
+	}
+	public int getNumCols()
+	{
+		return this.num_cols;
+	}
 	protected boolean within_bounds(Point point)
 	{
 		
@@ -79,6 +87,7 @@ public class WorldModel {
 	{
 		this.remove_entity_at(entity.get_position());
 	}
+	
 	protected void remove_entity_at(Point pt)
 	{
 	   if(this.within_bounds(pt) && this.occupancy[pt.y][pt.x] != null)
@@ -90,6 +99,7 @@ public class WorldModel {
 		   this.occupancy[pt.y][pt.x] = null;
 	   }
 	}
+	
 	protected Background get_background(Point pt)
 	{
 		if(this.within_bounds(pt))
@@ -98,6 +108,7 @@ public class WorldModel {
 		}
 		return null;
 	}
+	
 	protected void set_background(Point pt, Background bgnd)
 	{
 		if (this.within_bounds(pt))
@@ -105,6 +116,7 @@ public class WorldModel {
 			this.background[pt.y][pt.x] = bgnd;
 		}
 	}
+	
 	protected Entity get_tile_occupant(Point pt)
 	{
 		if (this.within_bounds(pt))
@@ -113,6 +125,7 @@ public class WorldModel {
 		}
 		return null;
 	}
+	
 	protected List<Entity> get_entities()
 	{
 		return this.entities;
