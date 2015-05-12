@@ -3,10 +3,7 @@
 import java.lang.Math;
  public class Actions extends Point
 {
-   public Actions(int x, int y)
-   {
-	   super(x, y);
-	   final int BLOB_RATE_SCALE = 4;
+	 final int BLOB_RATE_SCALE = 4;
 	   final int BLOB_ANIMATION_RATE_SCALE = 50;
 	   final int BLOB_ANIMATION_MIN = 1;
 	   final int BLOB_ANIMATION_MAX = 3;
@@ -21,6 +18,10 @@ import java.lang.Math;
 	   final int VEIN_SPAWN_DELAY = 500;
 	   final int VEIN_RATE_MIN = 8000;
 	   final int VEIN_RATE_MAX = 17000;
+   public Actions(int x, int y)
+   {
+	   super(x, y);
+	   
    }
      public static int sign(int x)
      {
