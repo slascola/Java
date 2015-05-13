@@ -13,8 +13,7 @@ public class WorldView extends PApplet {
     private int num_cols;
     private PApplet screen;
     private PImage mouse_img;
-    private int view_cols;
-    private int view_rows;
+    
     
 	public WorldView(int view_cols, int view_rows, PApplet screen, WorldModel world, 
 			int tile_width, int tile_height, PImage mouse_image)
@@ -132,8 +131,8 @@ public class WorldView extends PApplet {
 		rects.add(this.update_tile(this.mouse_pt,
 				this.get_tile_image(this.mouse_pt)));
 		
-		if(this.viewport.collidepoint(new_mouse_pt.x + this.viewport.left,
-				new_mouse_pt.y + this.viewport.top))
+		if(this.viewport.collidepoint(new_mouse_pt.x + this.viewport.getLeft(),
+				new_mouse_pt.y + this.viewport.getTop()))
 		{
 			this.mouse_pt = new_mouse_pt;
 		}
@@ -144,12 +143,12 @@ public class WorldView extends PApplet {
 	}
 	public static Point viewport_to_world(Rectangle viewport, Point pt)
 	{
-		Point p = new Point(pt.x + viewport.left, pt.y - viewport.top);
+		Point p = new Point(pt.x + viewport.getLeft(), pt.y - viewport.getTop());
 		return p;
 	}
 	public static Point world_to_viewport(Rectangle viewport, Point pt)
 	{
-		Point p = new Point(pt.x - viewport.left, pt.y - viewport.top);
+		Point p = new Point(pt.x - viewport.getLeft(), pt.y - viewport.getTop());
 		return p;
 	}
 	//help with clamp
@@ -157,12 +156,11 @@ public class WorldView extends PApplet {
 	{
 		return min(high, max(v, low));
 	}
-	//help with create_shifted_viewport
-	//what is delta?
+	
 	protected static Rectangle create_shifted_viewport(Rectangle viewport, int deltax, int deltay, int num_rows, int num_cols)
 	{
-		int new_x = clamp(viewport.left + deltax, 0, num_cols - viewport.getViewCols());
-		int new_y = clamp(viewport.top + deltay, 0, num_rows - viewport.getViewRows());
+		int new_x = clamp(viewport.getLeft() + deltax, 0, num_cols - viewport.getViewCols());
+		int new_y = clamp(viewport.getTop() + deltay, 0, num_rows - viewport.getViewRows());
 		Rectangle r = new Rectangle(new_x, new_y, viewport.getViewCols(), viewport.getViewRows());
 		return r;
 	}
