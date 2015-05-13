@@ -11,6 +11,14 @@ public class Rectangle {
 		this.width = width;
 		this.height = height;
 	}
+	protected int getLeft()
+	{
+		return this.x;
+	}
+	protected int getTop()
+	{
+		return this.y;
+	}
 	protected int getViewCols()
 	{
 		return this.width;
