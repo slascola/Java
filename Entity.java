@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.function.*;
 import processing.core.*;
 public class Entity 
 {
