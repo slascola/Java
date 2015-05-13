@@ -1,0 +1,30 @@
+import java.util.function.*;
+import java.util.List;
+import java.util.ArrayList;
+import processing.core.*;
+public class ActionItems extends Entity
+{
+	private List<Function> pending_actions;
+	public ActionItems(String name, Point position, List<PImage> imgs)
+	{
+		super(name, position, imgs);
+		this.pending_actions = new ArrayList<Function>;
+	}
+	protected void remove_pending_action(Function action)
+	{
+	   this.pending_actions.remove(action);
+	}
+
+	protected void add_pending_actions(Function action)
+	{
+		this.pending_actions.add(action);
+	}
+	protected List<Function> get_pending_actions()
+	{
+		return this.pending_actions;
+	}
+	protected void clear_pending_actions()
+	{
+		this.pending_actions = new ArrayList<Function>;
+	}
+}
