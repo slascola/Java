@@ -107,7 +107,7 @@ public class WorldView extends PApplet {
 		Entity occupant = this.world.get_tile_occupant(pt);
 		if(occupant != null)
 		{
-			PImage img = Surface(this.tile_width, this.tile_height); //what is Surface?
+			PImage img = image(this.tile_width, this.tile_height); //what is pygame.Surface?
 			image(bgnd, 0, 0);//original img.blit(bgnd, 0, 0)
 			image(occupant.get_image(), 0, 0);
 			return img;	
