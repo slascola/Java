@@ -10,7 +10,7 @@ public class WorldModel {
 	private Entity[][] occupancy;
 	
 	
-	public WorldModel(int num_rows, int num_cols)
+	public WorldModel(int num_rows, int num_cols, Background background)
 	{
 		this.background = new Background[num_rows][num_cols];
 		this.num_rows = num_rows;

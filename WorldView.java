@@ -2,7 +2,7 @@ import processing.core.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class WorldView extends PApplet {
+public class WorldView {
 	
     private Rectangle viewport;
     private Point mouse_pt;
