@@ -20,6 +20,13 @@ public class WorldModel {
 		this.occupancy = new Entity[num_rows][num_cols];
 		this.entities = new ArrayList<Entity>();
 		this.action_queue = new OrderedList();
+		for(int i = 0; i < num_rows; i++)
+		{
+			for(int j = 0; j<num_cols; j++)
+			{
+				this.background[i][j] = background;
+			}
+		}
 		
 	}
 	public int getNumRows()
@@ -76,7 +83,7 @@ public class WorldModel {
 		if (this.within_bounds(pt))
 		{
 			Entity old_entity = this.occupancy[pt.y][pt.x];
-			if(old_entity != null)
+			if(old_entity != null && old_entity instanceof ActionItems)
 			{
 				((ActionItems) old_entity).clear_pending_actions();
 			}

@@ -37,12 +37,11 @@ public class WorldView {
 		{
 			for(int x = 0; x < this.viewport.getViewCols(); x++)
 			{
-				System.out.println(x);
-				System.out.println(y);
+				
 				Point p = new Point(x, y);
 				Point w_pt = viewport_to_world(this.viewport, p);
 				PImage img = this.world.get_background_image(w_pt);//this line wont work
-				//this.screen.image(img, x*this.tile_width, y*this.tile_height);
+				this.screen.image(img, x*this.tile_width, y*this.tile_height);
 			}
 			
 			
