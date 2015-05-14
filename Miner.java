@@ -17,7 +17,7 @@ public class Miner extends Dudes
 	   this.resource_count = 0;
 	   this.resource_limit = resource_limit;
 	   this.animation_rate = animation_rate;
-	   this.pending_actions = new ArrayList<LongConsumer>();
+	   
    }
    
    protected int get_animation_rate()
