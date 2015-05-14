@@ -18,8 +18,9 @@ public class OrderedList {
 		{
 			idx++;
 		}
-		this.list.add(item);
-		this.list.add(ord);
+		ListItem newlist = new ListItem(item, ord);
+		this.list.add(idx, newlist);
+		
 	}
 	public void remove(LongConsumer item)
 	{
@@ -32,7 +33,7 @@ public class OrderedList {
 		if (idx < size)
 		{
 			this.list.remove(idx);
-			this.list.remove(idx+1);
+			
 		}
 	}
 	public ListItem head()
@@ -46,5 +47,12 @@ public class OrderedList {
 			return null;
 		}
 	}
-	//pop?
+	public void pop()
+	{
+		if (this.list != null)
+		{
+			this.list.remove(0);
+		}
+	}
+	
 }
