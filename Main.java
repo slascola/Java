@@ -46,6 +46,9 @@ public class Main extends PApplet {
 		WorldModel world = new WorldModel(num_rows, num_cols, default_background);
 	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
 				screen, world, TILE_WIDTH, TILE_HEIGHT);
+	    Point newp = new Point(1,1);
+	    Entity newe = new Entity("Dean", newp, e);
+	    world.add_entity(newe);
 	    //world.add entity
 	}
 	public void draw()
