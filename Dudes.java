@@ -1,6 +1,6 @@
 import java.util.List;
 import processing.core.*;
-public class Dudes extends Entity
+public class Dudes extends ActionItems
 {
    private int rate;
    private int resource_limit;

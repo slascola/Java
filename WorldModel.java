@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.function.*;
 import java.util.ArrayList;
 import processing.core.*;
 public class WorldModel {
@@ -8,6 +9,7 @@ public class WorldModel {
 	private List<Entity> entities;
 	private Background[][] background;
 	private Entity[][] occupancy;
+	private OrderedList action_queue;
 	
 	
 	public WorldModel(int num_rows, int num_cols, Background background)
@@ -17,6 +19,7 @@ public class WorldModel {
 		this.num_cols = num_cols;
 		this.occupancy = new Entity[num_rows][num_cols];
 		this.entities = new ArrayList<Entity>();
+		this.action_queue = new OrderedList();
 		
 	}
 	public int getNumRows()
@@ -31,6 +34,7 @@ public class WorldModel {
 	{
 		return this.entities;
 	}
+	
 	protected boolean within_bounds(Point point)
 	{
 		
@@ -71,11 +75,17 @@ public class WorldModel {
 		Point pt = entity.get_position();
 		if (this.within_bounds(pt))
 		{
+			Entity old_entity = this.occupancy[pt.y][pt.x];
+			if(old_entity != null)
+			{
+				((ActionItems) old_entity).clear_pending_actions();
+			}
 			this.occupancy[pt.y][pt.x] = entity;
 			this.entities.add(entity);
 		}
 		
 	}
+	
 	protected void move_entity(Entity entity, Point pt)
 	{
 		if (this.within_bounds(pt))
@@ -110,7 +120,8 @@ public class WorldModel {
 			Background cell = this.background[pt.y][pt.x];
 			return cell.get_image();
 		}
-		return 0;
+		return null;
+		
 	}
 	
 	protected Background get_background(Point pt)

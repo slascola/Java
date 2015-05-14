@@ -16,7 +16,7 @@ public class WorldView {
     
     
 	public WorldView(int view_cols, int view_rows, PApplet screen, WorldModel world, 
-			int tile_width, int tile_height, PImage mouse_image)
+			int tile_width, int tile_height)
 			{
 				this.viewport = new Rectangle(0, 0, view_cols, view_rows);
 				this.screen = screen;
@@ -33,18 +33,22 @@ public class WorldView {
 	
 	public void draw_background()
 	{
-		for(int y = 0; y < this.viewport.getViewCols(); y++)
+		for(int y = 0; y < this.viewport.getViewRows(); y++)
 		{
-			for(int x = 0; x< this.viewport.getViewRows(); x++)
+			for(int x = 0; x < this.viewport.getViewCols(); x++)
 			{
+				System.out.println(x);
+				System.out.println(y);
 				Point p = new Point(x, y);
 				Point w_pt = viewport_to_world(this.viewport, p);
-				PImage img = this.world.get_background_image(w_pt);
-				this.screen.image(img, x*this.tile_width, y*this.tile_height);
-				
-				
+				PImage img = this.world.get_background_image(w_pt);//this line wont work
+				//this.screen.image(img, x*this.tile_width, y*this.tile_height);
 			}
+			
+			
 		}
+		
+		
 	}
 	public void draw_entities()
 	{

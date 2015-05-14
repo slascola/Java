@@ -1,4 +1,6 @@
 import processing.core.*;
+import java.util.List;
+import java.util.ArrayList;
 public class Main extends PApplet {
 	//put image_store into main??
 	//load images and files is that scanner?
@@ -12,10 +14,13 @@ public class Main extends PApplet {
 	final int SCREEN_HEIGHT= 480;
 	final int TILE_WIDTH = 32;
 	final int TILE_HEIGHT = 32;
+	private WorldView view;
+	private List<PImage>img;
+	private List<PImage>e;
 	
-	public Background create_default_background(PImage img)
+	public Background create_default_background(List<PImage> img)
 	{
-		Background b = new Background(image_store.DEFAULT_IMAGE_NAME, img);
+		Background b = new Background("Pietro", img);
 		return b;
 	}
 	//load world?
@@ -23,17 +28,29 @@ public class Main extends PApplet {
 	{
 		//random.seed()
 		//pygame.init()
-		PApplet screen = SCREEN_WIDTH, SCREEN_HEIGHT;
+		//PApplet screen = (SCREEN_WIDTH, SCREEN_HEIGHT);
+		size(SCREEN_WIDTH, SCREEN_HEIGHT);
+		PApplet screen = this;
 		//i_store
 		int num_cols = SCREEN_WIDTH / TILE_WIDTH * WORLD_WIDTH_SCALE;
 		int num_rows = SCREEN_HEIGHT / TILE_HEIGHT * WORLD_HEIGHT_SCALE;
 		
+		img = new ArrayList<PImage>();
+		img.add(loadImage("v.png"));
+		
+		e = new ArrayList<PImage>();
+		e.add(loadImage("YAS.png"));
+		
 		Background default_background = create_default_background(
-				image_store.get_images(i_store, image_store.DEFAULT_IMAGE_NAME));
+				img);
 		
 		WorldModel world = new WorldModel(num_rows, num_cols, default_background);
-		WorldView view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
-				screen, world, TILE_WIDTH, TILE_HEIGHT, null);
+	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
+				screen, world, TILE_WIDTH, TILE_HEIGHT);
+	}
+	public void draw()
+	{
+	   view.draw_viewport();	
 	}
 	public static void main(String[] args)
 	   {
