@@ -26,9 +26,7 @@ public class Main extends PApplet {
 	//load world?
 	public void setup()
 	{
-		//random.seed()
-		//pygame.init()
-		//PApplet screen = (SCREEN_WIDTH, SCREEN_HEIGHT);
+		//store as map 
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 		PApplet screen = this;
 		//i_store
@@ -37,6 +35,7 @@ public class Main extends PApplet {
 		
 		img = new ArrayList<PImage>();
 		img.add(loadImage("v.png"));
+		System.out.println(img.get(0));
 		
 		e = new ArrayList<PImage>();
 		e.add(loadImage("YAS.png"));
@@ -47,10 +46,12 @@ public class Main extends PApplet {
 		WorldModel world = new WorldModel(num_rows, num_cols, default_background);
 	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
 				screen, world, TILE_WIDTH, TILE_HEIGHT);
+	    //world.add entity
 	}
 	public void draw()
 	{
 	   view.draw_viewport();	
+	   
 	}
 	public static void main(String[] args)
 	   {
