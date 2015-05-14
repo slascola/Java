@@ -23,7 +23,7 @@ public class Main extends PApplet {
 	{
 		//random.seed()
 		//pygame.init()
-		PApplet screen = display.set_mode(SCREEN_WIDTH, SCREEN_HEIGHT);
+		PApplet screen = SCREEN_WIDTH, SCREEN_HEIGHT;
 		//i_store
 		int num_cols = SCREEN_WIDTH / TILE_WIDTH * WORLD_WIDTH_SCALE;
 		int num_rows = SCREEN_HEIGHT / TILE_HEIGHT * WORLD_HEIGHT_SCALE;

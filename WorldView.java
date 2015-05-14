@@ -67,13 +67,13 @@ public class WorldView {
 		view_delta = 0;
 		view_delta2 = 0;
 		mouse_img = null;
-		this.viewport = create_shifted_viewport(this.viewport, view_delta, view_delta2, this.getNumRows(), this.getNumCols());
+		this.viewport = create_shifted_viewport(this.viewport, view_delta, view_delta2, this.num_rows, this.num_cols);
 		this.mouse_img = mouse_img;
 		this.draw_viewport();
-		//pygame.display.update()
 		this.mouse_move(this.mouse_pt);
 		
 	}
+	/*
 	public void update_view_tiles(List<Point> tiles)
 	{
 	   List<Rectangle> rects = new ArrayList<Rectangle>();
@@ -92,6 +92,7 @@ public class WorldView {
 	   }
 	   
 	}
+	*/
 	public Rectangle update_tile(Point view_tile_pt, PImage surface)
 	{
 		int abs_x = view_tile_pt.x * this.tile_width;
@@ -100,45 +101,20 @@ public class WorldView {
 		Rectangle final_rectangle = new Rectangle(abs_x, abs_y, this.tile_width, this.tile_height);
 		return final_rectangle;
 	}
-	public PImage get_tile_image(Point view_tile_pt)
-	{
-		Point pt = viewport_to_world(this.viewport, view_tile_pt);
-		PImage bgnd = this.world.get_background_image(pt);
-		Entity occupant = this.world.get_tile_occupant(pt);
-		if(occupant != null)
-		{
-			PImage img = image(this.tile_width, this.tile_height); //what is pygame.Surface?
-			image(bgnd, 0, 0);//original img.blit(bgnd, 0, 0)
-			image(occupant.get_image(), 0, 0);
-			return img;	
-		}
-		else
-		{
-			return bgnd;
-		}
-	}
-	public Rectangle update_mouse_cursor()
-	{
-		return (this.update_tile(this.mouse_pt, 
-				this.create_mouse_surface(
-						WorldModel.is_occupied(this.world, 
-								viewport_to_world(this.viewport, this.mouse_pt)))));
-	}
+	
+	
 	public void mouse_move(Point new_mouse_pt)
 	{
-		List<Rectangle> rects = new ArrayList<Rectangle>();
 		
-		rects.add(this.update_tile(this.mouse_pt,
-				this.get_tile_image(this.mouse_pt)));
 		
 		if(this.viewport.collidepoint(new_mouse_pt.x + this.viewport.getLeft(),
 				new_mouse_pt.y + this.viewport.getTop()))
 		{
 			this.mouse_pt = new_mouse_pt;
 		}
-		rects.add(this.update_mouse_cursor());
 		
-		//pygame.display.update(rects)???
+		
+		
 		
 	}
 	public static Point viewport_to_world(Rectangle viewport, Point pt)
@@ -151,10 +127,10 @@ public class WorldView {
 		Point p = new Point(pt.x - viewport.getLeft(), pt.y - viewport.getTop());
 		return p;
 	}
-	//help with clamp
+	
 	protected static int clamp(int v, int low, int high)
 	{
-		return min(high, max(v, low));
+		return Math.min(high, Math.max(v, low));
 	}
 	
 	protected static Rectangle create_shifted_viewport(Rectangle viewport, int deltax, int deltay, int num_rows, int num_cols)
