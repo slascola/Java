@@ -10,7 +10,7 @@ public class OrderedList {
 		this.list = new ArrayList<ListItem>();
 	}
 	
-	public void insert(LongConsumer item, int ord)
+	public void insert(LongConsumer item, long ord)
 	{
 		int size = this.list.size();
 		int idx = 0;
