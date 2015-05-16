@@ -27,12 +27,12 @@ public class Quake extends ActionItems
 		   LongConsumer[] action = { null };
 	       action[0] = (long x) -> {
 	       
-	    	   .remove_pending_action(action[0]);
+	    	   remove_pending_action(action[0]);
 	    	   Point pt = this.get_position();
-	    	   Actions.remove_entity(this, world);
 	    	   ArrayList<Point> pt_list = new ArrayList<Point>();
 	    	   pt_list.add(pt);
-	    	   return (LongConsumer) pt_list;
+	    	   Actions.remove_entity(this, world);
+	    	   //return pt_list;
 	    	   
 	       };
 

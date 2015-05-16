@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.HashMap;
 import processing.core.*;
 public class Vein extends Rate
 {
@@ -21,9 +22,9 @@ public class Vein extends Rate
 	   return vein_string;
    }
    protected void schedule_vein(WorldModel world, long ticks, 
-           HashMap<String, PImage> i_store)
+           HashMap<String, PImage> map)
 {
-Actions.schedule_action(world, this, create_vein_action(world, i_store), 
+	   Actions.schedule_action(world, this, create_vein_action(world, map), 
 				ticks + this.get_rate());
 }
 }
