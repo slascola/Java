@@ -1,15 +1,18 @@
 import processing.core.*;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.*;
 import java.util.Scanner;
+import java.util.function.*;
 
 public class Main extends PApplet {
-	//put image_store into main??
-	//load images and files is that scanner?
+	
+	
 	final boolean RUN_AFTER_LOAD = true;
 	final String IMAGE_LIST_FILE_NAME = "imagelist";
-	final static String WORLD_FILE = "gaia.sav";
+	final String WORLD_FILE = "gaia.sav";
 	
 	final int WORLD_WIDTH_SCALE = 2;
 	final int WORLD_HEIGHT_SCALE = 2;
@@ -18,10 +21,17 @@ public class Main extends PApplet {
 	final int TILE_WIDTH = 32;
 	final int TILE_HEIGHT = 32;
 	private WorldView view;
+	private WorldModel world;
 	private List<PImage>img;
 	private List<PImage>e;
-	private static final int FILE_IDX = 0;
+	
+	private HashMap <String, PImage> map;
+	
 	private static final int MIN_ARGS = 1;
+	
+	final String DEFAULT_IMAGE_NAME = "background_default";
+	
+	private boolean run;
 	
 	final int PROPERTY_KEY = 0;
 
@@ -78,13 +88,13 @@ public class Main extends PApplet {
 	
 	public void setup()
 	{
-		//store as map 
+		
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 		PApplet screen = this;
-		//i_store
+		
 		int num_cols = SCREEN_WIDTH / TILE_WIDTH * WORLD_WIDTH_SCALE;
 		int num_rows = SCREEN_HEIGHT / TILE_HEIGHT * WORLD_HEIGHT_SCALE;
-		
+
 		img = new ArrayList<PImage>();
 		img.add(loadImage("v.png"));
 		
@@ -95,19 +105,54 @@ public class Main extends PApplet {
 		Background default_background = create_default_background(
 				img);
 		
-		WorldModel world = new WorldModel(num_rows, num_cols, default_background);
+		world = new WorldModel(num_rows, num_cols, default_background);
 	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
 				screen, world, TILE_WIDTH, TILE_HEIGHT);
 	    Point newp = new Point(1,1);
 	    Entity newe = new Entity("Dean", newp, e);
 	    world.add_entity(newe);
 	    
+	    try
+	      {
+	         if (verifyArguments(args))
+	         {
+	            Scanner in = new Scanner(new FileInputStream(WORLD_FILE));
+	            useScanner(in);
+	         }
+	         else
+	         {
+	            System.err.println("missing filename");
+	         }
+	      }
+	      catch (FileNotFoundException e)
+	      {
+	         System.err.println(e.getMessage());
+	      }
+	    try
+	    {
+	       if (verifyArguments(args))
+	       {
+	          Scanner im = new Scanner(new FileInputStream(IMAGE_LIST_FILE_NAME));
+	          useScannerImages(im);
+	       }
+	       else
+	       {
+	          System.err.println("missing filename");
+	       }
+	    }
+	    catch (FileNotFoundException e)
+	    {
+	       System.err.println(e.getMessage());
+	    }
+	    
+	    
+	    
 	}
 	private static boolean verifyArguments(String [] args)
 	{
 		return args.length >= MIN_ARGS;
 	}
-	private static void useScanner(Scanner in)
+	private void useScanner(Scanner in)
 	{
 		while(in.hasNextLine())
 		{
@@ -116,76 +161,140 @@ public class Main extends PApplet {
 			{
 				if(properties[PROPERTY_KEY] == BGND_KEY)
 				{
-					add_background(world, properties, WORLD_FILE);
+					add_background(world, properties, map);
 				}
 				else
 				{
-					add_entity(world, properties, images);
+					add_entity(world, properties, map, run);
 				}
 			}
 			
 		}
 		
 	}
-	public void add_background(WorldModel world, String[] properties, List<PImage>i_store)
+	
+
+	protected HashMap<String, PImage> useScannerImages(Scanner in)
+	{
+		HashMap<String, PImage> map = new HashMap<String, PImage>();
+		while(in.hasNextLine())
+		{
+			
+			String [] line = in.nextLine().split("\\");
+			process_image_line(map, line);
+		}
+		return map;
+	}
+	protected void process_image_line(HashMap<String, PImage> map, String[] line)
+	{
+		String key;
+		String image_file_name;
+		PImage image;
+		
+		key = line[0];
+		image_file_name = line[1];
+		
+		image = loadImage(image_file_name);
+		
+		if (image != null)
+		{
+			ArrayList<PImage> images = get_images_internal(map, key);
+			images.add(image);
+			if(line.length == 6)
+			{
+			   int r = Integer.parseInt(line[2]);
+			   int g = Integer.parseInt(line[3]);
+			   int b = Integer.parseInt(line[4]);
+			   int a = Integer.parseInt(line[5]);
+			   //look at the color coding thing on webste for this part
+			}
+		}
+		
+	}
+	protected ArrayList<PImage> get_images_internal(HashMap<String, PImage> map, String key)
+	{
+			ArrayList<PImage> images = new ArrayList<PImage>();
+			return images;
+		
+	}
+	protected List<PImage> get_images(HashMap<String, PImage> map, String key)
+	{
+		List<PImage> this_object_list = new ArrayList<PImage>();
+		if(map.containsKey(key))
+		{
+			for(PImage object_image : map.values())
+			{
+				this_object_list.add(object_image);
+			}
+			return this_object_list;
+			
+		}
+		else {
+			 this_object_list.add(map.get(DEFAULT_IMAGE_NAME));
+			 return this_object_list;
+			 
+		}
+	}
+	
+	public void add_background(WorldModel world, String[] properties, HashMap <String, PImage> map)
 	{
 		if(properties.length >= BGND_NUM_PROPERTIES)
 		{
 			Point pt = new Point(BGND_COL, BGND_ROW);
 			String name = properties[BGND_NAME];
-			Background b = new Background(name, i_store);
+			Background b = new Background(name, get_images(map, name));
 			world.set_background(pt, b);
 		}
 	}
-	public void add_entity(WorldModel world, String[] properties, List<PImage>i_store,  boolean run)
+	public void add_entity(WorldModel world, String[] properties, HashMap <String, PImage> map,  boolean run)
 	{
-		Entity new_entity = create_from_properties(properties, i_store);
+		Entity new_entity = create_from_properties(properties, map);
 		if(new_entity != null)
 		{
 			world.add_entity(new_entity);
 			if(run)
 			{
-				schedule_entity(world, new_entity, i_store);
+				schedule_entity(world, new_entity, map);
 			}
 			
 		}	
 				
 	}
-	public Entity create_from_properties(String[] properties, List<PImage> i_store)
+	public Entity create_from_properties(String[] properties, HashMap <String, PImage> map)
 	{
 		String key = properties[PROPERTY_KEY];
 		if(properties != null)
 		{
 			if(key == MINER_KEY)
 			{
-				return create_miner(properties, i_store);
+				return create_miner(properties, map);
 			}
 			else if(key == VEIN_KEY)
 			{
-				return create_vein(properties, i_store);
+				return create_vein(properties, map);
 			}
 			else if(key == ORE_KEY)
 			{
-				return create_ore(properties, i_store);
+				return create_ore(properties, map);
 			}
 			else if(key == SMITH_KEY)
 			{
-				return create_blacksmith(properties, i_store);
+				return create_blacksmith(properties, map);
 			}
 			else if(key == OBSTACLE_KEY)
 			{
-				return create_obstacle(properties, i_store);
+				return create_obstacle(properties, map);
 			}
 		}
 		return null;
 	}
-	public Miner create_miner(String[] properties, List<PImage> i_store)
+	public Miner create_miner(String[] properties, HashMap <String, PImage> map)
 	{
 		if(properties.length == MINER_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[MINER_COL]), Integer.parseInt(properties[MINER_ROW]));
 			Miner miner = new Miner(properties[MINER_NAME], p, Integer.parseInt(properties[MINER_RATE]), Integer.parseInt(properties[MINER_LIMIT]),
-					  0,Integer.parseInt(properties[MINER_ANIMATION_RATE]), i_store);
+					  0,Integer.parseInt(properties[MINER_ANIMATION_RATE]), get_images(map, properties[PROPERTY_KEY]));
 			return miner;
 		}
 		else
@@ -194,13 +303,13 @@ public class Main extends PApplet {
 		}
 			
 	}
-	public Vein create_vein(String[] properties, List<PImage> i_store)
+	public Vein create_vein(String[] properties, HashMap <String, PImage> map)
 	{
 		if(properties.length == VEIN_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[VEIN_COL]), Integer.parseInt(properties[VEIN_ROW]));
 			Vein vein = new Vein(properties[VEIN_NAME], Integer.parseInt(properties[VEIN_RATE]), p,
-					Integer.parseInt(properties[VEIN_REACH]), i_store);
+					Integer.parseInt(properties[VEIN_REACH]), get_images(map, properties[PROPERTY_KEY]));
 			return vein;
 		}
 		else
@@ -209,12 +318,12 @@ public class Main extends PApplet {
 		}
 		
 	}
-	public Ore create_ore(String[] properties, List<PImage> i_store)
+	public Ore create_ore(String[] properties, HashMap <String, PImage> map)
 	{
 		if(properties.length == ORE_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[ORE_COL]), Integer.parseInt(properties[ORE_ROW]));
-			Ore ore = new Ore(properties[ORE_NAME], p, Integer.parseInt(properties[ORE_RATE]), i_store);
+			Ore ore = new Ore(properties[ORE_NAME], p, Integer.parseInt(properties[ORE_RATE]), get_images(map, properties[PROPERTY_KEY]));
 			return ore;
 		}
 		else
@@ -222,12 +331,12 @@ public class Main extends PApplet {
 			return null;
 		}
 	}
-	public Blacksmith create_blacksmith(String[] properties, List<PImage>i_store)
+	public Blacksmith create_blacksmith(String[] properties, HashMap <String, PImage> map)
 	{
 		if(properties.length == SMITH_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[SMITH_COL]), Integer.parseInt(properties[SMITH_ROW]));
-			Blacksmith smith = new Blacksmith(properties[SMITH_NAME], p, i_store, Integer.parseInt(properties[SMITH_LIMIT]),
+			Blacksmith smith = new Blacksmith(properties[SMITH_NAME], p, get_images(map, properties[PROPERTY_KEY]), Integer.parseInt(properties[SMITH_LIMIT]),
 					Integer.parseInt(properties[SMITH_RATE]), Integer.parseInt(properties[SMITH_REACH]), 0);
 			return smith;
 		}
@@ -236,12 +345,12 @@ public class Main extends PApplet {
 			return null;
 		}
 	}
-	public Obstacle create_obstacle(String[] properties, List<PImage> i_store)
+	public Obstacle create_obstacle(String[] properties, HashMap <String, PImage> map)
 	{
 		if(properties.length == OBSTACLE_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[OBSTACLE_COL]), Integer.parseInt(properties[OBSTACLE_ROW]));
-			Obstacle obstacle = new Obstacle(properties[OBSTACLE_NAME],p, i_store);
+			Obstacle obstacle = new Obstacle(properties[OBSTACLE_NAME],p, get_images(map, properties[PROPERTY_KEY]));
 			return obstacle;
 		}
 		else
@@ -249,20 +358,21 @@ public class Main extends PApplet {
 			return null;
 		}
 	}
-	public void schedule_entity(WorldModel world, Entity entity,List<PImage> i_store)
+	public void schedule_entity(WorldModel world, Entity entity, HashMap <String, PImage> map)
 	{
 		if(entity instanceof MinerNotFull)
 		{
-			entity.schedule_miner(world, 0, i_store);
+			entity.schedule_miner(world, 0, map);
 		}
 		else if(entity instanceof Vein)
 		{
-			entity.schedule_vein(world, 0, i_store);
+			entity.schedule_vein(world, 0, map);
 		}
 		else if(entity instanceof Ore)
 		{
-			entity.schedule_ore(world, 0, i_store);
+			entity.schedule_ore(world, 0, map);
 		}
+	}
 		
 	
 	
@@ -276,22 +386,8 @@ public class Main extends PApplet {
 	public static void main(String[] args)
 	   {
 	      PApplet.main("Main");
-	      try
-	      {
-	         if (verifyArguments(args))
-	         {
-	            Scanner in = new Scanner(new FileInputStream(args[FILE_IDX]));
-	            useScanner(in);
-	         }
-	         else
-	         {
-	            System.err.println("missing filename");
-	         }
-	      }
-	      catch (FileNotFoundException e)
-	      {
-	         System.err.println(e.getMessage());
-	      }
+	      
 	   }
-	   }
+	   
 }
+
