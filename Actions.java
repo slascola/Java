@@ -11,8 +11,8 @@ import java.lang.Math;
 	   final int ORE_CORRUPT_MIN = 20000;
 	   final int ORE_CORRUPT_MAX = 30000;
 
-	   final int QUAKE_STEPS = 10;
-	   final int QUAKE_DURATION = 1100;
+	   final static int QUAKE_STEPS = 10;
+	   final static int QUAKE_DURATION = 1100;
 	   final int QUAKE_ANIMATION_RATE = 100;
 
 	   final int VEIN_SPAWN_DELAY = 500;
@@ -124,7 +124,7 @@ import java.lang.Math;
      }
      public static void schedule_action(WorldModel world, Entity entity, LongConsumer action, long time)
      {
-     	((ActionItems) entity).add_pending_action(action);
+     	((ActionItems) entity).add_pending_actions(action);
      	world.schedule_action(action, time);
      	
      	
