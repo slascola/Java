@@ -1,4 +1,6 @@
 import java.util.List;
+import java.util.ArrayList;
+import java.util.function.LongConsumer;
 import processing.core.*;
 public class Quake extends ActionItems
 {
@@ -13,4 +15,27 @@ public class Quake extends ActionItems
    {
 	   return this.animation_rate;
    }
+   protected void schedule_quake(WorldModel world, long ticks)
+	{
+		Actions.schedule_animation(world, this, Actions.QUAKE_STEPS);
+		Actions.schedule_action(world, this, create_entity_death_action(world),
+									ticks + Actions.QUAKE_DURATION);
+	}
+	
+	protected LongConsumer create_entity_death_action(WorldModel world)
+	   {
+		   LongConsumer[] action = { null };
+	       action[0] = (long x) -> {
+	       
+	    	   .remove_pending_action(action[0]);
+	    	   Point pt = this.get_position();
+	    	   Actions.remove_entity(this, world);
+	    	   ArrayList<Point> pt_list = new ArrayList<Point>();
+	    	   pt_list.add(pt);
+	    	   return (LongConsumer) pt_list;
+	    	   
+	       };
+
+	    return action[0];
+	 }
 }

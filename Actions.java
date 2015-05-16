@@ -1,5 +1,5 @@
 
-
+import java.util.function.LongConsumer;
 import java.lang.Math;
  public class Actions extends Point
 {
@@ -122,5 +122,42 @@ import java.lang.Math;
     	 }
     	 return null;
      }
+     public static void schedule_action(WorldModel world, Entity entity, LongConsumer action, long time)
+     {
+     	((ActionItems) entity).add_pending_action(action);
+     	world.schedule_action(action, time);
+     	
+     	
+     }
+
+     public static void schedule_animation(WorldModel world, Entity entity, int repeat_count)
+     {
+     	repeat_count = 0;
+     	schedule_action(entity, world, create_animation_action(world, entity, repeat_count),
+     					((ActionItems) entity).get_animation_rate());
+     }
+
+     public static LongConsumer create_animation_action(WorldModel world, Entity entity,
+     		                                           int repeat_count)
+     {
+     LongConsumer[] action = { null };
+     action[0] = (long x) -> 
+     {
+
+     	((ActionItems) entity).remove_pending_action(action[0]);
+     	entity.next_image();
+     	if(repeat_count != 1)
+     	{
+     		schedule_action(entity, world, 
+     				create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
+     				current_ticks + ((Object) entity).get_animation_rate());
+     	}
+     	
+
+     };
+
+     return action[0];
+
+
   
 }

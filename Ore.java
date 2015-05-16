@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.HashMap;
 import processing.core.*;
 public class Ore extends Rate
 {
@@ -15,4 +16,9 @@ public class Ore extends Rate
 			  + this.get_position().y + " " + (this.get_rate());
 	   return ore_string;
    }
+   protected void schedule_ore(WorldModel world, long ticks, HashMap<String, PImage> i_store)
+	{
+		Actions.schedule_action(world, this, create_ore_transform_action(world, i_store),
+								ticks + this.get_rate());
+	}
 }

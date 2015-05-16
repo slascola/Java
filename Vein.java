@@ -20,4 +20,10 @@ public class Vein extends Rate
 	           this.get_position().y + " " + this.get_rate() + " "+ this.get_resource_distance();
 	   return vein_string;
    }
+   protected void schedule_vein(WorldModel world, long ticks, 
+           HashMap<String, PImage> i_store)
+{
+Actions.schedule_action(world, this, create_vein_action(world, i_store), 
+				ticks + this.get_rate());
+}
 }
