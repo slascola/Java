@@ -82,7 +82,7 @@ public class Main extends PApplet {
 	
 	public Background create_default_background(List<PImage> img)
 	{
-		Background b = new Background("Pietro", img);
+		Background b = new Background(DEFAULT_IMAGE_NAME, img);
 		return b;
 	}
 	
@@ -95,34 +95,14 @@ public class Main extends PApplet {
 		int num_cols = SCREEN_WIDTH / TILE_WIDTH * WORLD_WIDTH_SCALE;
 		int num_rows = SCREEN_HEIGHT / TILE_HEIGHT * WORLD_HEIGHT_SCALE;
 
-		img = new ArrayList<PImage>();
-		img.add(loadImage("v.png"));
 		
-		
-		e = new ArrayList<PImage>();
-		e.add(loadImage("YAS.png"));
-		
-		Background default_background = create_default_background(
-				img);
-		
-		world = new WorldModel(num_rows, num_cols, default_background);
-	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
-				screen, world, TILE_WIDTH, TILE_HEIGHT);
-	    Point newp = new Point(1,1);
-	    Entity newe = new Entity("Dean", newp, e);
-	    world.add_entity(newe);
-	    
-	    try
+		try
 	      {
-	         if (verifyArguments(args))
-	         {
+	         
 	            Scanner in = new Scanner(new FileInputStream(WORLD_FILE));
 	            useScanner(in);
-	         }
-	         else
-	         {
-	            System.err.println("missing filename");
-	         }
+	         
+	         
 	      }
 	      catch (FileNotFoundException e)
 	      {
@@ -130,36 +110,40 @@ public class Main extends PApplet {
 	      }
 	    try
 	    {
-	       if (verifyArguments(args))
-	       {
+	      
 	          Scanner im = new Scanner(new FileInputStream(IMAGE_LIST_FILE_NAME));
 	          useScannerImages(im);
-	       }
-	       else
-	       {
-	          System.err.println("missing filename");
-	       }
+	      
 	    }
 	    catch (FileNotFoundException e)
 	    {
 	       System.err.println(e.getMessage());
 	    }
 	    
+		
+		
+		Background default_background = create_default_background(
+				get_images(map, DEFAULT_IMAGE_NAME));
+		
+		world = new WorldModel(num_rows, num_cols, default_background);
+	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
+				screen, world, TILE_WIDTH, TILE_HEIGHT);
+	    
+	    
+	    
+	    
 	    
 	    
 	}
-	private static boolean verifyArguments(String [] args)
-	{
-		return args.length >= MIN_ARGS;
-	}
+	
 	private void useScanner(Scanner in)
 	{
 		while(in.hasNextLine())
 		{
-			String [] properties = in.nextLine().split("\\");
+			String [] properties = in.nextLine().split("\\s+");
 			if(properties != null)
 			{
-				if(properties[PROPERTY_KEY] == BGND_KEY)
+				if(properties[PROPERTY_KEY] == DEFAULT_IMAGE_NAME)
 				{
 					add_background(world, properties, map);
 				}
@@ -176,13 +160,14 @@ public class Main extends PApplet {
 
 	protected HashMap<String, PImage> useScannerImages(Scanner in)
 	{
-		HashMap<String, PImage> map = new HashMap<String, PImage>();
+		 map = new HashMap<String, PImage>();
 		while(in.hasNextLine())
 		{
 			
-			String [] line = in.nextLine().split("\\");
+			String [] line = in.nextLine().split("\\s+");
 			process_image_line(map, line);
 		}
+		System.out.println(map);
 		return map;
 	}
 	protected void process_image_line(HashMap<String, PImage> map, String[] line)
@@ -191,10 +176,15 @@ public class Main extends PApplet {
 		String image_file_name;
 		PImage image;
 		
+		
+		
 		key = line[0];
 		image_file_name = line[1];
 		
 		image = loadImage(image_file_name);
+		
+		map.put(key, image);
+		
 		
 		if (image != null)
 		{
@@ -263,6 +253,7 @@ public class Main extends PApplet {
 	public Entity create_from_properties(String[] properties, HashMap <String, PImage> map)
 	{
 		String key = properties[PROPERTY_KEY];
+		
 		if(properties != null)
 		{
 			if(key == MINER_KEY)
@@ -360,17 +351,20 @@ public class Main extends PApplet {
 	}
 	public void schedule_entity(WorldModel world, Entity entity, HashMap <String, PImage> map)
 	{
+		long newtick = 0;
 		if(entity instanceof MinerNotFull)
 		{
-			entity.schedule_miner(world, 0, map);
+			
+			((Miner) entity).schedule_miner(world, newtick, map);
 		}
 		else if(entity instanceof Vein)
 		{
-			entity.schedule_vein(world, 0, map);
+			
+			((Vein) entity).schedule_vein(world, newtick, map);
 		}
 		else if(entity instanceof Ore)
 		{
-			entity.schedule_ore(world, 0, map);
+			((Ore) entity).schedule_ore(world, newtick, map);
 		}
 	}
 		
@@ -380,6 +374,7 @@ public class Main extends PApplet {
 	
 	public void draw()
 	{
+		
 	   view.draw_viewport();	
 	   
 	}
