@@ -35,7 +35,7 @@ public class Main extends PApplet {
 	
 	final int PROPERTY_KEY = 0;
 
-    final static String BGND_KEY = "background";
+    private String BGND_KEY = "background";
 	final int BGND_NUM_PROPERTIES = 4;
 	final int BGND_NAME = 1;
 	final int BGND_COL = 2;
@@ -144,18 +144,19 @@ public class Main extends PApplet {
 		{
 			String [] properties;
 			properties = in.nextLine().split("\\s");
-			
+			//System.out.println(properties);
 			if(properties != null)
 			{
-				//System.out.println(properties[PROPERTY_KEY]);
-				if(properties[PROPERTY_KEY] == BGND_KEY)
+				Scanner new_one = new Scanner(IMAGE_LIST_FILE_NAME);
+				if(properties[PROPERTY_KEY].equals(BGND_KEY))
 				{
-				
-					add_background(world, properties, map);
+				    
+					add_background(world, properties, useScannerImages(new_one));
 				}
 				else
 				{
-					add_entity(world, properties, map, run);
+					
+					add_entity(world, properties, useScannerImages(new_one), run);
 				}
 			}
 			
@@ -199,7 +200,8 @@ public class Main extends PApplet {
 			List<PImage>images = get_images_internal(map, key);
 			images.add(image);
 			map.put(key, images);
-			System.out.println(map);
+			
+			
 			
 			
 			
@@ -217,6 +219,7 @@ public class Main extends PApplet {
 	private List<PImage> get_images_internal(HashMap<String, List<PImage>> map, String key)
 	{
 		List<PImage> this_object_list = new ArrayList<PImage>();
+		
 		if(map.containsKey(key))
 		{
 			List<PImage> object_image = map.get(key);
@@ -232,7 +235,7 @@ public class Main extends PApplet {
 	}
 	public static List<PImage> get_images(HashMap<String, List<PImage>> map, String key)
 	{
-		
+		System.out.println(map);
 		if(map.containsKey(key))
 		{
 			
@@ -260,6 +263,7 @@ public class Main extends PApplet {
 	public void add_entity(WorldModel world, String[] properties, HashMap <String, List<PImage>> map,  boolean run)
 	{
 		Entity new_entity = create_from_properties(properties, map);
+		System.out.println(map);
 		if(new_entity != null)
 		{
 			world.add_entity(new_entity);
@@ -277,31 +281,35 @@ public class Main extends PApplet {
 		
 		if(properties != null)
 		{
-			if(key == MINER_KEY)
+			if(key.equals(MINER_KEY))
 			{
+				//System.out.println("IT CAME HERE");
 				return create_miner(properties, map);
 			}
-			else if(key == VEIN_KEY)
+			else if(key.equals(VEIN_KEY))
 			{
 				return create_vein(properties, map);
 			}
-			else if(key == ORE_KEY)
+			else if(key.equals(ORE_KEY))
 			{
 				return create_ore(properties, map);
 			}
-			else if(key == SMITH_KEY)
+			else if(key.equals(SMITH_KEY))
 			{
+				//System.out.println("it ran here");
 				return create_blacksmith(properties, map);
 			}
-			else if(key == OBSTACLE_KEY)
+			else if(key.equals(OBSTACLE_KEY))
 			{
 				return create_obstacle(properties, map);
 			}
 		}
+	    
 		return null;
 	}
 	public Miner create_miner(String[] properties, HashMap <String, List<PImage>> map)
 	{
+		
 		if(properties.length == MINER_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[MINER_COL]), Integer.parseInt(properties[MINER_ROW]));
@@ -350,6 +358,7 @@ public class Main extends PApplet {
 			Point p = new Point(Integer.parseInt(properties[SMITH_COL]), Integer.parseInt(properties[SMITH_ROW]));
 			Blacksmith smith = new Blacksmith(properties[SMITH_NAME], p, get_images(map, properties[PROPERTY_KEY]), Integer.parseInt(properties[SMITH_LIMIT]),
 					Integer.parseInt(properties[SMITH_RATE]), Integer.parseInt(properties[SMITH_REACH]), 0);
+			System.out.println(smith);
 			return smith;
 		}
 		else
