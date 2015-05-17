@@ -24,7 +24,7 @@ public class MinerNotFull extends Miner
 		   return miner_string;
 	   }
 	   
-	   protected Miner try_transform_miner_not_full()
+	   protected Miner try_transform_miner_not_full(WorldModel world)
 	   {
 	      if (this.resource_count < this.get_resource_limit())
 		  {
@@ -75,11 +75,11 @@ public class MinerNotFull extends Miner
 		    	  
 		    	  boolean found = this.miner_to_ore(world, ore);
 		    	  
-		    	  MinerNotFull new_entity = this;
+		    	  Miner new_entity = this;
 		    	  
 		    	  if (found)
 		    	  {
-		    		  new_entity = (MinerNotFull) this.try_transform_miner(world, this.try_transform_miner_not_full());
+		    		  new_entity = this.try_transform_miner(world, this :: try_transform_miner_not_full);
 		    	  }
 		    	  Actions.schedule_action(world, new_entity, new_entity.create_miner_action(world, i_store),
 		    	  current_ticks + new_entity.get_rate());

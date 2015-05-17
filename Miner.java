@@ -34,9 +34,9 @@ public class Miner extends Dudes
 	   }
 	   this.clear_pending_actions();
    }
-   protected Miner try_transform_miner(WorldModel world, Miner new_entity)
+   protected Miner try_transform_miner(WorldModel world, Function<WorldModel, Miner> transform)
    {
-	   new_entity = this::transform(world);
+	   Miner new_entity = transform.apply(world);
 	   if (this != new_entity)
 	   {
 		   this.clear_pending_actions_new(world);
