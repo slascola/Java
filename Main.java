@@ -80,6 +80,8 @@ public class Main extends PApplet {
 	final int VEIN_ROW = 3;
 	final int VEIN_REACH = 5;
 	
+	private List<PImage> MYIMAGE;
+	
 	public Background create_default_background(List<PImage> img)
 	{
 		Background b = new Background(DEFAULT_IMAGE_NAME, img);
@@ -129,7 +131,7 @@ public class Main extends PApplet {
 	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
 				screen, world, TILE_WIDTH, TILE_HEIGHT);
 	    
-	    
+	   
 	    
 	    
 	    
