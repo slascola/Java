@@ -79,6 +79,10 @@ public class Main extends PApplet {
 	final int VEIN_COL = 2;
 	final int VEIN_ROW = 3;
 	final int VEIN_REACH = 5;
+
+	private int num_cols;
+	private int num_rows;
+	private Background default_background;
 	
 	private List<PImage> MYIMAGE;
 	
@@ -94,15 +98,34 @@ public class Main extends PApplet {
 		size(SCREEN_WIDTH, SCREEN_HEIGHT);
 		PApplet screen = this;
 		
-		int num_cols = SCREEN_WIDTH / TILE_WIDTH * WORLD_WIDTH_SCALE;
-		int num_rows = SCREEN_HEIGHT / TILE_HEIGHT * WORLD_HEIGHT_SCALE;
+		num_cols = SCREEN_WIDTH / TILE_WIDTH * WORLD_WIDTH_SCALE;
+		num_rows = SCREEN_HEIGHT / TILE_HEIGHT * WORLD_HEIGHT_SCALE;
 
 		
-		try
+		
+		  try {
+				map = map_initializer(IMAGE_LIST_FILE_NAME);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		
+		default_background = create_default_background(
+				get_images(map, DEFAULT_IMAGE_NAME));
+		
+		world = new WorldModel(num_rows, num_cols, default_background);
+		
+	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
+				screen, world, TILE_WIDTH, TILE_HEIGHT);
+	   
+	  
+	    
+	    try
 	      {
 	         
 	            Scanner in = new Scanner(new FileInputStream(WORLD_FILE));
-	            useScanner(in);
+	            useScanner(in, map);
 	         
 	         
 	      }
@@ -122,29 +145,27 @@ public class Main extends PApplet {
 	       System.err.println(e.getMessage());
 	    }
 	    
-		
-		
-		Background default_background = create_default_background(
-				get_images(map, DEFAULT_IMAGE_NAME));
-		
-		world = new WorldModel(num_rows, num_cols, default_background);
-	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
-				screen, world, TILE_WIDTH, TILE_HEIGHT);
-	    
-	   
-	    
 	    
 	    
 	    
 	}
+	protected HashMap<String, List<PImage>> map_initializer(String filename) throws FileNotFoundException
+	{
+		 File file2 = new File(IMAGE_LIST_FILE_NAME);
+		 Scanner new_scan = new Scanner(file2);
+		 map = useScannerImages(new_scan);
+		 return map;
+		
+	}
 	
-	private void useScanner(Scanner in) throws FileNotFoundException
+	protected void useScanner(Scanner in, HashMap<String, List<PImage>> map) throws FileNotFoundException
 	{
 		while(in.hasNextLine())
 		{
+			
 			String [] properties;
 			properties = in.nextLine().split("\\s");
-			//System.out.println(properties);
+			
 			if(properties != null)
 			{
 				File file = new File(IMAGE_LIST_FILE_NAME);
@@ -152,7 +173,8 @@ public class Main extends PApplet {
 				if(properties[PROPERTY_KEY].equals(BGND_KEY))
 				{
 				    
-					add_background(world, properties, useScannerImages(new_scan));
+					add_background(world, properties, map);
+					
 				}
 				else
 				{
@@ -224,7 +246,7 @@ public class Main extends PApplet {
 		if(map.containsKey(key))
 		{
 			List<PImage> object_image = map.get(key);
-			//System.out.println(object_image);
+			
 			return object_image;
 			
 		}
@@ -236,7 +258,7 @@ public class Main extends PApplet {
 	}
 	public static List<PImage> get_images(HashMap<String, List<PImage>> map, String key)
 	{
-		//System.out.println(map);
+		
 		if(map.containsKey(key))
 		{
 			
@@ -255,19 +277,27 @@ public class Main extends PApplet {
 	{
 		if(properties.length >= BGND_NUM_PROPERTIES)
 		{
-			Point pt = new Point(BGND_COL, BGND_ROW);
+			//System.out.println("here");
+			Point pt = new Point(Integer.parseInt(properties[BGND_COL]), Integer.parseInt(properties[BGND_ROW]));
 			String name = properties[BGND_NAME];
 			Background b = new Background(name, get_images(map, name));
+			System.out.println(pt.x);
+			System.out.println(pt.y);
+			System.out.println(name);
+			System.out.println(get_images(map, name));
+			
 			world.set_background(pt, b);
 		}
 	}
 	public void add_entity(WorldModel world, String[] properties, HashMap <String, List<PImage>> map,  boolean run)
 	{
 		Entity new_entity = create_from_properties(properties, map);
-		System.out.println(new_entity.get_position().x);
+		
 		if(new_entity != null)
 		{
+			//System.out.println(world);
 			world.add_entity(new_entity);
+			
 			if(run)
 			{
 				schedule_entity(world, new_entity, map);
@@ -284,7 +314,7 @@ public class Main extends PApplet {
 		{
 			if(key.equals(MINER_KEY))
 			{
-				//System.out.println("IT CAME HERE");
+				
 				return create_miner(properties, map);
 			}
 			else if(key.equals(VEIN_KEY))
@@ -297,7 +327,7 @@ public class Main extends PApplet {
 			}
 			else if(key.equals(SMITH_KEY))
 			{
-				//System.out.println("it ran here");
+				
 				return create_blacksmith(properties, map);
 			}
 			else if(key.equals(OBSTACLE_KEY))
@@ -405,6 +435,7 @@ public class Main extends PApplet {
 	
 	public void draw()
 	{
+	
 		
 	   view.draw_viewport();	
 	   

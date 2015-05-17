@@ -79,6 +79,7 @@ public class WorldModel {
 	}
 	protected void add_entity(Entity entity)
 	{
+		//System.out.println("it got here");
 		Point pt = entity.get_position();
 		if (this.within_bounds(pt))
 		{
