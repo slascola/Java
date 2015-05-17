@@ -281,11 +281,6 @@ public class Main extends PApplet {
 			Point pt = new Point(Integer.parseInt(properties[BGND_COL]), Integer.parseInt(properties[BGND_ROW]));
 			String name = properties[BGND_NAME];
 			Background b = new Background(name, get_images(map, name));
-			System.out.println(pt.x);
-			System.out.println(pt.y);
-			System.out.println(name);
-			System.out.println(get_images(map, name));
-			
 			world.set_background(pt, b);
 		}
 	}
