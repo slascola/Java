@@ -25,11 +25,11 @@ public class Main extends PApplet {
 	private List<PImage>img;
 	private List<PImage>e;
 	
-	private HashMap <String, PImage> map;
+	private HashMap <String, List<PImage>> map;
 	
 	private static final int MIN_ARGS = 1;
 	
-	final String DEFAULT_IMAGE_NAME = "background_default";
+	final static String DEFAULT_IMAGE_NAME = "background_default";
 	
 	private boolean run;
 	
@@ -140,11 +140,15 @@ public class Main extends PApplet {
 	{
 		while(in.hasNextLine())
 		{
-			String [] properties = in.nextLine().split("\\s+");
+			String [] properties;
+			properties = in.nextLine().split("\\s");
+			
 			if(properties != null)
 			{
-				if(properties[PROPERTY_KEY] == DEFAULT_IMAGE_NAME)
+				//System.out.println(properties[PROPERTY_KEY]);
+				if(properties[PROPERTY_KEY] == BGND_KEY)
 				{
+				
 					add_background(world, properties, map);
 				}
 				else
@@ -158,19 +162,21 @@ public class Main extends PApplet {
 	}
 	
 
-	protected HashMap<String, PImage> useScannerImages(Scanner in)
+	protected HashMap<String, List<PImage>> useScannerImages(Scanner in)
 	{
-		 map = new HashMap<String, PImage>();
+		 map = new HashMap<String, List<PImage>>();
 		while(in.hasNextLine())
 		{
 			
-			String [] line = in.nextLine().split("\\s+");
+			String [] line = in.nextLine().split("\\s");
 			process_image_line(map, line);
+			
+			
 		}
-		System.out.println(map);
+		
 		return map;
 	}
-	protected void process_image_line(HashMap<String, PImage> map, String[] line)
+	protected void process_image_line(HashMap<String, List<PImage>> map, String[] line)
 	{
 		String key;
 		String image_file_name;
@@ -180,16 +186,21 @@ public class Main extends PApplet {
 		
 		key = line[0];
 		image_file_name = line[1];
-		
 		image = loadImage(image_file_name);
 		
-		map.put(key, image);
 		
 		
 		if (image != null)
 		{
-			ArrayList<PImage> images = get_images_internal(map, key);
+			
+			
+			List<PImage>images = get_images_internal(map, key);
 			images.add(image);
+			map.put(key, images);
+			System.out.println(map);
+			
+			
+			
 			if(line.length == 6)
 			{
 			   int r = Integer.parseInt(line[2]);
@@ -201,32 +212,40 @@ public class Main extends PApplet {
 		}
 		
 	}
-	protected ArrayList<PImage> get_images_internal(HashMap<String, PImage> map, String key)
-	{
-			ArrayList<PImage> images = new ArrayList<PImage>();
-			return images;
-		
-	}
-	protected List<PImage> get_images(HashMap<String, PImage> map, String key)
+	private List<PImage> get_images_internal(HashMap<String, List<PImage>> map, String key)
 	{
 		List<PImage> this_object_list = new ArrayList<PImage>();
 		if(map.containsKey(key))
 		{
-			for(PImage object_image : map.values())
-			{
-				this_object_list.add(object_image);
-			}
+			List<PImage> object_image = map.get(key);
+			//System.out.println(object_image);
+			return object_image;
+			
+		}
+		else
+		{
 			return this_object_list;
+		}
+		
+	}
+	public static List<PImage> get_images(HashMap<String, List<PImage>> map, String key)
+	{
+		
+		if(map.containsKey(key))
+		{
+			
+           List<PImage> object_image = map.get(key);	
+			return object_image;
 			
 		}
 		else {
-			 this_object_list.add(map.get(DEFAULT_IMAGE_NAME));
-			 return this_object_list;
+			 List<PImage> object_image = map.get(DEFAULT_IMAGE_NAME);
+			 return object_image;
 			 
 		}
 	}
 	
-	public void add_background(WorldModel world, String[] properties, HashMap <String, PImage> map)
+	public void add_background(WorldModel world, String[] properties, HashMap <String, List<PImage>> map)
 	{
 		if(properties.length >= BGND_NUM_PROPERTIES)
 		{
@@ -236,7 +255,7 @@ public class Main extends PApplet {
 			world.set_background(pt, b);
 		}
 	}
-	public void add_entity(WorldModel world, String[] properties, HashMap <String, PImage> map,  boolean run)
+	public void add_entity(WorldModel world, String[] properties, HashMap <String, List<PImage>> map,  boolean run)
 	{
 		Entity new_entity = create_from_properties(properties, map);
 		if(new_entity != null)
@@ -250,7 +269,7 @@ public class Main extends PApplet {
 		}	
 				
 	}
-	public Entity create_from_properties(String[] properties, HashMap <String, PImage> map)
+	public Entity create_from_properties(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		String key = properties[PROPERTY_KEY];
 		
@@ -279,7 +298,7 @@ public class Main extends PApplet {
 		}
 		return null;
 	}
-	public Miner create_miner(String[] properties, HashMap <String, PImage> map)
+	public Miner create_miner(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		if(properties.length == MINER_NUM_PROPERTIES)
 		{
@@ -294,7 +313,7 @@ public class Main extends PApplet {
 		}
 			
 	}
-	public Vein create_vein(String[] properties, HashMap <String, PImage> map)
+	public Vein create_vein(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		if(properties.length == VEIN_NUM_PROPERTIES)
 		{
@@ -309,7 +328,7 @@ public class Main extends PApplet {
 		}
 		
 	}
-	public Ore create_ore(String[] properties, HashMap <String, PImage> map)
+	public Ore create_ore(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		if(properties.length == ORE_NUM_PROPERTIES)
 		{
@@ -322,7 +341,7 @@ public class Main extends PApplet {
 			return null;
 		}
 	}
-	public Blacksmith create_blacksmith(String[] properties, HashMap <String, PImage> map)
+	public Blacksmith create_blacksmith(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		if(properties.length == SMITH_NUM_PROPERTIES)
 		{
@@ -336,7 +355,7 @@ public class Main extends PApplet {
 			return null;
 		}
 	}
-	public Obstacle create_obstacle(String[] properties, HashMap <String, PImage> map)
+	public Obstacle create_obstacle(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		if(properties.length == OBSTACLE_NUM_PROPERTIES)
 		{
@@ -349,7 +368,7 @@ public class Main extends PApplet {
 			return null;
 		}
 	}
-	public void schedule_entity(WorldModel world, Entity entity, HashMap <String, PImage> map)
+	public void schedule_entity(WorldModel world, Entity entity, HashMap <String, List<PImage>> map)
 	{
 		long newtick = 0;
 		if(entity instanceof MinerNotFull)
