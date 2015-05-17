@@ -3,10 +3,10 @@ import java.util.function.LongConsumer;
 import java.lang.Math;
  public class Actions extends Point
 {
-	 final int BLOB_RATE_SCALE = 4;
-	   final int BLOB_ANIMATION_RATE_SCALE = 50;
-	   final int BLOB_ANIMATION_MIN = 1;
-	   final int BLOB_ANIMATION_MAX = 3;
+	 final static int BLOB_RATE_SCALE = 4;
+	   final static int BLOB_ANIMATION_RATE_SCALE = 50;
+	   final static int BLOB_ANIMATION_MIN = 1;
+	   final static int BLOB_ANIMATION_MAX = 3;
 
 	   final static int ORE_CORRUPT_MIN = 20000;
 	   final static int ORE_CORRUPT_MAX = 30000;
@@ -16,8 +16,8 @@ import java.lang.Math;
 	   final static int QUAKE_ANIMATION_RATE = 100;
 
 	   final int VEIN_SPAWN_DELAY = 500;
-	   final int VEIN_RATE_MIN = 8000;
-	   final int VEIN_RATE_MAX = 17000;
+	   final static int VEIN_RATE_MIN = 8000;
+	   final static int VEIN_RATE_MAX = 17000;
    public Actions(int x, int y)
    {
 	   super(x, y);

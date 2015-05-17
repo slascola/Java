@@ -1,6 +1,9 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.function.*;
 import java.util.ArrayList;
+
 import processing.core.*;
 public class WorldModel {
 
@@ -197,6 +200,15 @@ public class WorldModel {
 	protected void unschedule_action(LongConsumer action)
 	{
 		this.action_queue.remove(action);
+	}
+	
+	protected static Vein create_vein(String name, Point pt, long ticks, HashMap<String, List<PImage>> i_store)
+	{
+		Random rand = new Random();
+		Vein vein = new Vein("vein" +  name, rand.nextInt(Actions.VEIN_RATE_MAX - Actions.VEIN_RATE_MIN + 1) + Actions.VEIN_RATE_MIN, 
+														 pt, 1, Main.get_images(i_store, "vein"));
+		
+		return vein;
 	}
 
 	public static int distance_sq(Point p1, Point p2)
