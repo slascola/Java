@@ -25,17 +25,18 @@ public class Quake extends ActionItems
 	protected LongConsumer create_entity_death_action(WorldModel world)
 	   {
 		   LongConsumer[] action = { null };
-	       action[0] = (long x) -> {
+	       action[0] = (long current_ticks) -> {
 	       
-	    	   remove_pending_action(action[0]);
+	    	   this.remove_pending_action(action[0]);
 	    	   Point pt = this.get_position();
 	    	   ArrayList<Point> pt_list = new ArrayList<Point>();
 	    	   pt_list.add(pt);
 	    	   Actions.remove_entity(this, world);
-	    	   //return pt_list;
+	    	   
 	    	   
 	       };
 
 	    return action[0];
+	    
 	 }
 }

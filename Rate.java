@@ -1,6 +1,6 @@
 import java.util.List;
 import processing.core.*;
-public class Rate extends Entity
+public class Rate extends ActionItems
 {
    private int rate;
    public Rate(String name, Point position, List<PImage> imgs, int rate)

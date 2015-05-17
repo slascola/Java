@@ -1,6 +1,8 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.function.*;
+
 import processing.core.*;
 public class Miner extends Dudes
 {
@@ -26,10 +28,35 @@ public class Miner extends Dudes
    }
    protected void clear_pending_actions_new(WorldModel world)
    {
-	   for (LongConsumer action : this.get_pending_actions())
+	   for(LongConsumer action : this.get_pending_actions())
 	   {
-		   
+		  world.unschedule_action(action);
 	   }
+	   this.clear_pending_actions();
    }
+   protected Miner try_transform_miner(WorldModel world, Miner new_entity)
+   {
+	   new_entity = this::transform(world);
+	   if (this != new_entity)
+	   {
+		   this.clear_pending_actions_new(world);
+		   world.remove_entity_at(this.get_position());
+		   world.add_entity(new_entity);
+		   Actions.schedule_animation(world, new_entity,0);
+	   }
+	   return new_entity;
+   }
+   protected LongConsumer create_miner_action(WorldModel world, HashMap<String, List<PImage>> i_store)
+   {
+	   return null;
+   }
+   
+   protected void schedule_miner(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
+   {
+	   Actions.schedule_action(world, this, this.create_miner_action(world, i_store),  ticks + this.get_rate());
+	   Actions.schedule_animation(world, this, 0);
+   }
+ 
+  
    
 }

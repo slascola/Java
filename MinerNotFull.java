@@ -1,4 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.LongConsumer;
+
 import processing.core.*;
 public class MinerNotFull extends Miner
 {
@@ -60,6 +63,28 @@ public class MinerNotFull extends Miner
 			   world.move_entity(this, new_pt);
 			   return false;
 		   }
+	   }
+	   protected LongConsumer create_miner_action(WorldModel world, HashMap<String, List<PImage>> i_store)
+	   {
+		   LongConsumer[] action = { null };
+		      action[0] = (long current_ticks) -> {
+		    	  this.remove_pending_action(action[0]);
+		    	  
+		    	  Point entity_pt = this.get_position();
+		    	  Ore ore = (Ore) world.find_nearest(entity_pt, Ore.class);
+		    	  
+		    	  boolean found = this.miner_to_ore(world, ore);
+		    	  
+		    	  MinerNotFull new_entity = this;
+		    	  
+		    	  if (found)
+		    	  {
+		    		  new_entity = (MinerNotFull) this.try_transform_miner(world, this.try_transform_miner_not_full());
+		    	  }
+		    	  Actions.schedule_action(world, new_entity, new_entity.create_miner_action(world, i_store),
+		    	  current_ticks + new_entity.get_rate());
+		      };
+		      return action[0];
 	   }
 	   
 }

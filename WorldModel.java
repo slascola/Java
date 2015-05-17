@@ -188,6 +188,16 @@ public class WorldModel {
 		}
 		return nearest;
 	}
+	protected void schedule_action(LongConsumer action, long time)
+	{
+		this.action_queue.insert(action, time);
+	}
+	
+	protected void unschedule_action(LongConsumer action)
+	{
+		this.action_queue.remove(action);
+	}
+
 	public static int distance_sq(Point p1, Point p2)
 	{
 		int pxfinal = (p1.x - p2.x) * (p1.x - p2.x);

@@ -1,4 +1,7 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.LongConsumer;
+
 import processing.core.*;
 public class OreBlob extends Rate
 {
@@ -38,5 +41,37 @@ public class OreBlob extends Rate
 		   return false; 
 	   }
    }
+	protected Quake create_quake(WorldModel world, Point pt, long ticks, 
+			 HashMap<String, List<PImage>> i_store)
+	{
+		Quake quake = new Quake("quake", pt, Actions.QUAKE_ANIMATION_RATE, Main.get_images(i_store, "quake"));
+		quake.schedule_quake(world, ticks);
+		return quake;
+	}
+	protected LongConsumer create_ore_blob_action(WorldModel world, HashMap <String, List<PImage>> i_store)
+	{
+		LongConsumer[] action = { null };
+	      action[0] = (long current_ticks) -> {
+	    	  this.remove_pending_action(action[0]);
+	    	  
+	    	  Point entity_pt = this.get_position();
+	    	  Vein vein = (Vein) world.find_nearest(entity_pt, Vein.class);
+	    	  
+	    	  boolean found = this.blob_to_vein(world, vein);
+	    	  
+	    	  long next_time = current_ticks + this.get_rate();
+	    	  
+	    	  if(found)
+	    	  {
+    		    Quake quake = this.create_quake(world, entity_pt, current_ticks, i_store);
+    		    world.add_entity(quake);
+    		    next_time = current_ticks + this.get_rate() * 2;
+	    	  }
+	    	  Actions.schedule_action(world, this, this.create_ore_blob_action(world, i_store), next_time);
+	    	    
+	      };
+		return action[0];
+	}
+   
    
 }
