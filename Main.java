@@ -138,7 +138,7 @@ public class Main extends PApplet {
 	    
 	}
 	
-	private void useScanner(Scanner in)
+	private void useScanner(Scanner in) throws FileNotFoundException
 	{
 		while(in.hasNextLine())
 		{
@@ -147,16 +147,17 @@ public class Main extends PApplet {
 			//System.out.println(properties);
 			if(properties != null)
 			{
-				Scanner new_one = new Scanner(IMAGE_LIST_FILE_NAME);
+				File file = new File(IMAGE_LIST_FILE_NAME);
+				Scanner new_scan = new Scanner(file);
 				if(properties[PROPERTY_KEY].equals(BGND_KEY))
 				{
 				    
-					add_background(world, properties, useScannerImages(new_one));
+					add_background(world, properties, useScannerImages(new_scan));
 				}
 				else
 				{
 					
-					add_entity(world, properties, useScannerImages(new_one), run);
+					add_entity(world, properties, useScannerImages(new_scan), run);
 				}
 			}
 			
@@ -235,7 +236,7 @@ public class Main extends PApplet {
 	}
 	public static List<PImage> get_images(HashMap<String, List<PImage>> map, String key)
 	{
-		System.out.println(map);
+		//System.out.println(map);
 		if(map.containsKey(key))
 		{
 			
@@ -263,7 +264,7 @@ public class Main extends PApplet {
 	public void add_entity(WorldModel world, String[] properties, HashMap <String, List<PImage>> map,  boolean run)
 	{
 		Entity new_entity = create_from_properties(properties, map);
-		System.out.println(map);
+		System.out.println(new_entity.get_position().x);
 		if(new_entity != null)
 		{
 			world.add_entity(new_entity);
