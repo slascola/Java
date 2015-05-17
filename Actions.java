@@ -8,12 +8,12 @@ import java.lang.Math;
 	   final int BLOB_ANIMATION_MIN = 1;
 	   final int BLOB_ANIMATION_MAX = 3;
 
-	   final int ORE_CORRUPT_MIN = 20000;
-	   final int ORE_CORRUPT_MAX = 30000;
+	   final static int ORE_CORRUPT_MIN = 20000;
+	   final static int ORE_CORRUPT_MAX = 30000;
 
 	   final static int QUAKE_STEPS = 10;
 	   final static int QUAKE_DURATION = 1100;
-	   final int QUAKE_ANIMATION_RATE = 100;
+	   final static int QUAKE_ANIMATION_RATE = 100;
 
 	   final int VEIN_SPAWN_DELAY = 500;
 	   final int VEIN_RATE_MIN = 8000;
@@ -104,7 +104,13 @@ import java.lang.Math;
      }
      public static void remove_entity(Entity entity, WorldModel world)
      {
-    	 
+    	 for(LongConsumer action : ((ActionItems) entity).get_pending_actions())
+    	 {
+    		 world.unschedule_action(action);
+    		 
+    	 }
+    	 ((ActionItems) entity).clear_pending_actions();
+    	 world.remove_entity(entity);
      }
      public static Point find_open_around(WorldModel world, Point pt, int distance)
      {
@@ -129,35 +135,65 @@ import java.lang.Math;
      	
      	
      }
-
+     
      public static void schedule_animation(WorldModel world, Entity entity, int repeat_count)
      {
-     	repeat_count = 0;
-     	schedule_action(entity, world, create_animation_action(world, entity, repeat_count),
-     					((ActionItems) entity).get_animation_rate());
+    	 repeat_count = 0;
+    	 if (entity instanceof Miner)
+    	 {
+    		 schedule_action(world, entity, create_animation_action(world, entity, repeat_count),
+  					((Miner) entity).get_animation_rate()); 
+    	 }
+    	 else if(entity instanceof OreBlob)
+    	 {
+    		 schedule_action(world, entity, create_animation_action(world, entity, repeat_count),
+  					((OreBlob) entity).get_animation_rate());
+    	 }
+    	 else if(entity instanceof Quake)
+    	 {
+    		 schedule_action(world, entity, create_animation_action(world, entity, repeat_count),
+  					((Quake) entity).get_animation_rate());
+    	 }
+     	
+     	
      }
 
      public static LongConsumer create_animation_action(WorldModel world, Entity entity,
      		                                           int repeat_count)
      {
      LongConsumer[] action = { null };
-     action[0] = (long x) -> 
+     action[0] = (long current_ticks) -> 
      {
 
      	((ActionItems) entity).remove_pending_action(action[0]);
      	entity.next_image();
      	if(repeat_count != 1)
      	{
-     		schedule_action(entity, world, 
-     				create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
-     				current_ticks + ((Object) entity).get_animation_rate());
+     		
+     		if (entity instanceof Quake)
+     		{
+     			schedule_action(world, entity, 
+     					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
+     					current_ticks + ((Quake) entity).get_animation_rate());
+     		}
+     		else if(entity instanceof Miner)
+     		{
+     			schedule_action(world, entity, 
+     					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
+     					current_ticks + ((Miner) entity).get_animation_rate());
+     		}
+     		else if(entity instanceof OreBlob)
+     		{
+     			schedule_action(world, entity, 
+     					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
+     					current_ticks + ((OreBlob) entity).get_animation_rate());
+     		}
      	}
      	
 
      };
 
      return action[0];
+     }
 
-
-  
 }
