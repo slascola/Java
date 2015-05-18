@@ -9,6 +9,8 @@ import java.util.function.*;
 
 public class Main extends PApplet {
 	
+	private int x_delta =0;
+	private int y_delta =0;
 	
 	final boolean RUN_AFTER_LOAD = true;
 	final String IMAGE_LIST_FILE_NAME = "imagelist";
@@ -387,7 +389,7 @@ public class Main extends PApplet {
 			Point p = new Point(Integer.parseInt(properties[SMITH_COL]), Integer.parseInt(properties[SMITH_ROW]));
 			Blacksmith smith = new Blacksmith(properties[SMITH_NAME], p, get_images(map, properties[PROPERTY_KEY]), Integer.parseInt(properties[SMITH_LIMIT]),
 					Integer.parseInt(properties[SMITH_RATE]), Integer.parseInt(properties[SMITH_REACH]), 0);
-			System.out.println(smith);
+			//System.out.println(smith);
 			return smith;
 		}
 		else
@@ -440,9 +442,64 @@ public class Main extends PApplet {
 	         next_time = time + ANIMATION_TIME;
 	      }
 		
-	   view.draw_viewport();	
+	   view.draw_viewport();
+	   
 	   
 	}
+	
+	 public void left()
+	   {
+		  x_delta =0;
+		  y_delta = 0;
+	      x_delta = x_delta -1;
+	      view.update_view(x_delta, y_delta);
+	      
+	   }
+	   public void right()
+	   {
+		   x_delta =0;
+		   y_delta = 0;
+		  x_delta = x_delta + 1;
+		  
+		  view.update_view(x_delta, y_delta);
+		         
+	   }
+	   public void up()
+	   {
+		 x_delta =0;
+		 y_delta = 0;
+	     y_delta = y_delta -1;
+	     view.update_view(x_delta, y_delta);
+	   }
+	   public void down()
+	   {
+		  x_delta =0;
+		  y_delta = 0;
+	      y_delta = y_delta + 1;
+	      view.update_view(x_delta, y_delta);
+	   }
+	 public void keyPressed()
+	   {
+	      switch(key)
+	      {
+	         case 'a':
+	            left();
+	            
+	            break; 
+	         case 'w':
+	            up();
+	            
+	            break;
+	         case 's':
+	           down();
+	           
+	            break;
+	         case 'd':
+	            right();
+	            break;
+	         
+	       }
+	   }
 	public static void main(String[] args)
 	   {
 	      PApplet.main("Main");

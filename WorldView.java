@@ -65,13 +65,11 @@ public class WorldView {
 		this.draw_background();
 		this.draw_entities();
 	}
-	public void update_view(int view_delta, int view_delta2, PImage mouse_img)
+	public void update_view(int view_delta, int view_delta2)
 	{
 		view_delta = 0;
 		view_delta2 = 0;
-		mouse_img = null;
 		this.viewport = create_shifted_viewport(this.viewport, view_delta, view_delta2, this.num_rows, this.num_cols);
-		this.mouse_img = mouse_img;
 		this.draw_viewport();
 		this.mouse_move(this.mouse_pt);
 		
@@ -138,9 +136,12 @@ public class WorldView {
 	
 	protected static Rectangle create_shifted_viewport(Rectangle viewport, int deltax, int deltay, int num_rows, int num_cols)
 	{
+		
 		int new_x = clamp(viewport.getLeft() + deltax, 0, num_cols - viewport.getViewCols());
 		int new_y = clamp(viewport.getTop() + deltay, 0, num_rows - viewport.getViewRows());
 		Rectangle r = new Rectangle(new_x, new_y, viewport.getViewCols(), viewport.getViewRows());
+		
+		
 		return r;
 	}
 	

@@ -204,6 +204,7 @@ public class WorldModel {
 	protected void update_on_time(long ticks)
 	{
 		ListItem next = this.action_queue.head();
+		
 		while(next != null && next.getOrd() < ticks)
 		{
 			this.action_queue.pop();

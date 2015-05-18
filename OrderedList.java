@@ -40,6 +40,7 @@ public class OrderedList {
 	{
 		if (this.list != null)
 		{
+			
 			return this.list.get(0);
 		}
 		else
