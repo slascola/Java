@@ -79,12 +79,15 @@ public class Main extends PApplet {
 	final int VEIN_COL = 2;
 	final int VEIN_ROW = 3;
 	final int VEIN_REACH = 5;
-
+	//setting up time
+	private long next_time;
+	private static final int ANIMATION_TIME = 100;
+    //setting up background
 	private int num_cols;
 	private int num_rows;
 	private Background default_background;
 	
-	private List<PImage> MYIMAGE;
+	
 	
 	public Background create_default_background(List<PImage> img)
 	{
@@ -430,7 +433,12 @@ public class Main extends PApplet {
 	
 	public void draw()
 	{
-	
+		long time = System.currentTimeMillis();
+	      if (time >= next_time)
+	      {
+	         world.update_on_time(time);
+	         next_time = time + ANIMATION_TIME;
+	      }
 		
 	   view.draw_viewport();	
 	   
