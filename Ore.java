@@ -35,6 +35,7 @@ public class Ore extends Rate
 		LongConsumer[] action = { null };
 		action[0] = (long current_ticks) -> 
 		{
+			//System.out.println("ore going to be transformed");
 			this.remove_pending_action(action[0]);
 			OreBlob blob = this.create_blob(world, this.get_name() + " -- blob",
 					this.get_position(), this.get_rate() / Actions.BLOB_RATE_SCALE,
@@ -49,6 +50,7 @@ public class Ore extends Rate
 	  }
    protected void schedule_ore(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
 	{
+	   System.out.println("it came herrree");
 		Actions.schedule_action(world, this, create_ore_transform_action(world, i_store),
 								ticks + this.get_rate());
 	}

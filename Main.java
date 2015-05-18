@@ -283,7 +283,7 @@ public class Main extends PApplet {
 	{
 		if(properties.length >= BGND_NUM_PROPERTIES)
 		{
-			//System.out.println("here");
+			
 			Point pt = new Point(Integer.parseInt(properties[BGND_COL]), Integer.parseInt(properties[BGND_ROW]));
 			String name = properties[BGND_NAME];
 			Background b = new Background(name, get_images(map, name));
@@ -310,6 +310,7 @@ public class Main extends PApplet {
 	public Entity create_from_properties(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		String key = properties[PROPERTY_KEY];
+	
 		
 		if(properties != null)
 		{
@@ -324,6 +325,7 @@ public class Main extends PApplet {
 			}
 			else if(key.equals(ORE_KEY))
 			{
+				System.out.println(key);
 				return create_ore(properties, map);
 			}
 			else if(key.equals(SMITH_KEY))
@@ -374,12 +376,16 @@ public class Main extends PApplet {
 	{
 		if(properties.length == ORE_NUM_PROPERTIES)
 		{
+			
 			Point p = new Point(Integer.parseInt(properties[ORE_COL]), Integer.parseInt(properties[ORE_ROW]));
 			Ore ore = new Ore(properties[ORE_NAME], p, Integer.parseInt(properties[ORE_RATE]), get_images(map, properties[PROPERTY_KEY]));
+			
 			return ore;
+			
 		}
 		else
 		{
+			
 			return null;
 		}
 	}

@@ -19,7 +19,7 @@ public class MinerFull extends Miner
    protected boolean miner_to_smith(WorldModel world, Blacksmith smith)
    {
 	   Point entity_pt = this.get_position();
-	   //System.out.println(smith == null);
+	   
 	   if(smith == null)
 	   {
 		   return false;
@@ -54,7 +54,7 @@ public class MinerFull extends Miner
 	    	  
 	    	  Point entity_pt = this.get_position();
 	    	  Blacksmith smith = (Blacksmith) world.find_nearest(entity_pt, Blacksmith.class);
-	    	  //System.out.println(smith);
+	    	  
 	    	  boolean found = this.miner_to_smith(world, smith);
 	    	  
 	    	  Miner new_entity  = this;

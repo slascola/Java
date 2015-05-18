@@ -13,7 +13,7 @@ public class OrderedList {
 	public void insert(LongConsumer item, long ord)
 	{
 		int size = this.list.size();
-		//System.out.println(this.list.size());
+		
 		int idx = 0;
 		while(idx < size && this.list.get(idx).getOrd() < ord)
 		{
