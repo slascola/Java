@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.function.*;
 
 import processing.core.*;
-public class Miner extends Dudes
+public abstract class Miner extends Dudes
 {
    private int resource_count;
    private int resource_limit;
@@ -46,10 +46,8 @@ public class Miner extends Dudes
 	   }
 	   return new_entity;
    }
-   protected LongConsumer create_miner_action(WorldModel world, HashMap<String, List<PImage>> i_store)
-   {
-	   return null;
-   }
+   protected abstract LongConsumer create_miner_action(WorldModel world, HashMap<String, List<PImage>> i_store);
+   
    
    protected void schedule_miner(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
    {

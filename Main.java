@@ -339,14 +339,14 @@ public class Main extends PApplet {
 	    
 		return null;
 	}
-	public Miner create_miner(String[] properties, HashMap <String, List<PImage>> map)
+	public MinerNotFull create_miner(String[] properties, HashMap <String, List<PImage>> map)
 	{
 		
 		if(properties.length == MINER_NUM_PROPERTIES)
 		{
 			Point p = new Point(Integer.parseInt(properties[MINER_COL]), Integer.parseInt(properties[MINER_ROW]));
-			Miner miner = new Miner(properties[MINER_NAME], p, Integer.parseInt(properties[MINER_RATE]), Integer.parseInt(properties[MINER_LIMIT]),
-					  0,Integer.parseInt(properties[MINER_ANIMATION_RATE]), get_images(map, properties[PROPERTY_KEY]));
+			MinerNotFull miner = new MinerNotFull(properties[MINER_NAME], Integer.parseInt(properties[MINER_LIMIT]), p, Integer.parseInt(properties[MINER_RATE]), get_images(map, properties[PROPERTY_KEY]) ,
+					  0,Integer.parseInt(properties[MINER_ANIMATION_RATE]));
 			return miner;
 		}
 		else

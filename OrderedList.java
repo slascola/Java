@@ -13,12 +13,14 @@ public class OrderedList {
 	public void insert(LongConsumer item, long ord)
 	{
 		int size = this.list.size();
+		//System.out.println(this.list.size());
 		int idx = 0;
 		while(idx < size && this.list.get(idx).getOrd() < ord)
 		{
 			idx++;
 		}
 		ListItem newlist = new ListItem(item, ord);
+		System.out.println(newlist.getItem());
 		this.list.add(idx, newlist);
 		
 	}
@@ -38,6 +40,7 @@ public class OrderedList {
 	}
 	public ListItem head()
 	{
+		//System.out.println(this.list.size());
 		if (this.list.size() != 0)
 		{
 			
@@ -50,7 +53,7 @@ public class OrderedList {
 	}
 	public void pop()
 	{
-		if (this.list != null)
+		if (this.list.size() != 0)
 		{
 			this.list.remove(0);
 		}

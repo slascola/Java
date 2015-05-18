@@ -167,6 +167,7 @@ import java.lang.Math;
 
      	((ActionItems) entity).remove_pending_action(action[0]);
      	entity.next_image();
+     	System.out.println(repeat_count);
      	if(repeat_count != 1)
      	{
      		
@@ -178,6 +179,7 @@ import java.lang.Math;
      		}
      		else if(entity instanceof Miner)
      		{
+     			//System.out.println("it came herree");
      			schedule_action(world, entity, 
      					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
      					current_ticks + ((Miner) entity).get_animation_rate());

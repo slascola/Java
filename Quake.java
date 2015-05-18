@@ -30,8 +30,8 @@ public class Quake extends ActionItems
 	    	   this.remove_pending_action(action[0]);
 	    	   Point pt = this.get_position();
 	    	   ArrayList<Point> pt_list = new ArrayList<Point>();
-	    	   pt_list.add(pt);
 	    	   Actions.remove_entity(this, world);
+	    	   pt_list.add(pt);
 	    	   
 	    	   
 	       };
