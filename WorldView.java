@@ -40,8 +40,12 @@ public class WorldView {
 				
 				Point p = new Point(x, y);
 				Point w_pt = viewport_to_world(this.viewport, p);
+				//System.out.println(w_pt.x);
+				//System.out.println(w_pt.y);
 				PImage img = this.world.get_background_image(w_pt);
+				//System.out.println(img);
 				this.screen.image(img, x*this.tile_width, y*this.tile_height);
+				
 			}
 			
 			
@@ -120,7 +124,7 @@ public class WorldView {
 	}
 	public static Point viewport_to_world(Rectangle viewport, Point pt)
 	{
-		Point p = new Point(pt.x + viewport.getLeft(), pt.y - viewport.getTop());
+		Point p = new Point(pt.x + viewport.getLeft(), pt.y + viewport.getTop());
 		return p;
 	}
 	public static Point world_to_viewport(Rectangle viewport, Point pt)
@@ -140,6 +144,7 @@ public class WorldView {
 		int new_x = clamp(viewport.getLeft() + deltax, 0, num_cols - viewport.getViewCols());
 		//System.out.println(new_x);
 		int new_y = clamp(viewport.getTop() + deltay, 0, num_rows - viewport.getViewRows());
+		//System.out.println(deltay);
 		//System.out.println(viewport.getTop());
 		Rectangle r = new Rectangle(new_x, new_y, viewport.getViewCols(), viewport.getViewRows());
 		

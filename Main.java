@@ -451,7 +451,8 @@ public class Main extends PApplet {
 	   {
 		  x_delta =0;
 		  y_delta = 0;
-	      int newx_delta = x_delta -1;
+	      int newx_delta = x_delta - 1;
+	     // System.out.println(newx_delta);
 	      view.update_view(newx_delta, y_delta);
 	      
 	   }
@@ -475,7 +476,8 @@ public class Main extends PApplet {
 	   {
 		  x_delta =0;
 		  y_delta = 0;
-	      int newy_delta = y_delta + 1;
+	      int newy_delta = abs(y_delta +1);
+	      //System.out.println(newy_delta);
 	      view.update_view(x_delta, newy_delta);
 	   }
 	 public void keyPressed()

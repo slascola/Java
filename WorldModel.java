@@ -141,6 +141,7 @@ public class WorldModel {
 		{
 			return this.background[pt.y][pt.x];
 		}
+		
 		return null;
 	}
 	
