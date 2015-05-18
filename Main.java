@@ -3,6 +3,7 @@ import processing.core.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.Scanner;
 import java.util.function.*;
@@ -412,7 +413,7 @@ public class Main extends PApplet {
 	}
 	public void schedule_entity(WorldModel world, Entity entity, HashMap <String, List<PImage>> map)
 	{
-		long newtick = 0;
+		long newtick = System.currentTimeMillis();
 		if(entity instanceof MinerNotFull)
 		{
 			
@@ -420,11 +421,12 @@ public class Main extends PApplet {
 		}
 		else if(entity instanceof Vein)
 		{
-			
+			//System.out.println("a new vein");
 			((Vein) entity).schedule_vein(world, newtick, map);
 		}
 		else if(entity instanceof Ore)
 		{
+			//System.out.println("it got here");
 			((Ore) entity).schedule_ore(world, newtick, map);
 		}
 	}
@@ -480,23 +482,23 @@ public class Main extends PApplet {
 	      //System.out.println(newy_delta);
 	      view.update_view(x_delta, newy_delta);
 	   }
-	 public void keyPressed()
+	 public void keyPressed(KeyEvent event)
 	   {
-	      switch(key)
+	      switch(event.getKeyCode())
 	      {
-	         case 'a':
+	         case KeyEvent.VK_LEFT:
 	            left();
 	            
 	            break; 
-	         case 'w':
+	         case KeyEvent.VK_UP:
 	            up();
 	            
 	            break;
-	         case 's':
+	         case KeyEvent.VK_DOWN:
 	           down();
 	           
 	            break;
-	         case 'd':
+	         case KeyEvent.VK_RIGHT:
 	            right();
 	            break;
 	         
