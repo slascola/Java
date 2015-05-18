@@ -201,6 +201,15 @@ public class WorldModel {
 	{
 		this.action_queue.remove(action);
 	}
+	protected void update_on_time(long ticks)
+	{
+		ListItem next = this.action_queue.head();
+		while(next != null && next.getOrd() < ticks)
+		{
+			this.action_queue.pop();
+			next = this.action_queue.head();
+		}
+	}
 	
 	protected static Vein create_vein(String name, Point pt, long ticks, HashMap<String, List<PImage>> i_store)
 	{
