@@ -37,7 +37,7 @@ public class OreBlob extends Rate
            {
 			 Actions.remove_entity(old_entity, world);
 		   }
-		   world.move_entity(old_entity, entity_pt);
+		   world.move_entity(this, new_pt);
 		   return false; 
 	   }
    }
@@ -56,14 +56,14 @@ public class OreBlob extends Rate
 	    	  
 	    	  Point entity_pt = this.get_position();
 	    	  Vein vein = (Vein) world.find_nearest(entity_pt, Vein.class);
-	    	  
+	    	  Point vein_pt = vein.get_position();
 	    	  boolean found = this.blob_to_vein(world, vein);
 	    	  
 	    	  long next_time = current_ticks + this.get_rate();
 	    	  
 	    	  if(found)
 	    	  {
-    		    Quake quake = this.create_quake(world, entity_pt, current_ticks, i_store);
+    		    Quake quake = this.create_quake(world, vein_pt, current_ticks, i_store);
     		    world.add_entity(quake);
     		    next_time = current_ticks + this.get_rate() * 2;
 	    	  }
@@ -75,7 +75,7 @@ public class OreBlob extends Rate
 	
 	protected void schedule_blob(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
 	{
-		System.out.println("blob here");
+		
 		Actions.schedule_action(world, this, create_ore_blob_action(world, i_store),
 								ticks + this.get_rate());
 		Actions.schedule_animation(world, this, 0); //just added in 0. keep eye on this

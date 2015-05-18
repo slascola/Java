@@ -99,9 +99,11 @@ public class WorldModel {
 	
 	protected void move_entity(Entity entity, Point pt)
 	{
+		//System.out.println(pt.x +"," + pt.y);
 		if (this.within_bounds(pt))
 		{
 			Point old_pt = entity.get_position();
+			//System.out.println(old_pt.x +"," + old_pt.y);
 			this.occupancy[old_pt.y][old_pt.x] = null;
 			this.occupancy[pt.y][pt.x] = entity;
 			entity.set_position(pt);
