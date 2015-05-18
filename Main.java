@@ -184,7 +184,7 @@ public class Main extends PApplet {
 				else
 				{
 					
-					add_entity(world, properties, useScannerImages(new_scan), run);
+					add_entity(world, properties, useScannerImages(new_scan), RUN_AFTER_LOAD);//when run is true it adds ore
 				}
 			}
 			
