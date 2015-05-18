@@ -37,6 +37,7 @@ public abstract class Miner extends Dudes
    protected Miner try_transform_miner(WorldModel world, Function<WorldModel, Miner> transform)
    {
 	   Miner new_entity = transform.apply(world);
+	   System.out.println(new_entity);
 	   if (this != new_entity)
 	   {
 		   this.clear_pending_actions_new(world);

@@ -20,7 +20,7 @@ public class OrderedList {
 			idx++;
 		}
 		ListItem newlist = new ListItem(item, ord);
-		System.out.println(newlist.getItem());
+		//System.out.println(newlist.getItem());
 		this.list.add(idx, newlist);
 		
 	}

@@ -167,7 +167,7 @@ import java.lang.Math;
 
      	((ActionItems) entity).remove_pending_action(action[0]);
      	entity.next_image();
-     	System.out.println(repeat_count);
+     	//System.out.println(repeat_count);
      	if(repeat_count != 1)
      	{
      		

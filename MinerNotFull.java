@@ -74,12 +74,15 @@ public class MinerNotFull extends Miner
 		    	  Ore ore = (Ore) world.find_nearest(entity_pt, Ore.class);
 		    	  
 		    	  boolean found = this.miner_to_ore(world, ore);
+		    	  //System.out.println(found);
 		    	  
 		    	  Miner new_entity = this;
 		    	  
-		    	  if (found)
+		    	  if (found == true)
 		    	  {
+		    		  //System.out.println("ayyy miner");
 		    		  new_entity = this.try_transform_miner(world, this :: try_transform_miner_not_full);
+		    		  //System.out.println(new_entity);
 		    	  }
 		    	  Actions.schedule_action(world, new_entity, new_entity.create_miner_action(world, i_store),
 		    	  current_ticks + new_entity.get_rate());
