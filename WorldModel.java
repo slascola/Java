@@ -209,6 +209,8 @@ public class WorldModel {
 		while(next != null && next.getOrd() < ticks)
 		{
 			this.action_queue.pop();
+			next.getItem().accept(ticks);
+			//invoke action function
 			next = this.action_queue.head();
 		}
 	}
