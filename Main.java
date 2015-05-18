@@ -89,6 +89,7 @@ public class Main extends PApplet {
 	private int num_cols;
 	private int num_rows;
 	private Background default_background;
+	   private static final int COLOR_MASK = 0xffffff;
 	
 	
 	
@@ -240,11 +241,30 @@ public class Main extends PApplet {
 			   int g = Integer.parseInt(line[3]);
 			   int b = Integer.parseInt(line[4]);
 			   int a = Integer.parseInt(line[5]);
+			   setAlpha(image, color(r, g, b), a);
 			   //look at the color coding thing on webste for this part
 			}
 		}
 		
 	}
+	   // Called with color for which alpha should be set and alpha value.
+	   //PImage img = setAlpha(loadImage("wyvern1.bmp"), color(255, 255, 255), 0));
+	   private static PImage setAlpha(PImage img, int maskColor, int alpha)
+	   {
+	      int alphaValue = alpha << 24;
+	      int nonAlpha = maskColor & COLOR_MASK;
+	      img.format = PApplet.ARGB;
+	      img.loadPixels();
+	      for (int i = 0; i < img.pixels.length; i++)
+	      {
+	         if ((img.pixels[i] & COLOR_MASK) == nonAlpha)
+	         {
+	            img.pixels[i] = alphaValue | nonAlpha;
+	         }
+	      }
+	      img.updatePixels();
+	      return img;
+	   }
 	private List<PImage> get_images_internal(HashMap<String, List<PImage>> map, String key)
 	{
 		List<PImage> this_object_list = new ArrayList<PImage>();
