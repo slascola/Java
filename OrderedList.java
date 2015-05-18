@@ -38,7 +38,7 @@ public class OrderedList {
 	}
 	public ListItem head()
 	{
-		if (this.list != null)
+		if (this.list.size() != 0)
 		{
 			
 			return this.list.get(0);

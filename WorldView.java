@@ -67,8 +67,8 @@ public class WorldView {
 	}
 	public void update_view(int view_delta, int view_delta2)
 	{
-		view_delta = 0;
-		view_delta2 = 0;
+		//view_delta = 0;
+		//view_delta2 = 0;
 		this.viewport = create_shifted_viewport(this.viewport, view_delta, view_delta2, this.num_rows, this.num_cols);
 		this.draw_viewport();
 		this.mouse_move(this.mouse_pt);
@@ -138,7 +138,9 @@ public class WorldView {
 	{
 		
 		int new_x = clamp(viewport.getLeft() + deltax, 0, num_cols - viewport.getViewCols());
+		//System.out.println(new_x);
 		int new_y = clamp(viewport.getTop() + deltay, 0, num_rows - viewport.getViewRows());
+		//System.out.println(viewport.getTop());
 		Rectangle r = new Rectangle(new_x, new_y, viewport.getViewCols(), viewport.getViewRows());
 		
 		

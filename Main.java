@@ -9,8 +9,8 @@ import java.util.function.*;
 
 public class Main extends PApplet {
 	
-	private int x_delta =0;
-	private int y_delta =0;
+	private int x_delta;
+	private int y_delta;
 	
 	final boolean RUN_AFTER_LOAD = true;
 	final String IMAGE_LIST_FILE_NAME = "imagelist";
@@ -451,32 +451,32 @@ public class Main extends PApplet {
 	   {
 		  x_delta =0;
 		  y_delta = 0;
-	      x_delta = x_delta -1;
-	      view.update_view(x_delta, y_delta);
+	      int newx_delta = x_delta -1;
+	      view.update_view(newx_delta, y_delta);
 	      
 	   }
 	   public void right()
 	   {
-		   x_delta =0;
-		   y_delta = 0;
-		  x_delta = x_delta + 1;
-		  
-		  view.update_view(x_delta, y_delta);
+		  x_delta = 0;
+		  y_delta = 0;
+		  int newx_delta = x_delta + 1;
+		  //System.out.println(newx_delta);
+		  view.update_view(newx_delta, y_delta);
 		         
 	   }
 	   public void up()
 	   {
 		 x_delta =0;
 		 y_delta = 0;
-	     y_delta = y_delta -1;
-	     view.update_view(x_delta, y_delta);
+	     int newy_delta = y_delta -1;
+	     view.update_view(x_delta, newy_delta);
 	   }
 	   public void down()
 	   {
 		  x_delta =0;
 		  y_delta = 0;
-	      y_delta = y_delta + 1;
-	      view.update_view(x_delta, y_delta);
+	      int newy_delta = y_delta + 1;
+	      view.update_view(x_delta, newy_delta);
 	   }
 	 public void keyPressed()
 	   {
