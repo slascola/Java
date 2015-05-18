@@ -27,6 +27,7 @@ public class Ore extends Rate
 	   OreBlob blob = new OreBlob(name, pt, rate, ((rand.nextInt(Actions.BLOB_ANIMATION_MAX - 
 			   Actions.BLOB_ANIMATION_MIN + 1) + Actions.BLOB_ANIMATION_MIN) * Actions.BLOB_ANIMATION_RATE_SCALE),
 			   Main.get_images(i_store, "blob"));
+	   blob.schedule_blob(world, ticks, i_store);
 	   return blob;
 
    	}
@@ -50,7 +51,7 @@ public class Ore extends Rate
 	  }
    protected void schedule_ore(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
 	{
-	   System.out.println("it came herrree");
+	   //System.out.println("it came herrree");
 		Actions.schedule_action(world, this, create_ore_transform_action(world, i_store),
 								ticks + this.get_rate());
 	}

@@ -51,9 +51,11 @@ public class Vein extends Rate
    }
    protected Ore create_ore(WorldModel world, String name, Point pt, long ticks, HashMap<String, List<PImage>> i_store)
    {
+	   //System.out.println("here");
 	   Random rand = new Random();
 	   Ore ore = new Ore(name, pt, rand.nextInt(Actions.ORE_CORRUPT_MAX - Actions.ORE_CORRUPT_MIN 
 			   + 1) + Actions.ORE_CORRUPT_MIN, Main.get_images(i_store, "ore"));
+	   ore.schedule_ore(world, ticks, i_store);
 	   return ore;
 	   
    }

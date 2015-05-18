@@ -75,6 +75,7 @@ public class OreBlob extends Rate
 	
 	protected void schedule_blob(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
 	{
+		System.out.println("blob here");
 		Actions.schedule_action(world, this, create_ore_blob_action(world, i_store),
 								ticks + this.get_rate());
 		Actions.schedule_animation(world, this, 0); //just added in 0. keep eye on this

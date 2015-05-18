@@ -325,7 +325,7 @@ public class Main extends PApplet {
 			}
 			else if(key.equals(ORE_KEY))
 			{
-				System.out.println(key);
+				//System.out.println(key);
 				return create_ore(properties, map);
 			}
 			else if(key.equals(SMITH_KEY))
