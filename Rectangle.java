@@ -29,8 +29,8 @@ public class Rectangle {
 	}
 	protected boolean collidepoint(int x, int y)
 	{
-		return (x >= 0) && (x < this.width) && 
-				(y >= 0) && (y < this.height);
+		return (x >= 0) && (x < 2 *this.width) && 
+				(y >= 0) && (y < 2 * this.height);
 	}
 
 }
