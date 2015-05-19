@@ -13,6 +13,8 @@ public class Main extends PApplet {
 	private int x_delta;
 	private int y_delta;
 	
+	
+	
 	final boolean RUN_AFTER_LOAD = true;
 	final String IMAGE_LIST_FILE_NAME = "imagelist";
 	final String WORLD_FILE = "gaia.sav";
@@ -206,8 +208,26 @@ public class Main extends PApplet {
 			
 			
 		}
+		if(!(map.containsKey(DEFAULT_IMAGE_NAME)))
+		{
+			PImage default_image = create_default_image(TILE_WIDTH, TILE_HEIGHT);
+			List<PImage> this_default_image = new ArrayList<PImage>();
+			this_default_image.add(default_image);
+			map.put(DEFAULT_IMAGE_NAME, this_default_image);
+		}
 		
 		return map;
+	}
+	protected PImage create_default_image(int tile_width, int tile_height)
+	{
+		PImage surf = createImage(tile_width, tile_height, RGB);
+		surf.loadPixels();
+		for (int i = 0; i < surf.pixels.length; i++) {
+		  surf.pixels[i] = color(128, 128, 128, 0); 
+		}
+		surf.updatePixels();
+		return surf;
+		
 	}
 	protected void process_image_line(HashMap<String, List<PImage>> map, String[] line)
 	{
