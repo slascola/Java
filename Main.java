@@ -86,7 +86,7 @@ public class Main extends PApplet {
 	final int VEIN_REACH = 5;
 	//setting up time
 	private long next_time;
-	private static final int ANIMATION_TIME = 100;
+	private static final int ANIMATION_TIME = 175;
     //setting up background
 	private int num_cols;
 	private int num_rows;
