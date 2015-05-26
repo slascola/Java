@@ -31,11 +31,7 @@ public class Node extends Point
 	   int y_sq = (p1.y - p2.y) * (p1.y - p2.y);
 	   return (int)Math.sqrt(x_sq + y_sq);
    }
-   public int distance_hx(Point p1, Point p2)
-   {
-	   int hx_distance = Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
-	   return hx_distance;
-   }
+  
    public void overlay_nodes(int[][] world, int num_cols, int num_rows, Point start, Point goal) 
 	//change return type to ??
 	{
