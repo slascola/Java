@@ -1,15 +1,15 @@
 
 public class OpenSetItem {
 	private int f_value;
-	private Point pt;
-	public OpenSetItem(Point pt, int f_value)
+	private Node node;
+	public OpenSetItem(Node node, int f_value)
 	{
-		this.pt = pt;
+		this.node = node;
 		this.f_value = f_value;
 	}
-	public Point getPoint()
+	public Node getNode()
 	{
-		return this.pt;
+		return this.node;
 	}
 	public int getFValue()
 	{

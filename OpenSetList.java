@@ -10,7 +10,7 @@ public class OpenSetList {
 			this.list = new ArrayList<OpenSetItem>();
 		}
 		
-		public void insert(Point pt,  int f_value)
+		public void insert(Node node,  int f_value)
 		{
 			int size = this.list.size();
 			
@@ -19,15 +19,15 @@ public class OpenSetList {
 			{
 				idx++;
 			}
-			OpenSetItem newlist = new OpenSetItem(pt, f_value);
+			OpenSetItem newlist = new OpenSetItem(node, f_value);
 			this.list.add(idx, newlist);
 			
 		}
-		public void remove(Point pt)
+		public void remove(Node node)
 		{
 			int size = this.list.size();
 			int idx = 0;
-			while(idx < size && this.list.get(idx).getPoint() != pt)
+			while(idx < size && this.list.get(idx).getNode() != node)
 			{
 				idx++;
 			}
@@ -61,6 +61,7 @@ public class OpenSetList {
 		{
 			return this.list.size();
 		}
+	
 		
 	}
 
