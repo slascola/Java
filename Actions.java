@@ -49,6 +49,8 @@ import java.lang.Math;
       }
      public static Point next_position(WorldModel world, Point entity_pt, Point dest_pt)
      {
+    	 //if null return current postion
+    	 //put a star in world model and then call here
     	int pt = dest_pt.x - entity_pt.x;
     	double horiz = Math.signum(pt);
     	int horiz2 = (int)horiz;

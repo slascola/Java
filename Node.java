@@ -2,12 +2,13 @@
 public class Node extends Point
 {
    private int gx;
-   private int hx;
-   public Node(int x, int y, int gx, int hx)
+   
+   private boolean closedset = false;
+   public Node(int x, int y, int gx,  boolean closesdset)
    {
 	   super(x, y);
 	   this.gx = gx;
-	   this.hx = hx;
+	   this.closedset = closedset;
    }
    public int getNodeX()
    {
@@ -21,16 +22,11 @@ public class Node extends Point
    {
 	   return this.gx;
    }
-   public int getHX()
+   public boolean getClosedSet()
    {
-	   return this.hx;
+	   return this.closedset;
    }
-   public int distance_gx(Point p1, Point p2)
-   {
-	   int x_sq = (p1.x - p2.x) * (p1.x - p2.x);
-	   int y_sq = (p1.y - p2.y) * (p1.y - p2.y);
-	   return (int)Math.sqrt(x_sq + y_sq);
-   }
+  
   
    public void overlay_nodes(int[][] world, int num_cols, int num_rows, Point start, Point goal) 
 	//change return type to ??
@@ -40,9 +36,9 @@ public class Node extends Point
 			for(int x = 0; x < num_cols; x++)
 			{
 				Point cur = new Point(x, y);
-				int gx = this.distance_gx(start, cur);
-				int hx = this.distance_hx(cur, goal);
-				Node node = new Node(x, y, gx, hx);
+				int gx = 0; //compute the gx in astar
+				
+				Node node = new Node(x, y, gx, closedset);
 			}
 		}
 		//now add to overlay grid
