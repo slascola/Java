@@ -61,7 +61,22 @@ public class OpenSetList {
 		{
 			return this.list.size();
 		}
-	
+		public boolean contains(Node node)
+		{
+			for(int i = 0; i < this.list.size(); i++)
+			{
+				
+			   if(this.list.get(i).getNode() == node)
+			    {
+				return true;
+				
+			    }
+			   else if(!(node instanceof Node))
+			   {
+				return false;
+			   }
+			}
+		}
 		
 	}
 

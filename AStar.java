@@ -93,7 +93,7 @@ public class AStar
 			   
 			   int neighbor_g_score = dist_between(start, neighbor_node);
 			   
-			   if(!(openset.contains(neighbor)) || tentative_g_score < neighbor_g_score)
+			   if(!(openset.contains(neighbor_node)) || tentative_g_score < neighbor_g_score)
 			   {
 				   came_from.put(neighbor_node, current_node);
 				   
@@ -104,7 +104,7 @@ public class AStar
 				   
 				   //do we insert new f score into openset
 				   
-				   if(!(openset.contains(neighbor)))
+				   if(!(openset.contains(neighbor_node)))
 				   {
 					   openset.insert(neighbor_node, newfscore);
 				   }
