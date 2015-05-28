@@ -66,7 +66,7 @@ public class AStar
 		   OpenSetItem current= openset.head();
 		   Node current_node = current.getNode();
 		   
-		   if(current_node == goal)//do we have to define an equals method?
+		   if(current_node.equals(goal))//do we have to define an equals method?
 		   {
 			   return reconstruct_path(came_from, goal);
 		   }
@@ -77,15 +77,14 @@ public class AStar
 		   
 		   //create method neigbornodes based on grid with current all around it are neighbors
 		   List<Point> nbr_nodes = neighbor_nodes(current_node);
-		   for(Point neighbor : neighbor_nodes(current_node))
+		   for(Point neighbor : nbr_nodes)
 		   {
 			   //need to check for other entities surrounding it
-			   if(node_grid[neighbor.y][neighbor.x].getClosedSet() == true || (!world.within_bounds(neighbor)))
+			   if(node_grid[neighbor.y][neighbor.x].getClosedSet() == true  
+					   || world.get_occupancy(neighbor) != null)
 			   {
 				   continue;
 			   }
-			   
-			   //if(world.background[neighbor.y][neighbor.x] instanceof Ore)
 				    
 			   int current_g_score = dist_between(start, current_node);
 			   Node neighbor_node = node_grid[neighbor.y][neighbor.x];
@@ -94,6 +93,7 @@ public class AStar
 			   int neighbor_g_score = dist_between(start, neighbor_node);
 			   
 			   if(!(openset.contains(neighbor_node)) || tentative_g_score < neighbor_g_score)
+					   
 			   {
 				   came_from.put(neighbor_node, current_node);
 				   

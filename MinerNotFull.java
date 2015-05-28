@@ -7,6 +7,7 @@ public class MinerNotFull extends Miner
 {
 
 	private int current_img;
+	private Node[][] node_grid;
 	   public MinerNotFull(String name, int resource_limit, Point position, 
 	      int rate, List<PImage> imgs, int animation_rate, int resource_count)
 	   {
@@ -59,7 +60,19 @@ public class MinerNotFull extends Miner
 		   }
 		   else
 		   {
-			   Point new_pt = Actions.next_position(world, entity_pt, ore_pt); 
+			   int num_rows = world.getNumRows();
+		  	   int num_cols = world.getNumCols();
+		  	   node_grid = new Node[num_rows][num_cols];
+		  	   
+		  	   for(int y = 0; y< num_rows; y++)
+		  	   {
+		  		   for(int x = 0; x < num_cols; x++)
+		  		   {
+		  			   Node node = new Node(x, y, false);
+		  			   node_grid[y][x] = node;
+		  		   }
+		  	   }
+			   Point new_pt = Actions.next_position(world, entity_pt, ore_pt, node_grid); 
 			   world.move_entity(this, new_pt);
 			   return false;
 		   }

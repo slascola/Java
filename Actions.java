@@ -1,4 +1,7 @@
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.LongConsumer;
 import java.lang.Math;
  public class Actions extends Point
@@ -47,60 +50,169 @@ import java.lang.Math;
 	   return ((x1 == x2 && Math.abs(y1 - y2) == 1) ||
 			   (y1 == y2 && Math.abs(x1 - x2) == 1));
       }
-     public static Point next_position(WorldModel world, Point entity_pt, Point dest_pt)
+     public static int distance_hx(Node current, Node goal)//heuristic distance
+     {
+  	   Point p1 = new Point(current.getNodeX(), current.getNodeY());
+  	   Point p2 = new Point(goal.getNodeX(), goal.getNodeY());
+  	   int hx_distance = Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y);
+  	   return hx_distance;
+     }
+     public static int dist_between(Node current, Node neighbor)
+     {
+  	   Point c_pt = new Point(current.getNodeX(), current.getNodeY());
+  	   Point n_pt = new Point(neighbor.getNodeX(), neighbor.getNodeY());
+  	   int gx_distance = Math.abs(c_pt.x - n_pt.x) + Math.abs(c_pt.y - n_pt.y);
+  	   return gx_distance;
+     }
+     public static List<Point> neighbor_nodes(Node current)
+     {
+  	   List<Point> valid_neighbors = new ArrayList<Point>();
+  	   
+  	   Point left = new Point(current.getNodeX() - 1, current.getNodeY());
+  	   Point right = new Point(current.getNodeX() + 1, current.getNodeY());
+  	   Point down = new Point(current.getNodeX(), current.getNodeY() +1);
+  	   Point up = new Point(current.getNodeX(), current.getNodeY() -1);
+  	   
+  	   valid_neighbors.add(left);
+  	   valid_neighbors.add(right);
+  	   valid_neighbors.add(up);
+  	   valid_neighbors.add(down);
+  	   
+  	   return valid_neighbors;
+     }
+     public static List<Point> aStar(Node start, Node goal, WorldModel world, Node[][] node_grid)
+     {
+  	   
+  	   
+  	   OpenSetList openset = new OpenSetList();
+  	   
+  	   
+  	   int g_score = 0;
+  	   int f_score = g_score + distance_hx(start, goal);
+  	   
+  	   openset.insert(start, f_score);
+  	   
+  	   while(openset.size() != 0)
+  	   {
+  		   OpenSetItem current= openset.head();
+  		   Node current_node = current.getNode();
+  		   
+  		   if(adjacent(current_node, goal))
+  		   {
+  			   return reconstruct_path(current_node);
+  		   }
+  		   
+  		  // boolean cur_closed_set = current_node.getClosedSet();
+  		  // cur_closed_set = true;
+  		   current_node.setClosedSet(true);
+  		   openset.remove(current_node);
+  		   
+  		   
+  		   List<Point> nbr_nodes = neighbor_nodes(current_node);
+  		   for(Point neighbor : nbr_nodes)
+  		   {
+  			   //System.out.println("x");
+  			   if((!world.within_bounds(neighbor)) || node_grid[neighbor.y][neighbor.x].getClosedSet() == true  
+  					   || world.get_occupancy(neighbor) != null)
+  			   {
+  				  //System.out.println("not passing");
+  				   continue;
+  			   }
+  			   //System.out.println("passing");
+  				    //current +1
+  			   int current_g_score = current_node.getG() + 1;
+  			   current_node.setG(current_g_score);
+  			   
+  			   Node neighbor_node = node_grid[neighbor.y][neighbor.x];
+  			   int tentative_g_score = current_g_score + dist_between(current_node, neighbor_node);
+  			   
+  			  // int neighbor_g_score = neighbor_node.getG();//where do you set g
+  			   
+  			   if(!(openset.contains(neighbor_node)) || tentative_g_score < neighbor_node.getG())
+  					   
+  			   {
+  				   //neighbor node came from = current
+  				   neighbor_node.setCameFrom(current_node);
+  			  	   System.out.println("Setting came from " + neighbor_node.getNodeX() + "," + neighbor_node.getNodeY() + " to " + current_node.getNodeX() + "," + current_node.getNodeY());
+
+
+  				   //came_from.put(neighbor_node, current_node);
+  				   neighbor_node.setG(tentative_g_score);
+  				   
+  				   
+  				   int newfscore = tentative_g_score + distance_hx(neighbor_node, goal);
+  				   neighbor_node.setF(newfscore);
+  				   
+  				   //put into node neighbor
+  				   
+  				  
+  				   
+  				   if(!(openset.contains(neighbor_node)))
+  				   {
+  					   openset.insert(neighbor_node, newfscore);
+  				   }
+  				   
+  			   }
+  		   }
+  	   }
+  	   return null;
+  	   
+     }
+     public static List<Point> reconstruct_path(Node current)
+     {
+  	   List<Point> total_path = new ArrayList<Point>();
+  	   
+  	   total_path.add(current);
+  	   //System.out.println(current.getNodeX() + "," + current.getNodeY() + " -- " + current.getCameFrom());
+  	   while(current.getCameFrom() != null)
+  	   {
+  		   current = current.getCameFrom(); //is this current node passed now the current node from the map?
+  		   Point cur_point = new Point(current.getNodeX(), current.getNodeY());
+  		   total_path.add(0, cur_point);
+  	  	   //System.out.println(current.getNodeX() + "," + current.getNodeY() + " -- " + current.getCameFrom());
+  		   
+  	   }
+  	   return total_path;
+     }
+     public static Point next_position(WorldModel world, Point entity_pt, Point dest_pt, Node[][]node_grid)
      {
     	 //if null return current postion
     	 //put a star in world model and then call here
-    	int pt = dest_pt.x - entity_pt.x;
-    	double horiz = Math.signum(pt);
-    	int horiz2 = (int)horiz;
-        int x = entity_pt.x + horiz2;
-        int y = entity_pt.y;
-    	Point newpoint = new Point(x, y);
-    	if (horiz == 0 || WorldModel.is_occupied(world, newpoint))
-    	{
-    		int y1 = dest_pt.y - entity_pt.y;
-    		double vert = Math.signum(y1);
-    		int vert2 = (int)vert;
-    		int newx = entity_pt.x;
-    		int newy = entity_pt.y  + vert2;
-    		newpoint = new Point(newx, newy);
-    		if (vert2 == 0 || WorldModel.is_occupied(world, newpoint))
-    		{
-    			int fx = entity_pt.x;
-    			int fy = entity_pt.y;
-    			newpoint = new Point(fx, fy);
-    		}
-    	}
-    	
-    	return newpoint;
-    	
+    	 Node entity_node = new Node(entity_pt.x, entity_pt.y, false);
+    	 Node dest_node = new Node(dest_pt.x, dest_pt.y, false);
+    	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid);
+    	 
+    	 if(list_pts == null || list_pts.size() == 0 || entity_node.equals(dest_node))
+    	 {
+    		 return entity_pt;
+    		 
+    	 }
+    	 
+    	 if (list_pts.size() > 1){
+    		 Point p = list_pts.get(1);
+    		 return p;
+    	 }   	 
+    	 
+    	 
+    	return entity_pt;
      }
-     public static Point blob_next_position(WorldModel world, Point entity_pt, Point dest_pt)
+     public static Point blob_next_position(WorldModel world, Point entity_pt, Point dest_pt, Node[][]node_grid)
      {
-    	int pt = dest_pt.x - entity_pt.x;
-     	double horiz = Math.signum(pt);
-     	int horiz2 = (int)horiz;
-         int x = entity_pt.x + horiz2;
-         int y = entity_pt.y;
-     	Point newpoint = new Point(x, y);
-     	if (horiz == 0 || WorldModel.is_occupied(world, newpoint) && (world.get_tile_occupant(newpoint) instanceof Ore == false))
-     	{
-     		int y1 = dest_pt.y - entity_pt.y;
-     		double vert = Math.signum(y1);
-     		int vert2 = (int)vert;
-     		int newx = entity_pt.x;
-     		int newy = entity_pt.y  + vert2;
-     		newpoint = new Point(newx, newy);
-     		if (vert2 == 0 || WorldModel.is_occupied(world, newpoint) && (world.get_tile_occupant(newpoint) instanceof Ore == false))
-     		{
-     			int fx = entity_pt.x;
-     			int fy = entity_pt.y;
-     			newpoint = new Point(fx, fy);
-     		}
-     	}
-     	
-     	return newpoint;
+    	 Node entity_node = new Node(entity_pt.x, entity_pt.y, false);
+    	 Node dest_node = new Node(dest_pt.x, dest_pt.y, false);
+    	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid);
+    	 
+    	 if(list_pts.size() == 0 && entity_node.equals(dest_node))
+    	 {
+    		 return entity_pt;
+    		 
+    	 }
+    	
+    		 Point p = list_pts.get(1);
+    		 return p;
+    	 
+    	 
+    	
      	
     	
      }
@@ -181,7 +293,7 @@ import java.lang.Math;
      		}
      		else if(entity instanceof Miner)
      		{
-     			//System.out.println("it came herree");
+     			
      			schedule_action(world, entity, 
      					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
      					current_ticks + ((Miner) entity).get_animation_rate());

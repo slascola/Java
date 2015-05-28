@@ -66,19 +66,17 @@ public class OpenSetList {
 			for(int i = 0; i < this.list.size(); i++)
 			{
 				
-			   if(this.list.get(i).getNode() == node)
+			   if(this.list.get(i).getNode().equals(node))
 			    {
 				return true;
 				
 			    }
-			   else if(!(node instanceof Node))
-			   {
-				return false;
-			   }
+			  
 			}
+			return false;
 		}
 		
 	}
 
 
-}
+

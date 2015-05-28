@@ -8,6 +8,7 @@ public class MinerFull extends Miner
 
    private int current_img;
    private int resource_count;
+   private Node[][] nodegrid;
    public MinerFull(String name, int resource_limit, Point position, 
 		      int rate, List<PImage> imgs, int animation_rate, int resource_count)
    {
@@ -33,7 +34,19 @@ public class MinerFull extends Miner
 	   }
 	   else
 	   {
-		   Point new_pt = Actions.next_position(world, entity_pt, smith_pt);
+		   int num_rows = world.getNumRows();
+	  	   int num_cols = world.getNumCols();
+	  	   nodegrid = new Node[num_rows][num_cols];
+	  	   
+	  	   for(int y = 0; y< num_rows; y++)
+	  	   {
+	  		   for(int x = 0; x < num_cols; x++)
+	  		   {
+	  			   Node node = new Node(x, y, false);
+	  			   nodegrid[y][x] = node;
+	  		   }
+	  	   }
+		   Point new_pt = Actions.next_position(world, entity_pt, smith_pt, nodegrid);
 		   world.move_entity(this, new_pt);
 		   return false;
 	   }

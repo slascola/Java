@@ -6,6 +6,7 @@ import processing.core.*;
 public class OreBlob extends Rate
 {
 	private int animation_rate;
+	private Node[][] node_grid;
    public OreBlob(String name, Point position, int rate, int animation_rate, List<PImage> imgs)
    {
 	   super(name, position, imgs, rate);
@@ -31,7 +32,19 @@ public class OreBlob extends Rate
 	   }
 	   else
 	   {
-		   Point new_pt = Actions.blob_next_position(world, entity_pt, vein_pt);
+		   int num_rows = world.getNumRows();
+	  	   int num_cols = world.getNumCols();
+	  	   node_grid = new Node[num_rows][num_cols];
+	  	   
+	  	   for(int y = 0; y< num_rows; y++)
+	  	   {
+	  		   for(int x = 0; x < num_cols; x++)
+	  		   {
+	  			   Node node = new Node(x, y, false);
+	  			   node_grid[y][x] = node;
+	  		   }
+	  	   }
+		   Point new_pt = Actions.blob_next_position(world, entity_pt, vein_pt, node_grid);
 		   Entity old_entity = world.get_tile_occupant(new_pt);
 		   if (old_entity instanceof Ore)
            {
