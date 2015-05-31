@@ -53,6 +53,11 @@ public class WorldView {
 		
 		
 	}
+	
+	public Rectangle get_viewport()
+	{
+		return this.viewport;
+	}
 	public void draw_entities()
 	{
 		for(Entity entity : this.world.getEntities())

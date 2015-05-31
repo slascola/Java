@@ -13,7 +13,9 @@ public class Main extends PApplet {
 	private int x_delta;
 	private int y_delta;
 	
-	
+	private PImage world_event_image;
+	private List<PImage>fire_imgs;
+	private int current_image;
 	
 	final boolean RUN_AFTER_LOAD = true;
 	final String IMAGE_LIST_FILE_NAME = "imagelist";
@@ -92,6 +94,8 @@ public class Main extends PApplet {
 	private int num_rows;
 	private Background default_background;
 	   private static final int COLOR_MASK = 0xffffff;
+	   private int[][] overlay;
+	   private PImage black;
 	
 	
 	
@@ -119,7 +123,7 @@ public class Main extends PApplet {
 				e1.printStackTrace();
 			}
 		
-		
+		  black =loadImage("v.png");
 		default_background = create_default_background(
 				get_images(map, DEFAULT_IMAGE_NAME));
 		
@@ -128,7 +132,19 @@ public class Main extends PApplet {
 	    view = new WorldView(SCREEN_WIDTH/TILE_WIDTH, SCREEN_HEIGHT/TILE_HEIGHT,
 				screen, world, TILE_WIDTH, TILE_HEIGHT);
 	   
-	  
+	    fire_imgs = new ArrayList<PImage>();
+	      fire_imgs.add(loadImage("fire1.gif"));
+	      fire_imgs.add(loadImage("fire2.gif"));
+	      fire_imgs.add(loadImage("fire3.gif"));
+	      fire_imgs.add(loadImage("fire4.gif"));
+	      fire_imgs.add(loadImage("fire5.gif"));
+	      fire_imgs.add(loadImage("fire6.gif"));
+	      fire_imgs.add(loadImage("fire7.gif"));
+	      fire_imgs.add(loadImage("fire8.gif"));
+	      fire_imgs.add(loadImage("fire9.gif"));
+	      fire_imgs.add(loadImage("fire10.gif"));
+	      
+	      current_image = 0;
 	    
 	    try
 	      {
@@ -476,6 +492,108 @@ public class Main extends PApplet {
 			((Ore) entity).schedule_ore(world, newtick, map);
 		}
 	}
+	public void draw_world_event()
+	{
+		for(int y = 2; y<7; y++)
+		{
+			
+				Point p = new Point(2, y);
+				WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+				world.set_occupancy(p, newworldevent);	
+		}
+		for(int x = 1; x < 4; x++)
+		{
+			Point p = new Point(x, 7);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int y = 3; y < 7; y++)
+		{
+			Point p = new Point(5, y);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int y = 3; y < 7; y++)
+		{
+			Point p = new Point(8, y);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int x = 6; x < 8; x++)
+		{
+			Point p = new Point(x, 2);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int x = 6; x < 8; x++)
+		{
+			Point p = new Point(x, 7);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int x = 10; x < 14; x++)
+		{
+			Point p = new Point(x, 7);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int x = 11; x < 13; x++)
+		{
+			Point p = new Point(x, 5);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int x = 11; x < 13; x++)
+		{
+			Point p = new Point(x, 2);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int y= 3; y < 5; y++)
+		{
+			Point p = new Point(13, y);
+			WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+			world.set_occupancy(p, newworldevent);	
+		}
+		for(int y = 1; y< 7; y++)
+		{
+			for(int x = 1; x < 13; x++)
+			{
+				Point p = new Point(1, 3);
+				WorldEvent newworldevent = new WorldEvent("world event", p, fire_imgs);
+				world.set_occupancy(p, newworldevent);
+				
+				Point pt = new Point(10, 3);
+				WorldEvent newworldevent2 = new WorldEvent("world event", pt, fire_imgs);
+				world.set_occupancy(pt, newworldevent2);
+				
+				Point p3 = new Point(10, 6);
+				WorldEvent newworldevent3 = new WorldEvent("world event", p3, fire_imgs);
+				world.set_occupancy(p3, newworldevent3);
+			}
+		}
+	}
+	 private void next_image()
+	   {
+	      current_image = (current_image + 1) % fire_imgs.size();
+	      
+	      
+	   }
+	 public boolean mouse_clicked()
+	 {
+		 for(int y = 0; y< world.getNumRows(); y++)
+		 {
+			 for(int x = 0; x<world.getNumCols(); x++)
+			 {
+				 Point p = new Point(x, y);
+				 if(world.get_occupancy(p) instanceof WorldEvent)
+				 {
+					 return true;
+				 }
+			 }
+		 }
+		 return false;
+	 }
 		
 	
 	
@@ -486,13 +604,59 @@ public class Main extends PApplet {
 		long time = System.currentTimeMillis();
 	      if (time >= next_time)
 	      {
+	    	  next_image();
 	         world.update_on_time(time);
 	         next_time = time + ANIMATION_TIME;
 	      }
 		
 	   view.draw_viewport();
+	   for(int y = 0; y < world.getNumRows(); y++)
+	   {
+		   for(int x = 0; x <world.getNumCols(); x++)
+		   {
+			   Point newp = new Point(x,y);
+			   Point v_pt = view.world_to_viewport(view.get_viewport(), newp);
+			   if(world.get_occupancy(newp) instanceof WorldEvent)
+			   {
+				   image(fire_imgs.get(current_image), v_pt.x*32, v_pt.y*32);
+			   }
+		   }
+	   }
+	   /*
+	    for(Entity e : world.get_entities())
+	    {
+	    	Point entity_pt = e.get_position();
+	    	Point mouse_loc = new Point(mouseX /32, mouseY /32);
+	    	Point mouse_pt = WorldView.viewport_to_world(view.get_viewport(), mouse_loc);
+	    	 
+	    	
+	    	overlay = new int[num_rows][num_cols];
+	    	if((mouse_loc.x == entity_pt.x && mouse_loc.y == entity_pt.y) && (e instanceof MinerFull))
+	    	{
+	    		for(int y = 0; y < num_rows; y++)
+	    		{
+	    			for( int x = 0; x < num_cols; x++)
+	    			{
+	    				if(((MinerFull) e).getOpenSet().contains(((MinerFull) e).getGrid()[y][x]))
+	    				{
+	    					image(black, x* 32, y*32);
+	    				}
+	    			}
+	    		}
+	    	}
+	    }
+	    */
+	   //use getters for the node grid in oreblob, mnf, and mf
+	   //if point at that node is instance of ob, mnf, mf and point is equal to getLocation() of mouse pointer 
+	   //and the node is in open set .... draw black square
+	   //if that node is in path ...draw red square
 	   
 	   
+	   
+	}
+	public void mouseClicked()
+	{
+		draw_world_event();
 	}
 	
 	 public void left()
