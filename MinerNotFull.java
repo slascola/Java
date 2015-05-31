@@ -8,11 +8,26 @@ public class MinerNotFull extends Miner
 
 	private int current_img;
 	private Node[][] node_grid;
+	private OpenSetList openset;
 	   public MinerNotFull(String name, int resource_limit, Point position, 
 	      int rate, List<PImage> imgs, int animation_rate, int resource_count)
 	   {
 		  super(name, position, rate, resource_limit, resource_count, animation_rate, imgs);
 	      this.current_img = 0;
+	   }
+	   public void setOpenSet(OpenSetList newopen)
+	   {
+		   
+		   this.openset = newopen;
+	   }
+	   public OpenSetList getOpenSet()
+	   {
+		  
+		   return this.openset;
+	   }
+	   public Node[][] getGrid()
+	   {
+		   return this.node_grid;
 	   }
 	   public String entity_string()
 	   {

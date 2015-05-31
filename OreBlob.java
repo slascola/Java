@@ -7,10 +7,23 @@ public class OreBlob extends Rate
 {
 	private int animation_rate;
 	private Node[][] node_grid;
+	private OpenSetList openset;
    public OreBlob(String name, Point position, int rate, int animation_rate, List<PImage> imgs)
    {
 	   super(name, position, imgs, rate);
 	   this.animation_rate = animation_rate;
+   }
+   public void setOpenSet(OpenSetList newopen)
+   {
+	   this.openset = newopen;
+   }
+   public OpenSetList getOpenSet()
+   {
+	   return this.openset;
+   }
+   public Node[][] getGrid()
+   {
+	   return this.node_grid;
    }
    protected int get_animation_rate()
    {

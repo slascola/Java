@@ -9,6 +9,7 @@ public class MinerFull extends Miner
    private int current_img;
    private int resource_count;
    private Node[][] nodegrid;
+   private OpenSetList openset;
    public MinerFull(String name, int resource_limit, Point position, 
 		      int rate, List<PImage> imgs, int animation_rate, int resource_count)
    {
@@ -16,7 +17,18 @@ public class MinerFull extends Miner
 	   this.current_img = 0;
 	   this.resource_count = resource_limit;
    }
-   
+   public void setOpenSet(OpenSetList newopen)
+   {
+	   this.openset = newopen;
+   }
+   public OpenSetList getOpenSet()
+   {
+	   return this.openset;
+   }
+   public Node[][] getGrid()
+   {
+	   return this.nodegrid;
+   }
    protected boolean miner_to_smith(WorldModel world, Blacksmith smith)
    {
 	   Point entity_pt = this.get_position();

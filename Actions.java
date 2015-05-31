@@ -50,7 +50,7 @@ import java.lang.Math;
 	   return ((x1 == x2 && Math.abs(y1 - y2) == 1) ||
 			   (y1 == y2 && Math.abs(x1 - x2) == 1));
       }
-     public static int distance_hx(Node current, Node goal)//heuristic distance
+     public static int distance_hx(Node current, Node goal)
      {
   	   Point p1 = new Point(current.getNodeX(), current.getNodeY());
   	   Point p2 = new Point(goal.getNodeX(), goal.getNodeY());
@@ -102,8 +102,7 @@ import java.lang.Math;
   			   return reconstruct_path(current_node);
   		   }
   		   
-  		  // boolean cur_closed_set = current_node.getClosedSet();
-  		  // cur_closed_set = true;
+  		  
   		   current_node.setClosedSet(true);
   		   openset.remove(current_node);
   		   
@@ -111,39 +110,37 @@ import java.lang.Math;
   		   List<Point> nbr_nodes = neighbor_nodes(current_node);
   		   for(Point neighbor : nbr_nodes)
   		   {
-  			   //System.out.println("x");
-  			   if((!world.within_bounds(neighbor)) || node_grid[neighbor.y][neighbor.x].getClosedSet() == true  
+  			   
+  			   if((!world.within_bounds(neighbor)) || node_grid[neighbor.y][neighbor.x].getClosedSet() == true 
   					   || world.get_occupancy(neighbor) != null)
   			   {
-  				  //System.out.println("not passing");
   				   continue;
   			   }
-  			   //System.out.println("passing");
-  				    //current +1
+  			   
   			   int current_g_score = current_node.getG() + 1;
   			   current_node.setG(current_g_score);
   			   
   			   Node neighbor_node = node_grid[neighbor.y][neighbor.x];
   			   int tentative_g_score = current_g_score + dist_between(current_node, neighbor_node);
   			   
-  			  // int neighbor_g_score = neighbor_node.getG();//where do you set g
+  			  
   			   
   			   if(!(openset.contains(neighbor_node)) || tentative_g_score < neighbor_node.getG())
   					   
   			   {
-  				   //neighbor node came from = current
+  				   
   				   neighbor_node.setCameFrom(current_node);
-  			  	   System.out.println("Setting came from " + neighbor_node.getNodeX() + "," + neighbor_node.getNodeY() + " to " + current_node.getNodeX() + "," + current_node.getNodeY());
+  			  	  // System.out.println("Setting came from " + neighbor_node.getNodeX() + "," + neighbor_node.getNodeY() + " to " + current_node.getNodeX() + "," + current_node.getNodeY());
 
 
-  				   //came_from.put(neighbor_node, current_node);
+  				   
   				   neighbor_node.setG(tentative_g_score);
   				   
   				   
   				   int newfscore = tentative_g_score + distance_hx(neighbor_node, goal);
   				   neighbor_node.setF(newfscore);
   				   
-  				   //put into node neighbor
+  				   
   				   
   				  
   				   
@@ -152,7 +149,33 @@ import java.lang.Math;
   					   openset.insert(neighbor_node, newfscore);
   				   }
   				   
+  				   
   			   }
+  			   //check if need to change to neighbor_node
+  			   /*
+  			   if(world.get_occupancy(current_node) instanceof MinerNotFull)
+  			   {
+  				   	Entity e = world.get_occupancy(current_node);
+  				   	((MinerNotFull) e).setOpenSet(openset);
+  				   //	System.out.println(((MinerNotFull) e).getOpenSet().equals(openset));
+  				   	
+  				   	
+  				   	
+  			   }
+  			  if(world.get_occupancy(current_node) instanceof MinerFull)
+ 			   {
+ 				   	Entity e = world.get_occupancy(current_node);
+ 				   	((MinerFull) e).setOpenSet(openset);
+ 				   	
+ 			   }
+  			  if(world.get_occupancy(current_node) instanceof OreBlob)
+ 			   {
+ 				   	Entity e = world.get_occupancy(current_node);
+ 				   	((OreBlob) e).setOpenSet(openset);
+ 				   	
+ 			   }
+ 			   */
+  			   
   		   }
   	   }
   	   return null;
@@ -166,7 +189,7 @@ import java.lang.Math;
   	   //System.out.println(current.getNodeX() + "," + current.getNodeY() + " -- " + current.getCameFrom());
   	   while(current.getCameFrom() != null)
   	   {
-  		   current = current.getCameFrom(); //is this current node passed now the current node from the map?
+  		   current = current.getCameFrom(); 
   		   Point cur_point = new Point(current.getNodeX(), current.getNodeY());
   		   total_path.add(0, cur_point);
   	  	   //System.out.println(current.getNodeX() + "," + current.getNodeY() + " -- " + current.getCameFrom());
@@ -176,8 +199,7 @@ import java.lang.Math;
      }
      public static Point next_position(WorldModel world, Point entity_pt, Point dest_pt, Node[][]node_grid)
      {
-    	 //if null return current postion
-    	 //put a star in world model and then call here
+    	 
     	 Node entity_node = new Node(entity_pt.x, entity_pt.y, false);
     	 Node dest_node = new Node(dest_pt.x, dest_pt.y, false);
     	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid);
@@ -202,7 +224,7 @@ import java.lang.Math;
     	 Node dest_node = new Node(dest_pt.x, dest_pt.y, false);
     	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid);
     	 
-    	 if(list_pts.size() == 0 && entity_node.equals(dest_node))
+    	 if(list_pts == null || list_pts.size() == 0 || entity_node.equals(dest_node))
     	 {
     		 return entity_pt;
     		 
