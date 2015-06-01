@@ -17,6 +17,8 @@ public class Main extends PApplet {
 	private List<PImage>fire_imgs;
 	private int current_image;
 	
+	private static boolean mouse_pressed = false;
+	
 	final boolean RUN_AFTER_LOAD = true;
 	final String IMAGE_LIST_FILE_NAME = "imagelist";
 	final String WORLD_FILE = "gaia.sav";
@@ -32,7 +34,7 @@ public class Main extends PApplet {
 	private List<PImage>img;
 	private List<PImage>e;
 	
-	private HashMap <String, List<PImage>> map;
+	private static HashMap <String, List<PImage>> map;
 	
 	private static final int MIN_ARGS = 1;
 	
@@ -98,7 +100,10 @@ public class Main extends PApplet {
 	   private PImage black;
 	
 	
-	
+	public static HashMap <String, List<PImage>> getMap()
+	{
+		return map;
+	}
 	public Background create_default_background(List<PImage> img)
 	{
 		Background b = new Background(DEFAULT_IMAGE_NAME, img);
@@ -579,21 +584,7 @@ public class Main extends PApplet {
 	      
 	      
 	   }
-	 public boolean mouse_clicked()
-	 {
-		 for(int y = 0; y< world.getNumRows(); y++)
-		 {
-			 for(int x = 0; x<world.getNumCols(); x++)
-			 {
-				 Point p = new Point(x, y);
-				 if(world.get_occupancy(p) instanceof WorldEvent)
-				 {
-					 return true;
-				 }
-			 }
-		 }
-		 return false;
-	 }
+	
 		
 	
 	
@@ -654,9 +645,15 @@ public class Main extends PApplet {
 	   
 	   
 	}
+	public static boolean getMousePressed()
+	{
+		return mouse_pressed;
+	}
+	//variable static and static method starts out false
 	public void mouseClicked()
 	{
 		draw_world_event();
+		mouse_pressed = true;
 	}
 	
 	 public void left()
