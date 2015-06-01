@@ -28,3 +28,5 @@ quake images/quake6.bmp 255 255 255 0
 rocks images/rock.bmp
 vein images/vein.bmp
 background_default images/none.bmp
+magnet images/manget_1.png
+magnet images/magnet_2_resized.png
