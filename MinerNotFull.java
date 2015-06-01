@@ -29,6 +29,23 @@ public class MinerNotFull extends Miner
 	   {
 		   return this.node_grid;
 	   }
+	   public List<PImage> magnet_images()
+	   {
+		   String key = "magnet";
+		   HashMap<String, List<PImage>> map = Main.getMap();
+		   if(map.containsKey(key))
+			{
+				
+	           List<PImage> object_image = map.get(key);	
+				return object_image;
+				
+			}
+		   else {
+				 List<PImage> object_image = map.get("background_default");
+				 return object_image;
+				 
+			}
+	   }
 	   public String entity_string()
 	   {
 		   String miner_string;
@@ -46,6 +63,13 @@ public class MinerNotFull extends Miner
 	    	  return this;
 
 		  }
+	      else if(Main.getMousePressed() == true)
+	      {
+	    	  Magnet new_entity =  new Magnet(this.get_name(), this.get_resource_limit(), this.get_position(), this.get_rate(),
+	    			  this.magnet_images(), this.get_animation_rate(), this.get_resource_count());
+
+	          return new_entity; 
+	      }
 	      else
 		  {
 			 MinerFull new_entity =  new MinerFull(

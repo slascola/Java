@@ -82,7 +82,13 @@ public class OreBlob extends Rate
 	    	  
 	    	  Point entity_pt = this.get_position();
 	    	  Vein vein = (Vein) world.find_nearest(entity_pt, Vein.class);
-	    	  Point vein_pt = vein.get_position();
+	    	  
+	    	  Point vein_pt = null;
+	    	  if(vein != null)
+	    	  {
+	    		  vein_pt = vein.get_position(); 
+	    	  }
+	    	  
 	    	  boolean found = this.blob_to_vein(world, vein);
 	    	  
 	    	  long next_time = current_ticks + this.get_rate();

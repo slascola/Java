@@ -79,8 +79,8 @@ public class WorldView {
 		//view_delta = 0;
 		//view_delta2 = 0;
 		this.viewport = create_shifted_viewport(this.viewport, view_delta, view_delta2, this.num_rows, this.num_cols);
-		this.draw_viewport();
-		this.mouse_move(this.mouse_pt);
+		//this.draw_viewport();
+		//this.mouse_move(this.mouse_pt);
 		
 	}
 	/*
