@@ -150,6 +150,8 @@ public class Main extends PApplet {
 	      fire_imgs.add(loadImage("fire10.gif"));
 	      
 	      current_image = 0;
+	      
+	      	
 	    
 	    try
 	      {
@@ -359,20 +361,14 @@ public class Main extends PApplet {
 		{
 			
 			world.add_entity(new_entity);
-			if(mousePressed == true)
-			{
-				long ticks = System.currentTimeMillis();
-				System.out.println("it created a fairy");
-				Point p = new Point(1, 1);
-				Fairy new_fairy = new Fairy("fairy", p, 5000, 100, get_images(map, "fairy"));
-				world.add_entity(new_fairy);
-				new_fairy.schedule_fairy(world, ticks, map);//fix this so animation works
-			}	
+			
 			
 			if(run)
 			{
 				schedule_entity(world, new_entity, map);
 			}
+			
+		
 			
 			//if mouse pressed create new entity fairy
 			
@@ -665,6 +661,12 @@ public class Main extends PApplet {
 	{
 		draw_world_event();
 		mouse_pressed = true;
+		
+		long ticks = System.currentTimeMillis();
+		Point p = new Point(mouseX/32, mouseY/32);
+		Fairy new_fairy = new Fairy("fairy", p, 5000, 100, get_images(map, "fairy"));
+		world.add_entity(new_fairy);
+		new_fairy.schedule_fairy(world, ticks, map);//fix this so animation works
 	}
 	
 	 public void left()
