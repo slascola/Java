@@ -102,15 +102,15 @@ public class Fairy extends Rate
 	      };
 		return action[0];
 	}
-	/*
-	protected void schedule_blob(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
+	
+	protected void schedule_fairy(WorldModel world, long ticks, HashMap<String, List<PImage>> i_store)
 	{
 		
 		Actions.schedule_action(world, this, create_ore_blob_action(world, i_store),
 								ticks + this.get_rate());
 		Actions.schedule_animation(world, this, 0); //just added in 0. keep eye on this
 	}
-	*/
+	
 	
 	
 	
