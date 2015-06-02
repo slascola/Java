@@ -370,7 +370,7 @@ public class Main extends PApplet {
 			
 		
 			
-			//if mouse pressed create new entity fairy
+		
 			
 		}	
 				

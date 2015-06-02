@@ -40,10 +40,9 @@ public class WorldView {
 				
 				Point p = new Point(x, y);
 				Point w_pt = viewport_to_world(this.viewport, p);
-				//System.out.println(w_pt.x);
-				//System.out.println(w_pt.y);
+				
 				PImage img = this.world.get_background_image(w_pt);
-				//System.out.println(img);
+				
 				this.screen.image(img, x*this.tile_width, y*this.tile_height);
 				
 			}
