@@ -290,6 +290,16 @@ import java.lang.Math;
     		 schedule_action(world, entity, create_animation_action(world, entity, repeat_count),
   					((Quake) entity).get_animation_rate());
     	 }
+    	 else if(entity instanceof Fairy)
+    	 {
+    		 schedule_action(world, entity, create_animation_action(world, entity, repeat_count),
+   					((Fairy) entity).get_animation_rate());
+    	 }
+    	 else if (entity instanceof Star)
+    	 {
+    		 schedule_action(world, entity, create_animation_action(world, entity, repeat_count),
+   					((Star) entity).get_animation_rate());
+    	 }
      	
      	
      }
@@ -325,6 +335,18 @@ import java.lang.Math;
      			schedule_action(world, entity, 
      					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
      					current_ticks + ((OreBlob) entity).get_animation_rate());
+     		}
+     		else if(entity instanceof Fairy)
+     		{
+     			schedule_action(world, entity, 
+     					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
+     					current_ticks + ((Fairy) entity).get_animation_rate());
+     		}
+     		else if(entity instanceof Star)
+     		{
+     			schedule_action(world, entity, 
+     					create_animation_action(world, entity, Math.max(repeat_count -1, 0)),
+     					current_ticks + ((Star) entity).get_animation_rate());
      		}
      	}
      	

@@ -666,7 +666,7 @@ public class Main extends PApplet {
 		Point p = new Point(mouseX/32, mouseY/32);
 		Fairy new_fairy = new Fairy("fairy", p, 500, 100, get_images(map, "fairy"));
 		world.add_entity(new_fairy);
-		new_fairy.schedule_fairy(world, ticks, map);//fix this so animation works it moves just super slow!
+		new_fairy.schedule_fairy(world, ticks, map);
 	}
 	
 	 public void left()
