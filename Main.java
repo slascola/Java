@@ -357,13 +357,21 @@ public class Main extends PApplet {
 		
 		if(new_entity != null)
 		{
-			//System.out.println(world);
+			
 			world.add_entity(new_entity);
+			
+				System.out.println("it created a fairy");
+				Point p = new Point(1, 1);
+				Fairy new_fairy = new Fairy("fairy", p, 5000, 100, get_images(map, "fairy"));
+				world.add_entity(new_fairy);
+				
 			
 			if(run)
 			{
 				schedule_entity(world, new_entity, map);
 			}
+			
+			//if mouse pressed create new entity fairy
 			
 		}	
 				
