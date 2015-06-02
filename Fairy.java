@@ -66,12 +66,29 @@ public class Fairy extends Rate
    }
    
 	protected Star create_star(WorldModel world, Point pt, long ticks, 
-			 HashMap<String, List<PImage>> i_store)//get images from map
+			 List<PImage> star_images)//get images from map
 	{
-		Star star = new Star("quake", pt, Actions.QUAKE_ANIMATION_RATE, Main.get_images(i_store, "quake"));
+		Star star = new Star("star", pt, Actions.QUAKE_ANIMATION_RATE, this.star_images());
 		star.schedule_star(world, ticks);
 		return star;
 	}
+	 public List<PImage> star_images()
+	   {
+		   String key = "star";
+		   HashMap<String, List<PImage>> map = Main.getMap();
+		   if(map.containsKey(key))
+			{
+				
+	           List<PImage> object_image = map.get(key);	
+				return object_image;
+				
+			}
+		   else {
+				 List<PImage> object_image = map.get("background_default");
+				 return object_image;
+				 
+			}
+	   }
 	protected LongConsumer create_ore_blob_action(WorldModel world, HashMap <String, List<PImage>> i_store)
 	{
 		LongConsumer[] action = { null };
@@ -93,7 +110,9 @@ public class Fairy extends Rate
 	    	  
 	    	  if(found)
 	    	  {
-    		    Star star = this.create_star(world, oreblob_pt, current_ticks, i_store);
+	    		
+	    		
+    		    Star star = this.create_star(world, oreblob_pt, current_ticks, this.star_images());//instead of istore use map
     		    world.add_entity(star);
     		    next_time = current_ticks + this.get_rate() * 2;
 	    	  }

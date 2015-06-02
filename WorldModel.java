@@ -97,6 +97,7 @@ public class WorldModel {
 		
 	}
 	
+	
 	protected void move_entity(Entity entity, Point pt)
 	{
 		//System.out.println(pt.x +"," + pt.y);
