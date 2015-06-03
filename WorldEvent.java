@@ -1,6 +1,6 @@
 import java.util.List;
 import processing.core.*;
-public class WorldEvent extends Entity {
+public class WorldEvent extends Obstacle {
 	
 	   public WorldEvent (String name, Point position, List<PImage> imgs)
 	   {
