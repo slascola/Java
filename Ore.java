@@ -19,6 +19,7 @@ public class Ore extends Rate
 			  + this.get_position().y + " " + (this.get_rate());
 	   return ore_string;
    }
+  
    
    protected OreBlob create_blob(WorldModel world, String name, Point pt, int Rate, long ticks, 
            HashMap<String, List<PImage>> i_store)		              

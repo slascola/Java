@@ -29,6 +29,15 @@ public class OreBlob extends Rate
    {
 	   return this.animation_rate;
    }
+   public boolean canMove(Entity entity)
+   {
+	   if(entity instanceof Ore)
+	   {
+		   return true;
+	   }
+	   return false;
+   }
+   
    
    protected boolean blob_to_vein(WorldModel world, Vein vein)
    {

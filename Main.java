@@ -666,8 +666,11 @@ public class Main extends PApplet {
 		Point p = new Point(mouseX/32, mouseY/32);
 		Point newpoint = WorldView.viewport_to_world(view.get_viewport(), p);
 		Fairy new_fairy = new Fairy("fairy", newpoint, 500, 100, get_images(map, "fairy"));
+		if(!(world.get_occupancy(newpoint) instanceof Fairy))
+		{
 		world.add_entity(new_fairy);
 		new_fairy.schedule_fairy(world, ticks, map);
+		}
 	}
 	
 	 public void left()

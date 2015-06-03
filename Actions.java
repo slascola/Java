@@ -80,7 +80,7 @@ import java.lang.Math;
   	   
   	   return valid_neighbors;
      }
-     public static List<Point> aStar(Node start, Node goal, WorldModel world, Node[][] node_grid)
+     public static List<Point> aStar(Node start, Node goal, WorldModel world, Node[][] node_grid, Entity thisentity)
      {
   	   
   	   
@@ -112,7 +112,7 @@ import java.lang.Math;
   		   {
   			   
   			   if((!world.within_bounds(neighbor)) || node_grid[neighbor.y][neighbor.x].getClosedSet() == true 
-  					   || world.get_occupancy(neighbor) != null)
+  					   || (world.get_occupancy(neighbor) != null && !(thisentity).canMove(world.get_occupancy(neighbor))))
   			   {
   				   continue;
   			   }
@@ -181,6 +181,7 @@ import java.lang.Math;
   	   return null;
   	   
      }
+     
      public static List<Point> reconstruct_path(Node current)
      {
   	   List<Point> total_path = new ArrayList<Point>();
@@ -202,7 +203,8 @@ import java.lang.Math;
     	 
     	 Node entity_node = new Node(entity_pt.x, entity_pt.y, false);
     	 Node dest_node = new Node(dest_pt.x, dest_pt.y, false);
-    	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid);
+    	 Entity entity = world.get_occupancy(entity_node);
+    	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid, entity);
     	 
     	 if(list_pts == null || list_pts.size() == 0 || entity_node.equals(dest_node))
     	 {
@@ -222,7 +224,14 @@ import java.lang.Math;
      {
     	 Node entity_node = new Node(entity_pt.x, entity_pt.y, false);
     	 Node dest_node = new Node(dest_pt.x, dest_pt.y, false);
-    	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid);
+    	 Entity entity = world.get_occupancy(entity_node);
+    	 if(entity == null)
+    	 {
+    		 System.out.println(entity_pt.x);
+    		 System.out.println(entity_pt.y);
+    		 System.out.println(entity);
+    	 }
+    	 List<Point> list_pts = aStar(entity_node, dest_node, world, node_grid, entity);
     	 
     	 if(list_pts == null || list_pts.size() == 0 || entity_node.equals(dest_node))
     	 {

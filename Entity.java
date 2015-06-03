@@ -14,6 +14,10 @@ public class Entity
 	   this.imgs = imgs;
 	   this.current_img = 0;
    }
+   public boolean canMove(Entity entity)
+   {
+	   return false;
+   }
    protected void set_position(Point point)
    {
 	   this.position = point;

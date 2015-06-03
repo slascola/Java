@@ -21,6 +21,11 @@ public abstract class Miner extends Dudes
 	   this.animation_rate = animation_rate;
 	   
    }
+   public boolean canMove(Entity entity)
+   {
+	   return false;
+   }
+  
    
    protected int get_animation_rate()
    {

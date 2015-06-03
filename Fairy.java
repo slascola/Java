@@ -29,6 +29,11 @@ public class Fairy extends Rate
    {
 	   return this.animation_rate;
    }
+   public boolean canMove(Entity entity)
+   {
+	   return false;
+   }
+   
    
    protected boolean fairy_to_oreblob(WorldModel world, OreBlob oreblob)
    {
